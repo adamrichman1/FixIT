@@ -34,7 +34,8 @@ public class CustomerRestController extends UserRestController<Customer> {
      * @return a ResponseEntity to the user
      */
     @Override
-    protected ResponseEntity signUp(HttpServletRequest request, Customer user) {
+    @RequestMapping(method= RequestMethod.POST, value="/customer/signUp", headers="Accept=application/json")
+    protected @ResponseBody ResponseEntity signUp(HttpServletRequest request, @RequestBody Customer user) {
         // TODO - sign-up
         return null;
     }

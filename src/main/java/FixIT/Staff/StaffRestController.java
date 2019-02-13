@@ -34,7 +34,8 @@ public class StaffRestController extends UserRestController<Staff> {
      * @return a ResponseEntity to the user
      */
     @Override
-    protected ResponseEntity signUp(HttpServletRequest request, Staff user) {
+    @RequestMapping(method= RequestMethod.POST, value="/staff/signUp", headers="Accept=application/json")
+    protected @ResponseBody ResponseEntity signUp(HttpServletRequest request, @RequestBody Staff user) {
         // TODO - sign-up
         return null;
     }
