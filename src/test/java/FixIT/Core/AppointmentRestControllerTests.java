@@ -17,7 +17,7 @@ public class AppointmentRestControllerTests {
     }
 
     @Test
-    public void testLogin() {
+    public void testCreateAppointment() {
         // TODO
     }
 }
