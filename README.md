@@ -14,3 +14,14 @@
 * [PostgreSQL 10.6+](https://www.postgresql.org/download/)
 
 
+#### Build
+```
+cd FixIT
+mvn package
+```
+
+#### Run
+```
+cd FixIT
+java -jar target/FixIT-1.0.jar
+```
