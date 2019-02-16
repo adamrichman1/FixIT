@@ -10,7 +10,7 @@ import java.util.ArrayList;
  * This class represents an appointment between a FixIT customer and FixIT staff member
  */
 class Appointment {
-    private String appiontmentID;
+    private String appointmentID;
     private Customer customer;
     private Staff staff;
     private long appointmentTime;
@@ -20,12 +20,12 @@ class Appointment {
     private int customerRating;
     private BigDecimal appointmentCost;
 
-    public String getAppiontmentID() {
-        return appiontmentID;
+    public String getAppointmentID() {
+        return appointmentID;
     }
 
-    public void setAppiontmentID(String appiontmentID) {
-        this.appiontmentID = appiontmentID;
+    public void setAppointmentID(String appointmentID) {
+        this.appointmentID = appointmentID;
     }
 
     public Customer getCustomer() {
