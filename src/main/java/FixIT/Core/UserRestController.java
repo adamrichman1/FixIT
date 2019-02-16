@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
  *
  * @param <T> the type of User object that passes through this class (either Customer or Staff)
  */
-public abstract class UserRestController<T extends User> extends FixITRestController {
+public abstract class UserRestController<T extends User> {
 
     /**
      * Requires subclasses of this class to implement a login endpoint

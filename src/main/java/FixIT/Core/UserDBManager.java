@@ -8,12 +8,32 @@ package FixIT.Core;
  */
 public abstract class UserDBManager<T extends User> extends DBManager {
 
+    protected String userTable;
+
+    protected UserDBManager(String userTable) {
+        this.userTable = userTable;
+    }
+
     /**
-     * Used to insert a user into the database - generic so specific types of users can be inserted
+     * Used to insert a new user into the database
      *
      * @param user the user to insert into the database
      */
-    public void insertUserToDB(T user) {
-        // TODO
-    }
+    protected abstract void insertUserToDB(T user);
+
+    /**
+     * Used to check if a user already exists before inserting a user into the database table during registration
+     *
+     * @param username the username to query for
+     * @return true if the username exists in the DB, false otherwise
+     */
+    protected abstract boolean userExists(String username);
+
+    /**
+     * Used to get information about the user for the user's profile page
+     *
+     * @param username the username of the user whose profile should be queried for
+     * @return a User object containing the user's profile
+     */
+    protected abstract T getUserProfile(String username);
 }

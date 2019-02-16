@@ -9,19 +9,15 @@ import org.springframework.stereotype.Controller;
 
 import javax.annotation.PreDestroy;
 
+/**
+ * This class contains the main method of the program and manages teardown operations, which are performed upon system
+ * shutdown
+ */
 @SpringBootApplication
 @EnableScheduling
 @Controller
 public class Application {
     private static Logger logger = LoggerFactory.getLogger(Application.class);
-
-    /**
-     * This method is used for tear-down operations and is called implicitly by Spring Boot upon shutdown
-     */
-    @PreDestroy
-    public static void tearDown() {
-        // TODO
-    }
 
     /**
      * This method is used on startup and is called implicitly by Spring Boot
@@ -36,5 +32,13 @@ public class Application {
         logger.info("------------ FixIT Launching ------------");
         SpringApplication.run(Application.class, args);
         logger.info("------------ FixIT Launched Successfully ------------");
+    }
+
+    /**
+     * This method is used for tear-down operations and is called implicitly by Spring Boot upon shutdown
+     */
+    @PreDestroy
+    public static void tearDown() {
+        // TODO
     }
 }
