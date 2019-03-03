@@ -65,7 +65,7 @@ public abstract class DBManager {
      *
      * @param table the table to drop
      */
-    static void dropTable(String table){
+    protected static void dropTable(String table){
         String sql = "DROP TABLE IF EXISTS " + table;
         executeUpdate(sql);
     }
@@ -77,7 +77,7 @@ public abstract class DBManager {
      * @param queryParams parameters for the query specific in sql
      * @return the ResultSet containing data from the query
      */
-    static ResultSet executeQuery(String sql, Object... queryParams) {
+    protected static ResultSet executeQuery(String sql, Object... queryParams) {
         Connection conn = connect(dbURL);
         try {
             PreparedStatement statement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -101,7 +101,7 @@ public abstract class DBManager {
      * @param c the Class to convert the ResultSet column to
      * @return an array of Team objects containing team data from the query
      */
-    static <S> S deserializeResultSetCol(ResultSet rs, String id, Class<S> c) {
+    protected static <S> S deserializeResultSetCol(ResultSet rs, String id, Class<S> c) {
         try {
             if (rs.next()) {
                 return deserializeString(rs.getString(id), c);
@@ -121,7 +121,7 @@ public abstract class DBManager {
      * @param <S> the generic type that the data will be deserialized into
      * @return the deserialized form of the data provided
      */
-    static <S> S deserializeString(String data, Class<S> c) {
+    protected static <S> S deserializeString(String data, Class<S> c) {
         ObjectMapper mapper = new ObjectMapper();
         try {
             return mapper.readValue(data, c);
@@ -139,7 +139,7 @@ public abstract class DBManager {
      * @param queryParams parameters for the query specific in sql
      * @return the ResultSet of the update
      */
-    static ResultSet executeUpdate(String sql, Object... queryParams) {
+    protected static ResultSet executeUpdate(String sql, Object... queryParams) {
         Connection conn = connect(dbURL);
         try {
             PreparedStatement statement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
