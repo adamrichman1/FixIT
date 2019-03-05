@@ -2,6 +2,8 @@ package FixIT.Customer;
 
 import FixIT.Core.UserRestController;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -9,7 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * This class manages HTTP endpoints for FixIT customers
  */
-@RestController
+@Controller
+@RequestMapping("/")
 public class CustomerRestController extends UserRestController<Customer> {
 
     /**
@@ -19,6 +22,7 @@ public class CustomerRestController extends UserRestController<Customer> {
      * @param user the login form of the customer attempting to login
      * @return a ResponseEntity to the user
      */
+    @Override
     @RequestMapping(method= RequestMethod.POST, value="/customer/login", headers="Accept=application/json")
     protected @ResponseBody ResponseEntity login(HttpServletRequest request, @RequestBody Customer user) {
         String username = request.getHeader("username");
@@ -38,5 +42,11 @@ public class CustomerRestController extends UserRestController<Customer> {
     protected @ResponseBody ResponseEntity signUp(HttpServletRequest request, @RequestBody Customer user) {
         // TODO - sign-up
         return null;
+    }
+
+    @RequestMapping(value="/greeting", method=RequestMethod.GET)
+    public String greet(@RequestParam(name="name", required=false, defaultValue="World") String name, Model model) {
+        model.addAttribute("name", name);
+        return "greeting";
     }
 }
