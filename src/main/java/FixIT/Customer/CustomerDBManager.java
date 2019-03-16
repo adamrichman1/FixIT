@@ -1,14 +1,13 @@
 package FixIT.Customer;
 
 import FixIT.Core.UserDBManager;
-//import FixIT.Core.Appointment;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.math.BigDecimal;
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
-import java.sql.Statement;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 
@@ -17,6 +16,8 @@ import java.util.ArrayList;
  */
 public class CustomerDBManager extends UserDBManager<Customer> {
 
+    private static Logger logger = LoggerFactory.getLogger(CustomerDBManager.class);
+
     CustomerDBManager() {
         super("customers");
     }
@@ -24,30 +25,25 @@ public class CustomerDBManager extends UserDBManager<Customer> {
     /**
      * Used to update a customer's balance in the database
      *
-     * @param user the Customer object containing customer data, including the customer's updated balance
+     * @param username the username of the user whose balance is being updated
+     * @param balance the new balance of the user TODO - integrate
      */
-    public void updateBalance(Customer user) {
+    public void updateBalance(String username, BigDecimal balance) {
         String sql = "UPDATE " + userTable + " SET balance=? WHERE username=?";
+        executeUpdate(sql, balance, username);
     }
 
     /**
      * Used to insert a new Customer into the database
      *
-     * @param user the Customer to insert into the database
+     * @param user the Customer to insert into the database TODO - make this more unit-testable
      */
     @Override
     protected void insertUserToDB(Customer user) {
-        try{
-            String sql = "INSERT INTO CUSTOMERS " +
-                            "(USERNAME, PASSWORD, EMAIL, NAME, ADDRESS, APPOINTMENT, RATING, CREDITCARD, BALANCE) " +
-                            "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-
-            executeUpdate(sql,user.getUsername(),user.getPassword(),user.getEmail(),user.getName(),user.getAddress(),
-                    user.getAppointmentHistory(),user.getRating(),user.getCreditCard(),user.getBalance());
-        }
-        catch (Exception e){
-            System.out.println(e.getMessage());
-        }
+        String sql = "INSERT INTO " + userTable + " (username, password, email, name, address, appointmentHistory, " +
+                "rating, creditCard, balance) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        executeUpdate(sql,user.getUsername(),user.getPassword(),user.getEmail(),user.getName(),user.getAddress(),
+                user.getAppointmentHistory(),user.getRating(),user.getCreditCard(),user.getBalance());
     }
 
     /**
@@ -58,67 +54,45 @@ public class CustomerDBManager extends UserDBManager<Customer> {
      */
     @Override
     protected Customer getUserProfile(String username) {
-        try{
+        return populateCustomer(executeQuery("SELECT * FROM " + userTable + " WHERE username=?"));
+    }
 
-            ResultSet rs = executeQuery("SELECT * FROM CUSTOMERS WHERE USERNAME = "+username);
-            if (!rs.isBeforeFirst()  ) {
-                return null; //no user with that username
+    /**
+     * Used to create the customer table
+     *
+     * @param tableName the name of the table to create // TODO - finish this based on insert and integrate
+     */
+    private void createCustomerTable(String tableName) {
+        String sql = "CREATE TABLE IF NOT EXISTS " + tableName +
+                "";
+        executeUpdate(sql);
+    }
+
+    /**
+     * Used to populate a customer object after querying the customer table for a ResultSet
+     *
+     * @param rs the ResultSet containing customer data
+     * @return a populated Customer object TODO - fix this cast warning
+     */
+    private Customer populateCustomer(ResultSet rs) {
+        try {
+            if (rs.next()) {
+                Customer c = new Customer(rs.getString("username"));
+                c.setEmail(rs.getString("email"));
+                c.setName(rs.getString("name"));
+                c.setAddress(rs.getString("address"));
+                c.setAppointmentHistory(deserializeString("appointmentHistory", ArrayList.class));
+                c.setRating(rs.getDouble("rating"));
+                c.setCreditCard(rs.getString("creditCard"));
+                c.setBalance(rs.getBigDecimal("balance"));
+                return c;
             }
-            else{
-                Customer rsCustomer = new Customer(rs.getNString(1));
-                rsCustomer.setPassword(rs.getNString(2));
-                rsCustomer.setEmail(rs.getNString(3));
-                rsCustomer.setName(rs.getNString(4));
-                rsCustomer.setAddress(rs.getNString(5));
-
-                // I didn't know how to do this
-                rsCustomer.setAppointmentHistory(rs.getObject(6, ArrayList<Appointment>));
-
-                rsCustomer.setRating(rs.getDouble(7));
-                rsCustomer.setCreditCard(rs.getNString(8));
-                rsCustomer.setBalance(rs.getBigDecimal(9));
-                return rsCustomer;
-            }
-        }
-        catch (Exception e){
-            System.out.println(e.getMessage());
+        } catch (SQLException e) {
+            logger.error(">>> ERROR: Couldn't populate Customer from ResultSet");
+            System.exit(1);
         }
         return null;
     }
-
-
-
-
-    /**
-     * Used by CustomerDBManager to create specific types of tables (e.g. appointment table)
-     *
-     * @param dbURL the URL of the DB to connect to
-     * @param sql the SQL string containing a query to create a table
-     */
-    protected void createTable(String dbURL, String sql) {
-        try{
-
-
-        }
-        catch (Exception e){
-            System.out.println(e.getMessage());
-        }
-    }
-
-    /**
-     * Used to insert a new Customer into the database
-     */
-
-    protected void insert1CustomerRow() {
-        try{
-
-        }
-        catch (Exception e){
-            System.out.println(e.getMessage());
-        }
-    }
-
-
 }
 
 

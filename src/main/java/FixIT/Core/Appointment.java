@@ -9,7 +9,7 @@ import java.util.ArrayList;
 /**
  * This class represents an appointment between a FixIT customer and FixIT staff member
  */
-class Appointment {
+public class Appointment {
     private String appointmentID;
     private Customer customer;
     private Staff staff;
