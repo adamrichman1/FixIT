@@ -64,7 +64,8 @@ public class CustomerRestController extends UserRestController<Customer> {
         }
         // Register user and return success
         else {
-            dbManager.insertUserToDB(user);
+            dbManager.insertUserToDB(user.getUsername(), user.getPassword(), user.getEmail(), user.getName(),
+                    user.getAddress(), user.getAppointmentHistory(), user.getCreditCard());
             // TODO return cookie?
             return "signup-success";
         }
@@ -81,7 +82,6 @@ public class CustomerRestController extends UserRestController<Customer> {
                 user.getPassword() == null ||
                 user.getEmail() == null ||
                 user.getName() == null ||
-                user.getAddress() == null ||
                 user.getAddress() == null ||
                 user.getCreditCard() == null;
     }

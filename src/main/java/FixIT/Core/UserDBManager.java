@@ -1,5 +1,7 @@
 package FixIT.Core;
 
+import java.sql.ResultSet;
+
 /**
  * This class contains query functionality that is general to users and is shared by subclasses CustomerDBManager and
  * StaffDBManager
@@ -13,13 +15,6 @@ public abstract class UserDBManager<T extends User> extends DBManager {
     protected UserDBManager(String userTable) {
         this.userTable = userTable;
     }
-
-    /**
-     * Used to insert a new user into the database
-     *
-     * @param user the user to insert into the database
-     */
-    protected abstract void insertUserToDB(T user);
 
     /**
      * Used to check if a user already exists before inserting a user into the database table during registration
@@ -38,7 +33,17 @@ public abstract class UserDBManager<T extends User> extends DBManager {
      * @param username the username of the user whose profile should be queried for
      * @return a User object containing the user's profile
      */
-    protected abstract T getUserProfile(String username);
+    protected T getUserProfile(String username) {
+        return populateUser(executeQuery("SELECT * FROM " + userTable + " WHERE username=?"));
+    }
+
+    /**
+     * Used to populate a user object
+     *
+     * @param rs the ResultSet containing customer data
+     * @return a populated user object
+     */
+    protected abstract T populateUser(ResultSet rs);
 
     /**
      * Used to determine if a user's username and password are valid upon sign-up

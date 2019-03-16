@@ -11,7 +11,7 @@ public class Customer extends User {
     private String creditCard;
     private BigDecimal balance;
 
-    public Customer(String username) {
+    Customer(String username) {
         super(username);
     }
 

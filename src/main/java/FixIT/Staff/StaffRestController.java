@@ -1,7 +1,7 @@
 package FixIT.Staff;
 
 import FixIT.Core.UserRestController;
-import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,7 +20,7 @@ public class StaffRestController extends UserRestController<Staff> {
      * @return a ResponseEntity to the user
      */
     @RequestMapping(method= RequestMethod.POST, value="/staff/login", headers="Accept=application/json")
-    protected @ResponseBody ResponseEntity login(HttpServletRequest request, @RequestBody Staff user) {
+    protected @ResponseBody String login(HttpServletRequest request, Model model, @RequestBody Staff user) {
         String username = request.getHeader("username");
         // TODO - login
         return null;
@@ -35,7 +35,7 @@ public class StaffRestController extends UserRestController<Staff> {
      */
     @Override
     @RequestMapping(method= RequestMethod.POST, value="/staff/signUp", headers="Accept=application/json")
-    protected @ResponseBody ResponseEntity signUp(HttpServletRequest request, @RequestBody Staff user) {
+    protected @ResponseBody String signUp(HttpServletRequest request, Model model, @RequestBody Staff user) {
         // TODO - sign-up
         return null;
     }

@@ -1,5 +1,6 @@
 package FixIT.Customer;
 
+import FixIT.Core.Appointment;
 import FixIT.Core.UserDBManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,6 +21,7 @@ public class CustomerDBManager extends UserDBManager<Customer> {
 
     CustomerDBManager() {
         super("customers");
+        createCustomerTable(userTable);
     }
 
     /**
@@ -34,27 +36,21 @@ public class CustomerDBManager extends UserDBManager<Customer> {
     }
 
     /**
-     * Used to insert a new Customer into the database
+     * Used to insert a new user into the database
      *
-     * @param user the Customer to insert into the database TODO - make this more unit-testable
+     * @param username the user's username
+     * @param password the user's password
+     * @param email the user's email
+     * @param name the user's name
+     * @param address the user's address
+     * @param appointmentHistory the user's appointment history
+     * @param creditCard the user's credit card number
      */
-    @Override
-    protected void insertUserToDB(Customer user) {
+    void insertUserToDB(String username, String password, String email, String name, String address,
+                        ArrayList<Appointment> appointmentHistory, String creditCard) {
         String sql = "INSERT INTO " + userTable + " (username, password, email, name, address, appointmentHistory, " +
-                "rating, creditCard, balance) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        executeUpdate(sql,user.getUsername(),user.getPassword(),user.getEmail(),user.getName(),user.getAddress(),
-                user.getAppointmentHistory(),user.getRating(),user.getCreditCard(),user.getBalance());
-    }
-
-    /**
-     * Used to get information about the user for the user's profile page
-     *
-     * @param username the username of the Customer whose profile should be queried for
-     * @return a Customer object containing the user's profile
-     */
-    @Override
-    protected Customer getUserProfile(String username) {
-        return populateCustomer(executeQuery("SELECT * FROM " + userTable + " WHERE username=?"));
+                "rating, creditCard, balance) VALUES (?, ?, ?, ?, ?, ?, 5.0, ?, 0.0)";
+        executeUpdate(sql, username, password, email, name, address, appointmentHistory, creditCard);
     }
 
     /**
@@ -64,7 +60,15 @@ public class CustomerDBManager extends UserDBManager<Customer> {
      */
     private void createCustomerTable(String tableName) {
         String sql = "CREATE TABLE IF NOT EXISTS " + tableName +
-                "";
+                " (username         TEXT        NOT NULL, " +
+                "password           TEXT        NOT NULL, " +
+                "email              TEXT        NOT NULL, " +
+                "name               TEXT        NOT NULL, " +
+                "address            TEXT        NOT NULL, " +
+                "appointmentHistory TEXT        NOT NULL, " +
+                "rating             DECIMAL     NOT NULL, " +
+                "creditCard         TEXT        NOT NULL, " +
+                "balance            DECIMAL     NOT NULL)";
         executeUpdate(sql);
     }
 
@@ -74,7 +78,7 @@ public class CustomerDBManager extends UserDBManager<Customer> {
      * @param rs the ResultSet containing customer data
      * @return a populated Customer object TODO - fix this cast warning
      */
-    private Customer populateCustomer(ResultSet rs) {
+    protected Customer populateUser(ResultSet rs) {
         try {
             if (rs.next()) {
                 Customer c = new Customer(rs.getString("username"));

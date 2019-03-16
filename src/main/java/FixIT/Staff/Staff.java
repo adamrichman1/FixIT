@@ -11,7 +11,7 @@ public class Staff extends User {
     private int yearsWorked;
     private ArrayList<String> strengths;
 
-    public Staff(String username) {
+    Staff(String username) {
         super(username);
     }
 
