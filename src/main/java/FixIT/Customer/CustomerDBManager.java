@@ -7,7 +7,7 @@ import FixIT.Core.UserDBManager;
  */
 public class CustomerDBManager extends UserDBManager<Customer> {
 
-    protected CustomerDBManager() {
+    CustomerDBManager() {
         super("customers");
     }
 
@@ -17,7 +17,7 @@ public class CustomerDBManager extends UserDBManager<Customer> {
      * @param user the Customer object containing customer data, including the customer's updated balance
      */
     public void updateBalance(Customer user) {
-
+        String sql = "UPDATE " + userTable + " SET balance=? WHERE username=?";
     }
 
     /**
@@ -28,17 +28,6 @@ public class CustomerDBManager extends UserDBManager<Customer> {
     @Override
     protected void insertUserToDB(Customer user) {
 
-    }
-
-    /**
-     * Used to check if a customer already exists before inserting a customer into the database table during registration
-     *
-     * @param username the username to query for
-     * @return true if the username exists in the DB, false otherwise
-     */
-    @Override
-    protected boolean userExists(String username) {
-        return false;
     }
 
     /**

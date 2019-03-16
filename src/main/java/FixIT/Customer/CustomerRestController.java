@@ -1,7 +1,6 @@
 package FixIT.Customer;
 
 import FixIT.Core.UserRestController;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -15,38 +14,75 @@ import javax.servlet.http.HttpServletRequest;
 @RequestMapping("/")
 public class CustomerRestController extends UserRestController<Customer> {
 
+    private static CustomerDBManager dbManager = new CustomerDBManager();
+
     /**
      * Called when a customer attempts to login to FixIT
      *
      * @param request the HttpRequest entity containing header information
+     * @param model the model that allows for html templates to be customized
      * @param user the login form of the customer attempting to login
      * @return a ResponseEntity to the user
      */
     @Override
-    @RequestMapping(method= RequestMethod.POST, value="/customer/login", headers="Accept=application/json")
-    protected @ResponseBody ResponseEntity login(HttpServletRequest request, @RequestBody Customer user) {
-        String username = request.getHeader("username");
-        // TODO - login
-        return null;
+    @RequestMapping(method= RequestMethod.POST, value="/customer/login")
+    protected String login(HttpServletRequest request, Model model, @RequestBody Customer user) {
+        if (!dbManager.userExists(user.getUsername())) {
+            model.addAttribute("errorMsg", "Invalid username");
+            return "login-error";
+        }
+        else if (!dbManager.passwordValid(user.getUsername(), user.getPassword())){
+            model.addAttribute("errorMsg", "Invalid password");
+            return "login-error";
+        }
+        else {
+            // TODO return cookie?
+            return "login-success";
+        }
     }
 
     /**
      * Called when a customer attempts to sign-up with FixIT
      *
      * @param request the HttpRequest entity containing header information
+     * @param model the model that allows for html templates to be customized
      * @param user the sign-up form of the user attempting to sign-up
      * @return a ResponseEntity to the user
      */
     @Override
-    @RequestMapping(method= RequestMethod.POST, value="/customer/signUp", headers="Accept=application/json")
-    protected @ResponseBody ResponseEntity signUp(HttpServletRequest request, @RequestBody Customer user) {
-        // TODO - sign-up
-        return null;
+    @RequestMapping(method= RequestMethod.POST, value="/customer/signUp")
+    protected String signUp(HttpServletRequest request, Model model, @RequestBody Customer user) {
+        // Check validity of sign-up form
+        if (signUpFormInvalid(user)) {
+            model.addAttribute("errorMsg", "Invalid registration form");
+            return "signup-error";
+        }
+        // Check if user already exists
+        else if (dbManager.userExists(user.getUsername())) {
+            model.addAttribute("errorMsg", "Username already in use");
+            return "signup-error";
+        }
+        // Register user and return success
+        else {
+            dbManager.insertUserToDB(user);
+            // TODO return cookie?
+            return "signup-success";
+        }
     }
 
-    @RequestMapping(value="/greeting", method=RequestMethod.GET)
-    public String greet(@RequestParam(name="name", required=false, defaultValue="World") String name, Model model) {
-        model.addAttribute("name", name);
-        return "greeting";
+    /**
+     * Used to determine if a sign-up form is invalid
+     *
+     * @param user the user object passed up via the sign-up endpoint
+     * @return true if the form contains an invalid field, false otherwise
+     */
+    private boolean signUpFormInvalid(Customer user) {
+        return user.getUsername() == null ||
+                user.getPassword() == null ||
+                user.getEmail() == null ||
+                user.getName() == null ||
+                user.getAddress() == null ||
+                user.getAddress() == null ||
+                user.getCreditCard() == null;
     }
 }

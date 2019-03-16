@@ -27,7 +27,10 @@ public abstract class UserDBManager<T extends User> extends DBManager {
      * @param username the username to query for
      * @return true if the username exists in the DB, false otherwise
      */
-    protected abstract boolean userExists(String username);
+    public boolean userExists(String username) {
+        String sql = "SELECT COUNT(*) AS count FROM " + userTable + " WHERE username=?";
+        return deserializeResultSetCol(executeQuery(sql, username), "count", int.class) == 1;
+    }
 
     /**
      * Used to get information about the user for the user's profile page
@@ -36,4 +39,16 @@ public abstract class UserDBManager<T extends User> extends DBManager {
      * @return a User object containing the user's profile
      */
     protected abstract T getUserProfile(String username);
+
+    /**
+     * Used to determine if a user's username and password are valid upon sign-up
+     *
+     * @param username the user's username
+     * @param password the user's password
+     * @return true if the password is valid for the given username, false otherwise
+     */
+    public boolean passwordValid(String username, String password) {
+        String sql = "SELECT COUNT(*) AS count FROM " + userTable + " WHERE username=? AND password=?";
+        return deserializeResultSetCol(executeQuery(sql, username, password), "count", int.class) == 1;
+    }
 }
