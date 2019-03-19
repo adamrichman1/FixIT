@@ -9,7 +9,7 @@ import java.util.ArrayList;
 /**
  * This class represents an appointment between a FixIT customer and FixIT staff member
  */
-class Appointment {
+public class Appointment {
     private String appointmentID;
     private Customer customer;
     private Staff staff;
@@ -19,6 +19,12 @@ class Appointment {
     private int staffRating;
     private int customerRating;
     private BigDecimal appointmentCost;
+
+    public Appointment() { this(""); }
+
+    public Appointment(String appointmentID) {
+        this.appointmentID = appointmentID;
+    }
 
     public String getAppointmentID() {
         return appointmentID;
