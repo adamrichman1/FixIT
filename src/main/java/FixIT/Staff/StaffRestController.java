@@ -19,8 +19,8 @@ public class StaffRestController extends UserRestController<Staff> {
      * @param user the login form of the staff member attempting to login
      * @return a ResponseEntity to the user
      */
-    @RequestMapping(method= RequestMethod.POST, value="/staff/login", headers="Accept=application/json")
-    protected @ResponseBody String login(HttpServletRequest request, Model model, @RequestBody Staff user) {
+    @RequestMapping(method= RequestMethod.POST, value="/staff/login")
+    protected @ResponseBody String login(HttpServletRequest request, Model model, Staff user) {
         String username = request.getHeader("username");
         // TODO - login
         return null;
@@ -34,8 +34,8 @@ public class StaffRestController extends UserRestController<Staff> {
      * @return a ResponseEntity to the user
      */
     @Override
-    @RequestMapping(method= RequestMethod.POST, value="/staff/signUp", headers="Accept=application/json")
-    protected @ResponseBody String signUp(HttpServletRequest request, Model model, @RequestBody Staff user) {
+    @RequestMapping(method= RequestMethod.POST, value="/staff/signUp")
+    protected @ResponseBody String signUp(HttpServletRequest request, Model model, Staff user) {
         // TODO - sign-up
         return null;
     }

@@ -22,7 +22,7 @@ public class AppointmentRestController {
      * @return a ResponseEntity to the user containing the result of the request in the body
      */
     @RequestMapping(method= RequestMethod.POST, value="/createAppointment", headers="Accept=application/json")
-    @ResponseBody ResponseEntity createAppointment(HttpServletRequest request, @RequestBody Appointment appointment) {
+    @ResponseBody ResponseEntity createAppointment(HttpServletRequest request, Appointment appointment) {
         String username = request.getHeader("username");
 
         // TODO create appointment
