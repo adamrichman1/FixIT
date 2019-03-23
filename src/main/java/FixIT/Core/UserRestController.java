@@ -1,6 +1,8 @@
 package FixIT.Core;
 
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -31,4 +33,21 @@ public abstract class UserRestController<T extends User> {
      * @return a ResponseEntity to the user
      */
     protected abstract String signUp(HttpServletRequest request, Model model, T user);
+
+    /**
+     * Used by users to obtain a sign-up template (either customer or staff)
+     *
+     * @return the signup template to the user
+     */
+    protected abstract String getSignupTemplate();
+
+    /**
+     * Called when a user (customer or staff) attempts to login to FixIT
+     *
+     * @return the login template to the user
+     */
+    @RequestMapping(method= RequestMethod.GET, value="/login")
+    protected String getLoginTemplate() {
+        return "login";
+    }
 }

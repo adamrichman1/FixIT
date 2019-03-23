@@ -39,4 +39,14 @@ public class StaffRestController extends UserRestController<Staff> {
         // TODO - sign-up
         return null;
     }
+
+    /**
+     * Called when a staff member attempts to sign-up with FixIT
+     *
+     * @return the staff sign-up template to the user
+     */
+    @RequestMapping(method= RequestMethod.GET, value="/staff/signup")
+    protected String getSignupTemplate() {
+        return "signup-staff";
+    }
 }

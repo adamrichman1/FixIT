@@ -49,13 +49,13 @@ public class CustomerRestController extends UserRestController<Customer> {
     }
 
     /**
-     * Called when a customer attempts to login to FixIT
+     * Called when a customer attempts to sign-up with FixIT
      *
-     * @return a ResponseEntity to the user
+     * @return the customer sign-up template to the user
      */
-    @RequestMapping(method= RequestMethod.GET, value="/customer/login")
-    protected String getLogin() {
-        return "login";
+    @RequestMapping(method= RequestMethod.GET, value="/customer/signup")
+    protected String getSignupTemplate() {
+        return "signup-customer";
     }
 
     /**
