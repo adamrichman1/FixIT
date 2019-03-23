@@ -96,6 +96,16 @@ public class CustomerRestController extends UserRestController<Customer> {
      *
      * @return the login template to the user
      */
+    @RequestMapping(method= RequestMethod.GET, value="/customer/home")
+    protected static String getCustomerHome() {
+        return "customer-home";
+    }
+
+    /**
+     * Called when a user (customer or staff) attempts to login to FixIT
+     *
+     * @return the login template to the user
+     */
     @RequestMapping(method= RequestMethod.GET, value="/login")
     protected static String getLoginTemplate() {
         return "login";
