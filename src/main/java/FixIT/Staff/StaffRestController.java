@@ -1,6 +1,7 @@
 package FixIT.Staff;
 
 import FixIT.Core.UserRestController;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * This class manages HTTP endpoints for FixIT staff members
  */
-@RestController
+@Controller
 public class StaffRestController extends UserRestController<Staff> {
 
     /**
@@ -34,7 +35,7 @@ public class StaffRestController extends UserRestController<Staff> {
      * @return a ResponseEntity to the user
      */
     @Override
-    @RequestMapping(method= RequestMethod.POST, value="/staff/signUp")
+    @RequestMapping(method= RequestMethod.POST, value="/staff/signup")
     protected @ResponseBody String signUp(HttpServletRequest request, Model model, Staff user) {
         // TODO - sign-up
         return null;

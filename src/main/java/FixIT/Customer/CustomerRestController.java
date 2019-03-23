@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletRequest;
  * This class manages HTTP endpoints for FixIT customers
  */
 @Controller
-@RequestMapping("/")
 public class CustomerRestController extends UserRestController<Customer> {
 
     private static CustomerDBManager dbManager = new CustomerDBManager();
@@ -67,7 +66,7 @@ public class CustomerRestController extends UserRestController<Customer> {
      * @return a ResponseEntity to the user
      */
     @Override
-    @RequestMapping(method= RequestMethod.POST, value="/customer/signUp")
+    @RequestMapping(method= RequestMethod.POST, value="/customer/signup")
     protected String signUp(HttpServletRequest request, Model model, Customer user) {
         // Check validity of sign-up form
         if (signUpFormInvalid(user)) {
@@ -86,6 +85,16 @@ public class CustomerRestController extends UserRestController<Customer> {
             // TODO return cookie?
             return "redirect:/home";
         }
+    }
+
+    /**
+     * Called when a user (customer or staff) attempts to login to FixIT
+     *
+     * @return the login template to the user
+     */
+    @RequestMapping(method= RequestMethod.GET, value="/login")
+    protected static String getLoginTemplate() {
+        return "login";
     }
 
     /**
