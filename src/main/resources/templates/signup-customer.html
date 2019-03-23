@@ -23,7 +23,7 @@
 <body>
 
 <div class="container">
-    <form class="form-signin">
+    <form class="form-signin" id="signup-form">
         <h2 class="form-signin-heading">Sign up now!</h2>
         <input id="inputUsername" class="form-control" placeholder="Username" required autofocus>
         <label for="inputPassword" class="sr-only">Password</label>
@@ -35,14 +35,14 @@
         <input id="address" class="form-control" placeholder="Address" required>
         <input id="creditcard" class="form-control" placeholder="Credit Card #" required>
         <br />
-        <button class="btn btn-lg btn-primary btn-block" id="login-button" type="submit">Sign up</button>
+        <button class="btn btn-lg btn-primary btn-block" id="customer-signup-button" type="button">Sign up</button>
     </form>
 </div> <!-- /container -->
 </body>
 </html>
 
 <script>
-    button = document.getElementById('login-button');
+    button = document.getElementById('customer-signup-button');
     button.addEventListener('click', function() {
         const formData = JSON.stringify({
             "username": document.getElementById('inputUsername').value,
@@ -52,17 +52,21 @@
             "address":  document.getElementById('address').value,
             "creditCard":  document.getElementById('creditcard').value
         });
+        document.getElementById("signup-form").reset();
         console.log(formData);
         $.ajax({
             url: "http://localhost:8080/customer/signup",
             type: 'POST',
             data: formData,
             contentType: "application/json",
-            success: function(response, textStatus, jqXHR) {
-                alert("Yay!");
+            success: function() {
+                window.location.href = "/customer/home";
             },
             error: function(jqXHR, textStatus, errorThrown){
-                alert('fuck');
+                console.log(jqXHR.status);
+                console.log(textStatus);
+                console.log(errorThrown);
+                // TODO - ERROR HANDLE
             }
         });
     });

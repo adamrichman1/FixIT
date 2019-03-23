@@ -1,5 +1,6 @@
 package FixIT.Core;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,7 +21,7 @@ public abstract class UserRestController<T extends User> {
      * @param user the login form of the user attempting to login
      * @return a ResponseEntity to the user
      */
-    protected abstract String login(HttpServletRequest request, Model model,  T user);
+    protected abstract ResponseEntity login(HttpServletRequest request, Model model,  T user);
 
     /**
      * Requires subclasses of this class to implement a sign-up endpoint
@@ -30,7 +31,7 @@ public abstract class UserRestController<T extends User> {
      * @param user the sign-up form of the user attempting to sign-up
      * @return a ResponseEntity to the user
      */
-    protected abstract String signUp(HttpServletRequest request, Model model, T user);
+    protected abstract ResponseEntity signUp(HttpServletRequest request, Model model, T user);
 
     /**
      * Used by users to obtain a sign-up template (either customer or staff)

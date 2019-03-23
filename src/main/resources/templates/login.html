@@ -31,7 +31,7 @@
         <label for="inputPassword" class="sr-only">Password</label>
         <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
 
-        <button class="btn btn-lg btn-primary btn-block" id="login-button" type="submit">Sign in</button>
+        <button class="btn btn-lg btn-primary btn-block" id="login-button" type="button">Sign in</button>
     </form>
 
 </div> <!-- /container -->
@@ -50,23 +50,26 @@
 <script>
     button = document.getElementById('login-button');
     button.addEventListener('click', function() {
-
         const formData = JSON.stringify({
             username: document.getElementById('inputUsername').value,
             password: document.getElementById('inputPassword').value
         });
-
+        document.getElementById("signin-form").reset();
         console.log(formData);
         $.ajax({
             url: "http://localhost:8080/customer/login",
             type: 'POST',
             data: formData,
             contentType: "application/json",
-            success: function(response, textStatus, jqXHR) {
-                alert("Yay!");
+            success: function() {
+                // TODO - FIX ENDPOINT
+                window.location.href = "/customer/home";
             },
             error: function(jqXHR, textStatus, errorThrown){
-                alert('fuck');
+                console.log(jqXHR.status);
+                console.log(textStatus);
+                console.log(errorThrown);
+                // TODO - ERROR HANDLE
             }
         });
     });

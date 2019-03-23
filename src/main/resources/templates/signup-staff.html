@@ -25,7 +25,7 @@
 
 <div class="container">
 
-    <form class="form-signin">
+    <form class="form-signin" id="signup-form">
         <h2 class="form-signin-heading">FixIT Staff Signup</h2>
         <input id="inputUsername" class="form-control" placeholder="Username" required autofocus>
         <label for="inputPassword" class="sr-only">Password</label>
@@ -36,7 +36,8 @@
         <input id="inputFirstName" class="form-control" placeholder="First Name" required autofocus>
         <input id="inputLastName" class="form-control" placeholder="Last Name" required autofocus>
         <input id="inputAddress" class="form-control" placeholder="Address" required autofocus>
-        <button class="btn btn-lg btn-primary btn-block" id="staff-signup-button" type="submit">Sign up</button>
+        <br />
+        <button class="btn btn-lg btn-primary btn-block" id="staff-signup-button" type="button">Sign up</button>
     </form>
 </div> <!-- /container -->
 
@@ -58,17 +59,21 @@
             "name":  document.getElementById('firstname').value + " " + document.getElementById('lastname').value,
             "address":  document.getElementById('inputAddress').value,
         });
+        document.getElementById("signup-form").reset();
         console.log(formData);
         $.ajax({
             url: "http://localhost:8080/staff/signup",
             type: 'POST',
             data: formData,
             contentType: "application/json",
-            success: function(response, textStatus, jqXHR) {
-                alert("Yay!");
+            success: function() {
+                window.location.href = "/staff/home";
             },
             error: function(jqXHR, textStatus, errorThrown){
-                alert('fuck');
+                console.log(jqXHR.status);
+                console.log(textStatus);
+                console.log(errorThrown);
+                // TODO - ERROR HANDLE
             }
         });
     });

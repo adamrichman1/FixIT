@@ -3,6 +3,8 @@ package FixIT.Customer;
 import FixIT.Core.UserRestController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -28,22 +30,20 @@ public class CustomerRestController extends UserRestController<Customer> {
      */
     @Override
     @RequestMapping(method= RequestMethod.POST, value="/customer/login")
-    protected String login(HttpServletRequest request, Model model, @RequestBody Customer user) {
+    protected ResponseEntity login(HttpServletRequest request, Model model, @RequestBody Customer user) {
         logger.info("LOGIN");
         if (!dbManager.userExists(user.getUsername())) {
             logger.warn("Invalid username");
-            model.addAttribute("errorMsg", "Invalid username");
-            return "login";
+            return new ResponseEntity<>("Invalid username", HttpStatus.BAD_REQUEST);
         }
         else if (!dbManager.passwordValid(user.getUsername(), user.getPassword())){
             logger.warn("Invalid password");
-            model.addAttribute("errorMsg", "Invalid password");
-            return "login";
+            return new ResponseEntity<>("Invalid password", HttpStatus.BAD_REQUEST);
         }
         else {
             logger.info("SUCCESS");
             // TODO return cookie?
-            return "redirect:/home";
+            return new ResponseEntity(HttpStatus.OK);
         }
     }
 
@@ -67,27 +67,26 @@ public class CustomerRestController extends UserRestController<Customer> {
      */
     @Override
     @RequestMapping(method= RequestMethod.POST, value="/customer/signup")
-    protected String signUp(HttpServletRequest request, Model model, @RequestBody Customer user) {
+    protected ResponseEntity signUp(HttpServletRequest request, Model model, @RequestBody Customer user) {
         logger.info("SignUp - Customer: " + user.toString());
         // Check validity of sign-up form
         if (signUpFormInvalid(user)) {
             logger.info("Invalid signup form");
-            model.addAttribute("errorMsg", "Invalid registration form");
-            return "signup-customer";
+            return new ResponseEntity<>("Invalid registration form", HttpStatus.BAD_REQUEST);
         }
         // Check if user already exists
         else if (dbManager.userExists(user.getUsername())) {
             logger.info("Username already exists");
             model.addAttribute("errorMsg", "Username already in use");
-            return "signup-customer";
+            return new ResponseEntity<>("Username already in use",  HttpStatus.BAD_REQUEST);
         }
         // Register user and return success
         else {
             logger.info("Success!");
             dbManager.insertUserToDB(user.getUsername(), user.getPassword(), user.getEmail(), user.getName(),
                     user.getAddress(), user.getAppointmentHistory(), user.getCreditCard());
-            // TODO return cookie?
-            return "customer-home";
+            // TODO return cookie
+            return new ResponseEntity<>(HttpStatus.OK);
         }
     }
 
@@ -98,6 +97,7 @@ public class CustomerRestController extends UserRestController<Customer> {
      */
     @RequestMapping(method= RequestMethod.GET, value="/customer/home")
     protected static String getCustomerHome() {
+        logger.info("accessed");
         return "customer-home";
     }
 
