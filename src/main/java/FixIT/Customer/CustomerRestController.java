@@ -1,6 +1,8 @@
 package FixIT.Customer;
 
 import FixIT.Core.UserRestController;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 public class CustomerRestController extends UserRestController<Customer> {
 
     private static CustomerDBManager dbManager = new CustomerDBManager();
+    private static Logger logger = LoggerFactory.getLogger(CustomerRestController.class);
 
     /**
      * Called when a customer attempts to login to FixIT
@@ -27,18 +30,32 @@ public class CustomerRestController extends UserRestController<Customer> {
     @Override
     @RequestMapping(method= RequestMethod.POST, value="/customer/login")
     protected String login(HttpServletRequest request, Model model, @RequestBody Customer user) {
+        logger.info("LOGIN");
         if (!dbManager.userExists(user.getUsername())) {
+            logger.warn("Invalid username");
             model.addAttribute("errorMsg", "Invalid username");
             return "login";
         }
         else if (!dbManager.passwordValid(user.getUsername(), user.getPassword())){
+            logger.warn("Invalid password");
             model.addAttribute("errorMsg", "Invalid password");
             return "login";
         }
         else {
+            logger.info("SUCCESS");
             // TODO return cookie?
             return "redirect:/home";
         }
+    }
+
+    /**
+     * Called when a customer attempts to login to FixIT
+     *
+     * @return a ResponseEntity to the user
+     */
+    @RequestMapping(method= RequestMethod.GET, value="/customer/login")
+    protected String getLogin() {
+        return "login";
     }
 
     /**

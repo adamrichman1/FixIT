@@ -28,7 +28,7 @@
         <label for="inputPassword" class="sr-only">Password</label>
         <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
 
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+        <button class="btn btn-lg btn-primary btn-block" id="login-button" type="submit">Sign in</button>
     </form>
 
 </div> <!-- /container -->
@@ -43,3 +43,22 @@
 
 </body>
 </html>
+
+<script>
+    button = document.getElementById('login-button');
+
+    button.addEventListener('click', {
+        try {
+            const response = await fetch('localhost:8080/customer/login', {
+                method: 'post',
+                body: {
+                    "username": document.getElementById('inputUsername').innerText,
+                    "password": document.getElementById('inputPassword').innerText
+                }
+            });
+            console.log('Completed!', response);
+        } catch(err) {
+            console.error(`Error: ${errorMsg}`);
+        }
+    });
+</script>
