@@ -52,15 +52,16 @@
     button.addEventListener('click', function() {
 
         const formData = JSON.stringify({
-            "username": document.getElementById('inputUsername').innerText,
-            "password": document.getElementById('inputPassword').innerText
+            username: document.getElementById('inputUsername').value,
+            password: document.getElementById('inputPassword').value
         });
+
         console.log(formData);
         $.ajax({
             url: "http://localhost:8080/customer/login",
             type: 'POST',
             data: formData,
-            dataType: "application/json",
+            contentType: "application/json",
             success: function(response, textStatus, jqXHR) {
                 alert("Yay!");
             },

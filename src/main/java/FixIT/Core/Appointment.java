@@ -1,5 +1,6 @@
 package FixIT.Core;
 
+import FixIT.Application;
 import FixIT.Customer.Customer;
 import FixIT.Staff.Staff;
 
@@ -90,5 +91,9 @@ public class Appointment {
 
     public void setAppointmentCost(BigDecimal appointmentCost) {
         this.appointmentCost = appointmentCost;
+    }
+
+    public String toString() {
+        return Application.toString(this);
     }
 }

@@ -14,7 +14,7 @@ public abstract class User {
     private String email;
     private String name;
     private String address;
-    private ArrayList<Appointment> appointmentHistory;
+    private ArrayList<Appointment> appointmentHistory = new ArrayList<>();
     private double rating;
 
     public User() {}

@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 
 /**
@@ -50,7 +51,7 @@ public class CustomerDBManager extends UserDBManager<Customer> {
                         ArrayList<Appointment> appointmentHistory, String creditCard) {
         String sql = "INSERT INTO " + userTable + " (username, password, email, name, address, appointmentHistory, " +
                 "rating, creditCard, balance) VALUES (?, ?, ?, ?, ?, ?, 5.0, ?, 0.0)";
-        executeUpdate(sql, username, password, email, name, address, appointmentHistory, creditCard);
+        executeUpdate(sql, username, password, email, name, address, Arrays.toString(appointmentHistory.toArray()), creditCard);
     }
 
     /**

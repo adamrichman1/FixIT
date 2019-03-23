@@ -16,12 +16,13 @@
 
     <!-- Custom styles for this template -->
     <link href="../styles/customer-signup.css" rel="stylesheet">
-</head>
 
+    <!-- JQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
 <body>
 
 <div class="container">
-
     <form class="form-signin">
         <h2 class="form-signin-heading">Sign up now!</h2>
         <input id="inputUsername" class="form-control" placeholder="Username" required autofocus>
@@ -31,33 +32,38 @@
         <input id="email" class="form-control" placeholder="Email" required>
         <input id="firstname" class="form-control" placeholder="First Name" required>
         <input id="lastname" class="form-control" placeholder="Last Name" required>
-        <input id="address" class="form-control" placeholder="Address" optional>
+        <input id="address" class="form-control" placeholder="Address" required>
         <input id="creditcard" class="form-control" placeholder="Credit Card #" required>
         <br />
-
         <button class="btn btn-lg btn-primary btn-block" id="login-button" type="submit">Sign up</button>
     </form>
-
 </div> <!-- /container -->
-
 </body>
 </html>
 
 <script>
     button = document.getElementById('login-button');
-
-    button.addEventListener('click', {
-        try {
-            const response = await fetch('localhost:8080/customer/login', {
-                method: 'post',
-                body: {
-                    "username": document.getElementById('inputUsername').innerText,
-                    "password": document.getElementById('inputPassword').innerText
-                }
-            });
-            console.log('Completed!', response);
-        } catch(err) {
-            console.error(`Error: ${errorMsg}`);
-        }
+    button.addEventListener('click', function() {
+        const formData = JSON.stringify({
+            "username": document.getElementById('inputUsername').value,
+            "password": document.getElementById('inputPassword').value,
+            "email":  document.getElementById('email').value,
+            "name":  document.getElementById('firstname').value + " " + document.getElementById('lastname').value,
+            "address":  document.getElementById('address').value,
+            "creditCard":  document.getElementById('creditcard').value
+        });
+        console.log(formData);
+        $.ajax({
+            url: "http://localhost:8080/customer/signup",
+            type: 'POST',
+            data: formData,
+            contentType: "application/json",
+            success: function(response, textStatus, jqXHR) {
+                alert("Yay!");
+            },
+            error: function(jqXHR, textStatus, errorThrown){
+                alert('fuck');
+            }
+        });
     });
 </script>

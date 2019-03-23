@@ -28,7 +28,7 @@ public class CustomerRestController extends UserRestController<Customer> {
      */
     @Override
     @RequestMapping(method= RequestMethod.POST, value="/customer/login")
-    protected String login(HttpServletRequest request, Model model, Customer user) {
+    protected String login(HttpServletRequest request, Model model, @RequestBody Customer user) {
         logger.info("LOGIN");
         if (!dbManager.userExists(user.getUsername())) {
             logger.warn("Invalid username");
@@ -67,23 +67,27 @@ public class CustomerRestController extends UserRestController<Customer> {
      */
     @Override
     @RequestMapping(method= RequestMethod.POST, value="/customer/signup")
-    protected String signUp(HttpServletRequest request, Model model, Customer user) {
+    protected String signUp(HttpServletRequest request, Model model, @RequestBody Customer user) {
+        logger.info("SignUp - Customer: " + user.toString());
         // Check validity of sign-up form
         if (signUpFormInvalid(user)) {
+            logger.info("Invalid signup form");
             model.addAttribute("errorMsg", "Invalid registration form");
             return "signup-customer";
         }
         // Check if user already exists
         else if (dbManager.userExists(user.getUsername())) {
+            logger.info("Username already exists");
             model.addAttribute("errorMsg", "Username already in use");
             return "signup-customer";
         }
         // Register user and return success
         else {
+            logger.info("Success!");
             dbManager.insertUserToDB(user.getUsername(), user.getPassword(), user.getEmail(), user.getName(),
                     user.getAddress(), user.getAppointmentHistory(), user.getCreditCard());
             // TODO return cookie?
-            return "redirect:/home";
+            return "customer-home";
         }
     }
 
@@ -104,11 +108,11 @@ public class CustomerRestController extends UserRestController<Customer> {
      * @return true if the form contains an invalid field, false otherwise
      */
     private boolean signUpFormInvalid(Customer user) {
-        return user.getUsername() == null ||
-                user.getPassword() == null ||
-                user.getEmail() == null ||
-                user.getName() == null ||
-                user.getAddress() == null ||
-                user.getCreditCard() == null;
+        return (user.getUsername() == null || user.getUsername().equals("")) ||
+                user.getPassword() == null || user.getPassword().equals("") ||
+                user.getEmail() == null || user.getEmail().equals("") ||
+                user.getName() == null || user.getName().equals("") ||
+                user.getAddress() == null || user.getAddress().equals("") ||
+                user.getCreditCard() == null || user.getCreditCard().equals("");
     }
 }

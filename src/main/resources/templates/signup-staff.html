@@ -16,6 +16,9 @@
 
     <!-- Custom styles for this template -->
     <link href="../styles/signin.css" rel="stylesheet">
+
+    <!-- JQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 
 <body>
@@ -30,22 +33,16 @@
         <label for="inputPasswordCon" class="sr-only">Confirm Password</label>
         <input type="password" id="inputPasswordCon" class="form-control" placeholder="Confirm Password" required>
         <input id="inputEmail" class="form-control" placeholder="Email" required autofocus>
-        <input id="inputName" class="form-control" placeholder="Name" required autofocus>
+        <input id="inputFirstName" class="form-control" placeholder="First Name" required autofocus>
+        <input id="inputLastName" class="form-control" placeholder="Last Name" required autofocus>
         <input id="inputAddress" class="form-control" placeholder="Address" required autofocus>
         <button class="btn btn-lg btn-primary btn-block" id="staff-signup-button" type="submit">Sign up</button>
     </form>
-
-
-
 </div> <!-- /container -->
-
-
 
 <div id="return-home-link" class="container">
     <span>Already have an account? <a href="#">Return to login.</a></span>
 </div>
-
-
 
 </body>
 </html>
@@ -55,18 +52,18 @@
     button.addEventListener('click', function() {
 
         const formData = JSON.stringify({
-            "username": document.getElementById('inputUsername').innerText,
-            "password": document.getElementById('inputPassword').innerText,
-            "email":  document.getElementById('inputEmail').innerText,
-            "name":  document.getElementById('inputName').innerText,
-            "address":  document.getElementById('inputAddress').innerText,
+            "username": document.getElementById('inputUsername').value,
+            "password": document.getElementById('inputPassword').value,
+            "email":  document.getElementById('inputEmail').value,
+            "name":  document.getElementById('firstname').value + " " + document.getElementById('lastname').value,
+            "address":  document.getElementById('inputAddress').value,
         });
         console.log(formData);
         $.ajax({
             url: "http://localhost:8080/staff/signup",
             type: 'POST',
             data: formData,
-            dataType: "application/json",
+            contentType: "application/json",
             success: function(response, textStatus, jqXHR) {
                 alert("Yay!");
             },

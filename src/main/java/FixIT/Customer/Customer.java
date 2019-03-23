@@ -1,5 +1,6 @@
 package FixIT.Customer;
 
+import FixIT.Application;
 import FixIT.Core.User;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -33,5 +34,9 @@ public class Customer extends User {
 
     public void setBalance(BigDecimal balance) {
         this.balance = balance;
+    }
+
+    public String toString() {
+        return Application.toString(this);
     }
 }

@@ -1,5 +1,6 @@
 package FixIT.Staff;
 
+import FixIT.Application;
 import FixIT.Core.User;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -31,5 +32,9 @@ public class Staff extends User {
 
     public void setStrengths(ArrayList<String> strengths) {
         this.strengths = strengths;
+    }
+
+    public String toString() {
+        return Application.toString(this);
     }
 }
