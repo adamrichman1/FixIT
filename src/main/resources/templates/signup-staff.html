@@ -24,7 +24,7 @@
 
     <form class="form-signin">
         <h2 class="form-signin-heading">FixIT Staff Signup</h2>
-        <input type="username" id="inputUsername" class="form-control" placeholder="Username" required autofocus>
+        <input id="inputUsername" class="form-control" placeholder="Username" required autofocus>
         </br>
         <label for="inputPassword" class="sr-only">Password</label>
         <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
@@ -32,13 +32,13 @@
         <label for="inputPasswordCon" class="sr-only">Confirm Password</label>
         <input type="password" id="inputPasswordCon" class="form-control" placeholder="Confirm Password" required>
 
-        <input type="username" id="inputEmail" class="form-control" placeholder="Email" required autofocus>
+        <input id="inputEmail" class="form-control" placeholder="Email" required autofocus>
         </br>
 
-        <input type="username" id="inputName" class="form-control" placeholder="Name" required autofocus>
+        <input id="inputName" class="form-control" placeholder="Name" required autofocus>
         </br>
 
-        <input type="username" id="inputAddress" class="form-control" placeholder="Address" required autofocus>
+        <input id="inputAddress" class="form-control" placeholder="Address" required autofocus>
         </br>
 
         <button class="btn btn-lg btn-primary btn-block" id="staff-signup-button" type="submit">Sign up</button>
@@ -61,19 +61,27 @@
 
 <script>
     button = document.getElementById('login-button');
+    button.addEventListener('click', function() {
 
-    button.addEventListener('click', {
-        try {
-            const response = await fetch('localhost:8080/customer/login', {
-                method: 'post',
-                body: {
-                    "username": document.getElementById('inputUsername').innerText,
-                    "password": document.getElementById('inputPassword').innerText
-                }
-            });
-            console.log('Completed!', response);
-        } catch(err) {
-            console.error(`Error: ${errorMsg}`);
-        }
+        const formData = JSON.stringify({
+            "username": document.getElementById('inputUsername').innerText,
+            "password": document.getElementById('inputPassword').innerText,
+            "email":  document.getElementById('inputEmail').innerText,
+            "name":  document.getElementById('inputName').innerText,
+            "address":  document.getElementById('inputAddress').innerText,
+        });
+        console.log(formData);
+        $.ajax({
+            url: "http://localhost:8080/staff/signup",
+            type: 'POST',
+            data: formData,
+            dataType: "application/json",
+            success: function(response, textStatus, jqXHR) {
+                alert("Yay!");
+            },
+            error: function(jqXHR, textStatus, errorThrown){
+                alert('fuck');
+            }
+        });
     });
 </script>
