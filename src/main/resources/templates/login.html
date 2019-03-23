@@ -16,13 +16,16 @@
 
     <!-- Custom styles for this template -->
     <link href="../styles/signin.css" rel="stylesheet">
+
+    <!-- JQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 
 <body>
 
 <div class="container">
 
-    <form class="form-signin">
+    <form class="form-signin" id="signin-form">
         <h2 class="form-signin-heading">FixIT</h2>
         <input type="username" id="inputUsername" class="form-control" placeholder="Username" required autofocus>
         <label for="inputPassword" class="sr-only">Password</label>
@@ -46,19 +49,24 @@
 
 <script>
     button = document.getElementById('login-button');
+    button.addEventListener('click', function() {
 
-    button.addEventListener('click', {
-        try {
-            const response = await fetch('localhost:8080/customer/login', {
-                method: 'post',
-                body: {
-                    "username": document.getElementById('inputUsername').innerText,
-                    "password": document.getElementById('inputPassword').innerText
-                }
-            });
-            console.log('Completed!', response);
-        } catch(err) {
-            console.error(`Error: ${errorMsg}`);
-        }
+        const formData = JSON.stringify({
+            "username": document.getElementById('inputUsername').innerText,
+            "password": document.getElementById('inputPassword').innerText
+        });
+        console.log(formData);
+        $.ajax({
+            url: "http://localhost:8080/customer/login",
+            type: 'POST',
+            data: formData,
+            dataType: "application/json",
+            success: function(response, textStatus, jqXHR) {
+                alert("Yay!");
+            },
+            error: function(jqXHR, textStatus, errorThrown){
+                alert('fuck');
+            }
+        });
     });
 </script>

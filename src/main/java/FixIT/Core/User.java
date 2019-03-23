@@ -1,10 +1,13 @@
 package FixIT.Core;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.util.ArrayList;
 
 /**
  * This class represents a User in the FixIT system. Subclasses include Staff and Customer.
  */
+@JsonIgnoreProperties(ignoreUnknown =true)
 public abstract class User {
     private String username;
     private String password;
@@ -13,6 +16,8 @@ public abstract class User {
     private String address;
     private ArrayList<Appointment> appointmentHistory;
     private double rating;
+
+    public User() {}
 
     public User(String username) {
         this.username = username;

@@ -29,7 +29,7 @@ public class CustomerRestController extends UserRestController<Customer> {
      */
     @Override
     @RequestMapping(method= RequestMethod.POST, value="/customer/login")
-    protected String login(HttpServletRequest request, Model model, @RequestBody Customer user) {
+    protected String login(HttpServletRequest request, Model model, Customer user) {
         logger.info("LOGIN");
         if (!dbManager.userExists(user.getUsername())) {
             logger.warn("Invalid username");
@@ -68,7 +68,7 @@ public class CustomerRestController extends UserRestController<Customer> {
      */
     @Override
     @RequestMapping(method= RequestMethod.POST, value="/customer/signUp")
-    protected String signUp(HttpServletRequest request, Model model, @RequestBody Customer user) {
+    protected String signUp(HttpServletRequest request, Model model, Customer user) {
         // Check validity of sign-up form
         if (signUpFormInvalid(user)) {
             model.addAttribute("errorMsg", "Invalid registration form");
