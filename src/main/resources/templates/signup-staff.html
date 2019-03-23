@@ -1,10 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>Welcome to FixIT</title>
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+
+    <!-- Custom styles for this template -->
+    <link href="../styles/signin.css" rel="stylesheet">
 </head>
+
 <body>
+
+<div class="container">
+
+    <form class="form-signin">
+        <h2 class="form-signin-heading">FixIT Staff Signup</h2>
+        <input type="username" id="inputUsername" class="form-control" placeholder="Username" required autofocus>
+        </br>
+        <label for="inputPassword" class="sr-only">Password</label>
+        <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+
+        <label for="inputPasswordCon" class="sr-only">Confirm Password</label>
+        <input type="password" id="inputPasswordCon" class="form-control" placeholder="Confirm Password" required>
+
+        <input type="username" id="inputEmail" class="form-control" placeholder="Email" required autofocus>
+        </br>
+
+        <input type="username" id="inputName" class="form-control" placeholder="Name" required autofocus>
+        </br>
+
+        <input type="username" id="inputAddress" class="form-control" placeholder="Address" required autofocus>
+        </br>
+
+        <button class="btn btn-lg btn-primary btn-block" id="staff-signup-button" type="submit">Sign up</button>
+    </form>
+
+
+
+</div> <!-- /container -->
+
+
+
+<div id="return-home-link" class="container">
+    <span>Already have an account? <a href="#">Return to login.</a></span>
+</div>
+
+
 
 </body>
 </html>
+
+<script>
+    button = document.getElementById('login-button');
+
+    button.addEventListener('click', {
+        try {
+            const response = await fetch('localhost:8080/customer/login', {
+                method: 'post',
+                body: {
+                    "username": document.getElementById('inputUsername').innerText,
+                    "password": document.getElementById('inputPassword').innerText
+                }
+            });
+            console.log('Completed!', response);
+        } catch(err) {
+            console.error(`Error: ${errorMsg}`);
+        }
+    });
+</script>
