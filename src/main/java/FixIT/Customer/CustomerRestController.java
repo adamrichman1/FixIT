@@ -37,7 +37,7 @@ public class CustomerRestController extends UserRestController<Customer> {
         }
         else {
             // TODO return cookie?
-            return "redirect:index";
+            return "redirect:/home";
         }
     }
 
@@ -55,19 +55,19 @@ public class CustomerRestController extends UserRestController<Customer> {
         // Check validity of sign-up form
         if (signUpFormInvalid(user)) {
             model.addAttribute("errorMsg", "Invalid registration form");
-            return "signup-error";
+            return "signup";
         }
         // Check if user already exists
         else if (dbManager.userExists(user.getUsername())) {
             model.addAttribute("errorMsg", "Username already in use");
-            return "signup-error";
+            return "signup";
         }
         // Register user and return success
         else {
             dbManager.insertUserToDB(user.getUsername(), user.getPassword(), user.getEmail(), user.getName(),
                     user.getAddress(), user.getAppointmentHistory(), user.getCreditCard());
             // TODO return cookie?
-            return "signup-success";
+            return "redirect:/home";
         }
     }
 
