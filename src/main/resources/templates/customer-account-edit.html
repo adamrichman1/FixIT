@@ -9,7 +9,7 @@
     <meta name="author" content="">
     <link rel="icon" href="../../favicon.ico">
 
-    <title>Account</title>
+    <title>Edit</title>
 
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
@@ -43,12 +43,50 @@
 
 <div class="container">
     <div class="customer-account-edit">
-        <h1>Bootstrap starter template</h1>
-        <p class="lead">
-            Use this document as a way to quickly start any new project.
-            <br> All you get is this text and a mostly barebones HTML document.
-        </p>
+        <form class="form-signin">
+            <!-- TODO populate placeholders to actual account values -->
+            <h2 class="form-signin-heading">Edit Account Details</h2>
+            <input type="username" id="inputUsername" class="form-control" placeholder="Username" required autofocus>
+            </br>
+            <label for="inputPassword" class="sr-only">Password</label>
+            <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+
+            <label for="inputPasswordCon" class="sr-only">Confirm Password</label>
+            <input type="password" id="inputPasswordCon" class="form-control" placeholder="Confirm Password" required>
+
+            <input type="username" id="inputEmail" class="form-control" placeholder="Email" required autofocus>
+            </br>
+
+            <input type="username" id="inputName" class="form-control" placeholder="Name" required autofocus>
+            </br>
+
+            <input type="username" id="inputAddress" class="form-control" placeholder="Address" required autofocus>
+            </br>
+
+            <button class="btn btn-lg btn-danger" id="customer-account-edit-cancel" type="submit">Cancel</button>
+            <button class="btn btn-lg btn-primary" id="customer-account-edit-submit" type="submit">Submit Changes</button>
+        </form>
     </div>
 </div><!-- /.container -->
 </body>
 </html>
+
+<script>
+    button = document.getElementById('customer-account-edit-submit');
+    button.addEventListener('click', {
+        try {
+            const response = await fetch('localhost:8080/customer/login', {
+                method: 'post',
+                body: {
+                    "username": document.getElementById('inputUsername').innerText,
+                    "password": document.getElementById('inputPassword').innerText
+                }
+            });
+            console.log('Completed!', response);
+        } catch(err) {
+            console.error(`Error: ${errorMsg}`);
+        }
+    });
+</script>
+
+<!-- TODO some script shit for cancel? Or cancel can just redirect back to customer account page-->
