@@ -55,12 +55,12 @@ public class CustomerRestController extends UserRestController<Customer> {
         // Check validity of sign-up form
         if (signUpFormInvalid(user)) {
             model.addAttribute("errorMsg", "Invalid registration form");
-            return "signup";
+            return "signup-customer";
         }
         // Check if user already exists
         else if (dbManager.userExists(user.getUsername())) {
             model.addAttribute("errorMsg", "Username already in use");
-            return "signup";
+            return "signup-customer";
         }
         // Register user and return success
         else {
