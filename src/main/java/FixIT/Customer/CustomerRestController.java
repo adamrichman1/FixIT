@@ -29,15 +29,15 @@ public class CustomerRestController extends UserRestController<Customer> {
     protected String login(HttpServletRequest request, Model model, @RequestBody Customer user) {
         if (!dbManager.userExists(user.getUsername())) {
             model.addAttribute("errorMsg", "Invalid username");
-            return "login-error";
+            return "login";
         }
         else if (!dbManager.passwordValid(user.getUsername(), user.getPassword())){
             model.addAttribute("errorMsg", "Invalid password");
-            return "login-error";
+            return "login";
         }
         else {
             // TODO return cookie?
-            return "login-success";
+            return "redirect:index";
         }
     }
 
