@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
 
     <!-- Custom styles for this template -->
-    <link href="../styles/signin.css" rel="stylesheet">
+    <link href="../styles/customer-signup.css" rel="stylesheet">
 </head>
 
 <body>
@@ -23,23 +23,22 @@
 <div class="container">
 
     <form class="form-signin">
-        <h2 class="form-signin-heading">FixIT</h2>
-        <input type="username" id="inputUsername" class="form-control" placeholder="Username" required autofocus>
+        <h2 class="form-signin-heading">Sign up now!</h2>
+        <input id="inputUsername" class="form-control" placeholder="Username" required autofocus>
         <label for="inputPassword" class="sr-only">Password</label>
         <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+        <input type="password" id="inputPassword2" class="form-control" placeholder="Confirm Password" required>
+        <input id="email" class="form-control" placeholder="Email" required>
+        <input id="firstname" class="form-control" placeholder="First Name" required>
+        <input id="lastname" class="form-control" placeholder="Last Name" required>
+        <input id="address" class="form-control" placeholder="Address" optional>
+        <input id="creditcard" class="form-control" placeholder="Credit Card #" required>
+        <br />
 
-        <button class="btn btn-lg btn-primary btn-block" id="login-button" type="submit">Sign in</button>
+        <button class="btn btn-lg btn-primary btn-block" id="login-button" type="submit">Sign up</button>
     </form>
 
 </div> <!-- /container -->
-
-<div id="sign-up-link" class="container">
-    <span>New User? <a href="#">Sign Up</a></span>
-</div>
-
-<div id="become-consultant" class="container">
-    <span><a href="#">Become a FixIT Consultant</a></span>
-</div>
 
 </body>
 </html>
