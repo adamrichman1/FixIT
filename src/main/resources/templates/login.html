@@ -22,12 +22,12 @@
 </head>
 
 <body>
-
+<header th:replace="fragments/base.html::test"> </header>
 <div class="container">
 
     <form class="form-signin" id="signin-form">
-        <h2 class="form-signin-heading">FixIT</h2>
-        <input type="username" id="inputUsername" class="form-control" placeholder="Username" required autofocus>
+        <h2 class="form-signin-heading">Login to FixIT</h2>
+        <input type="text" id="inputUsername" class="form-control" placeholder="Username" required autofocus>
         <label for="inputPassword" class="sr-only">Password</label>
         <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
 
@@ -37,11 +37,11 @@
 </div> <!-- /container -->
 
 <div id="sign-up-link" class="container">
-    <span>New User? <a href="#">Sign Up</a></span>
+    <span>New User? <a href="http://localhost:8080/customer/signup">Sign Up</a></span>
 </div>
 
-<div id="become-consultant" class="container">
-    <span><a href="#">Become a FixIT Consultant</a></span>
+<div id="become-staff" class="container">
+    <span><a href="http://localhost:8080/staff/signup">Become a FixIT Professional</a></span>
 </div>
 
 </body>
