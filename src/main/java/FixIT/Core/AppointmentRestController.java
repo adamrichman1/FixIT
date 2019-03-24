@@ -1,15 +1,15 @@
 package FixIT.Core;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 
 /**
  * This class manages HTTP endpoints for appointment-related functionality (e.g. createAppointment)
  */
-@RestController
+@Controller
 public class AppointmentRestController {
 
     private AppointmentDBManager appointmentDBManager = new AppointmentDBManager();

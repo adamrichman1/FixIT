@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
 
     <!-- Custom styles for this template -->
-    <link href="../styles/customer-signup.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/customer-signup.css}">
 
     <!-- JQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -24,7 +24,7 @@
 
 <div class="container">
     <form class="form-signin" id="signup-form">
-        <h2 class="form-signin-heading">Sign up now!</h2>
+        <h2 class="form-signin-heading">FixIT Sign-Up</h2>
         <input id="inputUsername" class="form-control" placeholder="Username" required autofocus>
         <label for="inputPassword" class="sr-only">Password</label>
         <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
