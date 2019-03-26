@@ -19,10 +19,23 @@ import java.util.Arrays;
 public class CustomerDBManager extends UserDBManager<Customer> {
 
     private static Logger logger = LoggerFactory.getLogger(CustomerDBManager.class);
+    private static CustomerDBManager dbManager;
 
-    CustomerDBManager() {
+    private CustomerDBManager() {
         super("customers");
         createCustomerTable(userTable);
+    }
+
+    /**
+     * Used for singleton design pattern.
+     *
+     * @return the singleton instance of this class
+     */
+    static CustomerDBManager getInstance() {
+        if (dbManager == null) {
+            dbManager = new CustomerDBManager();
+        }
+        return dbManager;
     }
 
     /**

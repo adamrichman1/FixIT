@@ -14,6 +14,8 @@ import javax.servlet.http.HttpServletRequest;
 @Controller
 public class StaffRestController extends UserRestController<Staff> {
 
+    private static StaffDBManager dbManager = StaffDBManager.getInstance();
+
     /**
      * Called when a staff member attempts to login to FixIT
      *

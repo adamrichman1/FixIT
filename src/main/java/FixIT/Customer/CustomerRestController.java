@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 @Controller
 public class CustomerRestController extends UserRestController<Customer> {
 
-    private static CustomerDBManager dbManager = new CustomerDBManager();
+    private static CustomerDBManager dbManager = CustomerDBManager.getInstance();
     private static Logger logger = LoggerFactory.getLogger(CustomerRestController.class);
 
     /**

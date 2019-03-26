@@ -14,9 +14,22 @@ import java.util.ArrayList;
 public class StaffDBManager extends UserDBManager<Staff> {
 
     private static Logger logger = LoggerFactory.getLogger(StaffDBManager.class);
+    private static StaffDBManager dbManager;
 
-    protected StaffDBManager() {
+    private StaffDBManager() {
         super("staff");
+    }
+
+    /**
+     * Used for singleton design pattern.
+     *
+     * @return the singleton instance of this class
+     */
+    static StaffDBManager getInstance() {
+        if (dbManager == null) {
+            dbManager = new StaffDBManager();
+        }
+        return dbManager;
     }
 
     /**
