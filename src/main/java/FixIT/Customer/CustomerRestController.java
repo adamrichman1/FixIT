@@ -106,9 +106,9 @@ public class CustomerRestController extends UserRestController<Customer> {
      *
      * @return the login template to the user
      */
-    @RequestMapping(method= RequestMethod.GET, value="/login")
+    @RequestMapping(method= RequestMethod.GET, value="/customer/login")
     protected static String getLoginTemplate() {
-        return "login";
+        return "customer-login";
     }
 
     /**

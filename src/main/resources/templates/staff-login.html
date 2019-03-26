@@ -22,11 +22,10 @@
 </head>
 
 <body>
-<header th:replace="fragments/base.html::test"> </header>
 <div class="container">
 
     <form class="form-signin" id="signin-form">
-        <h2 class="form-signin-heading">Login to FixIT</h2>
+        <h2 class="form-signin-heading">FixIT Consultant Login</h2>
         <input type="text" id="inputUsername" class="form-control" placeholder="Username" required autofocus>
         <label for="inputPassword" class="sr-only">Password</label>
         <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
@@ -37,11 +36,11 @@
 </div> <!-- /container -->
 
 <div id="sign-up-link" class="container">
-    <span>New User? <a href="http://localhost:8080/customer/signup">Sign Up</a></span>
+    <span>New User? <a href="http://localhost:8080/staff/signup">Become a FixIT Consultant</a></span>
 </div>
 
-<div id="become-staff" class="container">
-    <span><a href="http://localhost:8080/staff/signup">Become a FixIT Professional</a></span>
+<div id="back-to-home" class="container">
+    <span><a href="http://localhost:8080/">Back to Home</a></span>
 </div>
 
 </body>
@@ -57,13 +56,12 @@
         document.getElementById("signin-form").reset();
         console.log(formData);
         $.ajax({
-            url: "http://localhost:8080/customer/login",
+            url: "http://localhost:8080/staff/login",
             type: 'POST',
             data: formData,
             contentType: "application/json",
             success: function() {
-                // TODO - FIX ENDPOINT
-                window.location.href = "/customer/home";
+                window.location.href = "/staff/home";
             },
             error: function(jqXHR, textStatus, errorThrown){
                 console.log(jqXHR.status);

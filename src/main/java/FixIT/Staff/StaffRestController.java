@@ -51,4 +51,14 @@ public class StaffRestController extends UserRestController<Staff> {
     protected String getSignupTemplate() {
         return "signup-staff";
     }
+
+    /**
+     * Called when a staff member attempts to login to FixIT
+     *
+     * @return the login template to the user
+     */
+    @RequestMapping(method= RequestMethod.GET, value="/staff/login")
+    protected static String getLoginTemplate() {
+        return "staff-login";
+    }
 }

@@ -15,32 +15,32 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
 
     <!-- Custom styles for this template -->
-    <link rel="stylesheet" type="text/css" th:href="@{/css/customer-signup.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/login.css}">
 
     <!-- JQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
-<body>
 
+<body>
 <div class="container">
-    <form class="form-signin" id="signup-form">
-        <h2 class="form-signin-heading">FixIT User Sign-Up</h2>
-        <input id="inputUsername" class="form-control" placeholder="Username" required autofocus>
+
+    <form class="form-signin" id="signin-form">
+        <h2 class="form-signin-heading">Login to FixIT</h2>
+        <input type="text" id="inputUsername" class="form-control" placeholder="Username" required autofocus>
         <label for="inputPassword" class="sr-only">Password</label>
         <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
-        <input type="password" id="inputPassword2" class="form-control" placeholder="Confirm Password" required>
-        <input id="email" class="form-control" placeholder="Email" required>
-        <input id="firstname" class="form-control" placeholder="First Name" required>
-        <input id="lastname" class="form-control" placeholder="Last Name" required>
-        <input id="address" class="form-control" placeholder="Address" required>
-        <input id="creditcard" class="form-control" placeholder="Credit Card #" required>
-        <br />
-        <button class="btn btn-lg btn-primary btn-block" id="customer-signup-button" type="button">Sign up</button>
+
+        <button class="btn btn-lg btn-primary btn-block" id="login-button" type="button">Sign in</button>
     </form>
+
 </div> <!-- /container -->
 
-<div id="return-to-login" class="container">
-    <span>Already have an account? <a href="http://localhost:8080/customer/login">Return to login.</a></span>
+<div id="sign-up-link" class="container">
+    <span>New User? <a href="http://localhost:8080/customer/signup">Sign Up</a></span>
+</div>
+
+<div id="become-staff" class="container">
+    <span><a href="http://localhost:8080/staff/signup">Become a FixIT Professional</a></span>
 </div>
 
 <div id="back-to-home" class="container">
@@ -51,20 +51,16 @@
 </html>
 
 <script>
-    button = document.getElementById('customer-signup-button');
+    button = document.getElementById('login-button');
     button.addEventListener('click', function() {
         const formData = JSON.stringify({
-            "username": document.getElementById('inputUsername').value,
-            "password": document.getElementById('inputPassword').value,
-            "email":  document.getElementById('email').value,
-            "name":  document.getElementById('firstname').value + " " + document.getElementById('lastname').value,
-            "address":  document.getElementById('address').value,
-            "creditCard":  document.getElementById('creditcard').value
+            username: document.getElementById('inputUsername').value,
+            password: document.getElementById('inputPassword').value
         });
-        document.getElementById("signup-form").reset();
+        document.getElementById("signin-form").reset();
         console.log(formData);
         $.ajax({
-            url: "http://localhost:8080/customer/signup",
+            url: "http://localhost:8080/customer/login",
             type: 'POST',
             data: formData,
             contentType: "application/json",
