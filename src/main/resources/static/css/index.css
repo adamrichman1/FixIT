@@ -1,0 +1,16 @@
+body {
+    padding-top: 50px;
+}
+h1 {
+    font-size: 80pt;
+}
+button {
+    width: 175px;
+}
+.main {
+    padding: 100px 100px;
+    text-align: center;
+}
+.container {
+    text-align: center;
+}
