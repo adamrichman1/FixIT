@@ -3,98 +3,58 @@ window.addEventListener("load",initialize,true);
 
 function initialize(){
 
-    populateAppointments();
+
+    //initial call to poll staff appointments
+    pollAppointments();
+
+    //populateAppointments();
 
 }
 
 
-
-//Update the token that was just placed
-function populateAppointments()
-{
-
-    var staffID = 10; // TODO Get this from somewhere
-    var xhr = new XMLHttpRequest();
-    xhr.open("GET", '/staff/appointments/'+staffID, true);
-    xhr.setRequestHeader('Content-Type', 'application/json');
-
-    xhr.onload = function() {
-        var result = JSON.parse(xhr.responseText);
-        if(xhr.status !== 200){
-            console.log("Error Status:"+xhr.status);
-        }
-        if(result["completed"]){
-            console.log("Purchase created - POST: /purchases");
-
-            populateList(result);
-
-        }
-        else {
-            alert("Error")
-        }
-    };
-    xhr.send(null);
-
-}
-
-function populateList( jsonResult){
-
-    var appointmentList = document.getElementByID("staffAppointmentList");
-    var appointments = jsonResponse['appointments'];
-
-    for(var z = 0; z < newMessages.length; z++){
-        var message = appointments[z];
-
-        var newLI = document.createElement('li');
-        var msgString = appointments.name;
-        newLI.textContent = msgString;
-        appointmentList.appendChild(newLI);
+    //poll the model for any new rooms that may have been created
+    function pollAppointments() {
+        var xmlHttp = new XMLHttpRequest();
+        xmlHttp.onreadystatechange = function() {
+            if (xmlHttp.readyState == 4 && xmlHttp.status == 200){
+                var rawJson = JSON.parse(xmlHttp.responseText);
+                updateChatRoomList(rawJson, pollAppointments);
+            }
+        };
+        xmlHttp.open("GET", '/staff/getAppointments/', true);
+        xmlHttp.send(null);
     }
-}
 
 
-//Update the token that was just placed
-function populate()
-{
-    e = event;
+    //update the DOM to show the updated list of appointments
+    function updateChatRoomList(rawJson, callback){
+        if (allApps.length !== 0){
 
-    inDate = e.srcElement;
-    var rdate;
-    if (inDate.value != ''){
-        rdate = inDate.value;}
-    else{
-        return;
+            var staffAppHead = document.getElementById('staffAppHead');
+            staffAppHead.textContent = 'Currently Scheduled Appointments:';
+
+            var staffAppList = document.getElementById('staffAppList');
+            staffAppList.innerHTML = '';
+            for(var i = 0; i < allApps.length; i++){
+                var appInd = document.createElement('li');
+                var appmJoin = document.createElement('a');
+                var appDel = document.createElement('button');
+                appDel.id = '/deleteRoom/'+allApps[i].id;
+                appDel.addEventListener('click', deleteRoom,false);
+                appInd.textContent = allApps[i].name+ " ";
+                appJoin.textContent = "Join Chat";
+                appJoin.href = '/room/'+allApps[i].id;
+                appDel.textContent = "Delete Room";
+                appDel.id = '/deleteRoom/'+allApps[i].id;
+                staffAppList.appendChild(appInd);
+                appInd.appendChild(appJoin);
+                appInd.appendChild(appDel);
+            }
+        }
+        else{
+            var staffAppHead = document.getElementById('staffAppHead');
+            staffAppHead.textContent = 'You currently have no appointments scheduled';
+        }
+
+        setTimeout(callback, 1000);
     }
-    styID = document.URL.substring(34);
-    console.log(styID);
-    console.log(styIDTest);
-    var jsonObject = JSON.stringify(
-        {
-            ID: styID,
-            date: rdate
-        }
-    );
-
-
-    var xhr = new XMLHttpRequest();
-    xhr.open("POST", '/loadDate', true);
-    xhr.setRequestHeader('Content-Type', 'application/json');
-
-    xhr.onload = function() {
-        var result = JSON.parse(xhr.responseText);
-        if(xhr.status !== 200){
-            console.log("Error Status:"+xhr.status);
-        }
-        if(result["completed"]){
-            console.log("Purchase created - POST: /purchases");
-
-            loadRes(result);
-
-        }
-        else {
-            alert("Error")
-        }
-    };
-    xhr.send(jsonObject);
-
-}
