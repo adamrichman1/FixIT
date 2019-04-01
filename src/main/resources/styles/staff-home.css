@@ -3,6 +3,11 @@ body {
   padding-top: 70px;
 }
 .staff-home {
-  padding: 40px 15px;
-  text-align: center;
-}
+   padding: 40px 15px;
+   text-align: center;
+ }
+
+ .staff-list {
+   padding: 40px 15px;
+   text-align: left;
+ }

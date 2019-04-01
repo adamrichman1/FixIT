@@ -3,98 +3,86 @@ window.addEventListener("load",initialize,true);
 
 function initialize(){
 
-    populateAppointments();
+
+
+    //initial call to poll staff appointments
+    pollAppointments();
+
+    //populateAppointments();
 
 }
 
 
-
-//Update the token that was just placed
-function populateAppointments()
-{
-
-    var staffID = 10; // TODO Get this from somewhere
-    var xhr = new XMLHttpRequest();
-    xhr.open("GET", '/staff/appointments/'+staffID, true);
-    xhr.setRequestHeader('Content-Type', 'application/json');
-
-    xhr.onload = function() {
-        var result = JSON.parse(xhr.responseText);
-        if(xhr.status !== 200){
-            console.log("Error Status:"+xhr.status);
-        }
-        if(result["completed"]){
-            console.log("Purchase created - POST: /purchases");
-
-            populateList(result);
-
-        }
-        else {
-            alert("Error")
-        }
-    };
-    xhr.send(null);
-
-}
-
-function populateList( jsonResult){
-
-    var appointmentList = document.getElementByID("staffAppointmentList");
-    var appointments = jsonResponse['appointments'];
-
-    for(var z = 0; z < newMessages.length; z++){
-        var message = appointments[z];
-
-        var newLI = document.createElement('li');
-        var msgString = appointments.name;
-        newLI.textContent = msgString;
-        appointmentList.appendChild(newLI);
+    //poll the model for any new rooms that may have been created
+    function pollAppointments() {
+       /* var xmlHttp = new XMLHttpRequest();
+        xmlHttp.onreadystatechange = function() {
+            if (xmlHttp.readyState == 4 && xmlHttp.status == 200){
+                var rawJson = JSON.parse(xmlHttp.responseText);
+                updateChatRoomList(rawJson, pollAppointments);
+            }
+        };
+        xmlHttp.open("GET", '/staff/getAppointments/', true);
+        xmlHttp.send(null);*/
+        var testData = {"appointmentTime": 1000,"notes":"FixComputer","date":"4/28/19","ID":1,"name":"John"};
+        updateChatRoomList(testData, pollAppointments);
     }
-}
 
 
-//Update the token that was just placed
-function populate()
-{
-    e = event;
+    //update the DOM to show the updated list of appointments
+    function updateChatRoomList(rawJson, callback){
+        if (true){
 
-    inDate = e.srcElement;
-    var rdate;
-    if (inDate.value != ''){
-        rdate = inDate.value;}
-    else{
-        return;
+            var staffAppHead = document.getElementById('staffAppHead');
+            staffAppHead.textContent = 'Currently Scheduled Appointments:';
+
+            var staffAppList = document.getElementById('staffAppList');
+            staffAppList.innerHTML = '';
+            for(var i = 0; i < 1; i++){
+                var appInd = document.createElement('li');
+                var appTime = document.createElement('h4');
+                var appDate = document.createElement('h4');
+                var appName = document.createElement('h4');
+                var appNotesHead = document.createElement('h4');
+                var appNotes = document.createElement('p');
+                var appDel = document.createElement('button');
+                appDel.id = rawJson.ID;
+                appDel.addEventListener('click', cancelAppointment,false);
+                appTime.textContent = "Appointment Time: "+ rawJson.appointmentTime;
+                appDate.textContent = "Appointment Date: "+rawJson.date;
+                appName.textContent = "Customer Name: "+rawJson.name;
+                appNotesHead.textContent = "Appointment Notes:";
+                appNotes.textContent = rawJson.notes;
+                appDel.textContent = "Cancel Appointment";
+
+                staffAppList.appendChild(appInd);
+                appInd.appendChild(appTime);
+                appInd.appendChild(appDate);
+                appInd.appendChild(appName);
+                appInd.appendChild(appNotesHead);
+                appInd.appendChild(appNotes);
+                appInd.appendChild(appDel);
+            }
+        }
+        else{
+            var staffAppHead = document.getElementById('staffAppHead');
+            staffAppHead.textContent = 'You currently have no appointments scheduled';
+        }
+
+        setTimeout(callback, 1000);
     }
-    styID = document.URL.substring(34);
-    console.log(styID);
-    console.log(styIDTest);
-    var jsonObject = JSON.stringify(
-        {
-            ID: styID,
-            date: rdate
-        }
-    );
 
+    //function to cancel an appointment
+    function cancelAppointment(eve){
+        var appointmentID = eve.srcElement.id;
+        /* var xmlHttp = new XMLHttpRequest();
+        xmlHttp.onreadystatechange = function() {
+            if (xmlHttp.readyState == 4 && xmlHttp.status == 200){
+                var rawJson = JSON.parse(xmlHttp.responseText);
+                //updateChatRoomList(rawJson, pollAppointments);
+            }
+        };
+        xmlHttp.open("POST", '/staff/cancelAppointment/'+appointmentID, true);
+        xmlHttp.send(null);*/
+    }
 
-    var xhr = new XMLHttpRequest();
-    xhr.open("POST", '/loadDate', true);
-    xhr.setRequestHeader('Content-Type', 'application/json');
-
-    xhr.onload = function() {
-        var result = JSON.parse(xhr.responseText);
-        if(xhr.status !== 200){
-            console.log("Error Status:"+xhr.status);
-        }
-        if(result["completed"]){
-            console.log("Purchase created - POST: /purchases");
-
-            loadRes(result);
-
-        }
-        else {
-            alert("Error")
-        }
-    };
-    xhr.send(jsonObject);
-
-}
