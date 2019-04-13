@@ -11,6 +11,8 @@ import java.util.ArrayList;
  */
 @JsonIgnoreProperties(ignoreUnknown =true)
 public class Staff extends User {
+    public Staff() {}
+
     public Staff(String username) {
         super(username);
     }
