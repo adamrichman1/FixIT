@@ -75,7 +75,7 @@ public class AppointmentRestController {
      * @return a ResponseEntity to the user containing confirmation of the work-log update
      */
     @RequestMapping(method= RequestMethod.PUT, value="/updateWorklog", headers="Accept=application/json")
-    @ResponseBody ResponseEntity updateAppointmentWorklog(HttpServletRequest request, Appointment appointment) {
+    @ResponseBody ResponseEntity updateAppointmentWorklog(HttpServletRequest request, @RequestBody Appointment appointment) {
         AppointmentManager.updateWorklog(appointment.getAppointmentID(), appointment.getWorkLog());
         return new ResponseEntity(HttpStatus.OK);
     }
@@ -87,7 +87,7 @@ public class AppointmentRestController {
      * @return a ResponseEntity to the user containing confirmation of status update
      */
     @RequestMapping(method= RequestMethod.PUT, value="/updateAppointmentStatus", headers="Accept=application/json")
-    @ResponseBody ResponseEntity updateAppointmentStatus(Appointment appointment) {
+    @ResponseBody ResponseEntity updateAppointmentStatus(@RequestBody Appointment appointment) {
         logger.info(appointment.toString());
         AppointmentManager.updateAppointmentStatus(appointment.getAppointmentID(), appointment.getAppointmentStatus());
         return new ResponseEntity(HttpStatus.OK);
@@ -100,7 +100,7 @@ public class AppointmentRestController {
      * @return a ResponseEntity to the user containing confirmation of status update
      */
     @RequestMapping(method= RequestMethod.PUT, value="/updateCustomerRating", headers="Accept=application/json")
-    @ResponseBody ResponseEntity updateCustomerRating(Appointment appointment) {
+    @ResponseBody ResponseEntity updateCustomerRating(@RequestBody Appointment appointment) {
         AppointmentManager.addCustomerRating(appointment.getAppointmentID(), appointment.getCustomerRating());
         return new ResponseEntity(HttpStatus.OK);
     }
@@ -112,7 +112,7 @@ public class AppointmentRestController {
      * @return a ResponseEntity to the user containing confirmation of status update
      */
     @RequestMapping(method= RequestMethod.PUT, value="/updateStaffRating", headers="Accept=application/json")
-    @ResponseBody ResponseEntity updateStaffRating(Appointment appointment) {
+    @ResponseBody ResponseEntity updateStaffRating(@RequestBody Appointment appointment) {
         AppointmentManager.addStaffRating(appointment.getAppointmentID(), appointment.getStaffRating());
         return new ResponseEntity(HttpStatus.OK);
     }
