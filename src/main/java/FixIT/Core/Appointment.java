@@ -1,19 +1,18 @@
 package FixIT.Core;
 
 import FixIT.Application;
-import FixIT.Customer.Customer;
 import FixIT.Staff.Staff;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 
 /**
- * This class represents an appointment between a FixIT customer and FixIT staff member
+ * This class represents an appointment between a FixIT customer and FixIT staffUsername member
  */
 public class Appointment {
-    private String appointmentID;
-    private Customer customer;
-    private Staff staff;
+    private long appointmentID;
+    private String customerUsername;
+    private String staffUsername;
     private long appointmentTime;
     private ArrayList<String> workLog;
     private int appointmentStatus;
@@ -21,28 +20,28 @@ public class Appointment {
     private int customerRating;
     private BigDecimal appointmentCost;
 
-    public String getAppointmentID() {
+    public long getAppointmentID() {
         return appointmentID;
     }
 
-    public void setAppointmentID(String appointmentID) {
+    public void setAppointmentID(long appointmentID) {
         this.appointmentID = appointmentID;
     }
 
-    public Customer getCustomer() {
-        return customer;
+    public String getCustomerUsername() {
+        return customerUsername;
     }
 
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
+    public void setCustomerUsername(String customerUsername) {
+        this.customerUsername = customerUsername;
     }
 
-    public Staff getStaff() {
-        return staff;
+    public String getStaffUsername() {
+        return staffUsername;
     }
 
-    public void setStaff(Staff staff) {
-        this.staff = staff;
+    public void setStaffUsername(String staffUsername) {
+        this.staffUsername = staffUsername;
     }
 
     public long getAppointmentTime() {
