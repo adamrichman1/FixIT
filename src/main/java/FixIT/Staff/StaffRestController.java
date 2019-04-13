@@ -1,7 +1,10 @@
 package FixIT.Staff;
 
-import FixIT.Core.AppointmentManager;
+import FixIT.Core.AppointmentDBManager;
 import FixIT.Core.UserRestController;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,9 +29,7 @@ public class StaffRestController extends UserRestController<Staff> {
      */
     @RequestMapping(method= RequestMethod.POST, value="/staff/login")
     protected @ResponseBody ResponseEntity login(HttpServletRequest request, Model model, @RequestBody Staff user) {
-        String username = request.getHeader("username");
-        // TODO - login
-        return null;
+        return super.login(request, model, user);
     }
 
     /**
@@ -41,8 +42,17 @@ public class StaffRestController extends UserRestController<Staff> {
     @Override
     @RequestMapping(method= RequestMethod.POST, value="/staff/signup")
     protected @ResponseBody ResponseEntity signUp(HttpServletRequest request, Model model, @RequestBody Staff user) {
-        // TODO - sign-up
-        return null;
+        return super.signUp(request, model, user);
+    }
+
+    /**
+     * Retrieves the DBManager of the subclass
+     *
+     * @return the DBManager in the subclass
+     */
+    @Override
+    protected StaffDBManager getDBManager() {
+        return dbManager;
     }
 
     /**
@@ -53,6 +63,18 @@ public class StaffRestController extends UserRestController<Staff> {
     @RequestMapping(method= RequestMethod.GET, value="/staff/home")
     protected static String getStaffHome() {
         return "staff-home";
+    }
+
+    /**
+     * Retrieves a staff's rating
+     *
+     * @return the staff's rating
+     */
+    @RequestMapping(method= RequestMethod.GET, value="/staff/rating")
+    protected static ResponseEntity getStaffRating(HttpServletRequest request) {
+        String username = request.getHeader("username");
+        double rating = AppointmentDBManager.getStaffRating(username);
+        return new ResponseEntity<>(rating, HttpStatus.OK);
     }
 
     /**

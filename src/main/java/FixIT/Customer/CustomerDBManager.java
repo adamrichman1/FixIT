@@ -52,19 +52,13 @@ public class CustomerDBManager extends UserDBManager<Customer> {
     /**
      * Used to insert a new user into the database
      *
-     * @param username the user's username
-     * @param password the user's password
-     * @param email the user's email
-     * @param name the user's name
-     * @param address the user's address
-     * @param appointmentHistory the user's appointment history
-     * @param creditCard the user's credit card number
+     * @param user the user to insert into the database
      */
-    void insertUserToDB(String username, String password, String email, String name, String address,
-                        ArrayList<Appointment> appointmentHistory, String creditCard) {
+    protected void insertUserToDB(Customer user) {
         String sql = "INSERT INTO " + userTable + " (username, password, email, name, address, appointmentHistory, " +
                 "rating, creditCard, balance) VALUES (?, ?, ?, ?, ?, ?, 5.0, ?, 0.0)";
-        executeUpdate(sql, username, password, email, name, address, Arrays.toString(appointmentHistory.toArray()), creditCard);
+        executeUpdate(sql, user.getUsername(), user.getPassword(), user.getEmail(), user.getName(), user.getAddress(),
+                Arrays.toString(user.getAppointmentHistory().toArray()), user.getCreditCard());
     }
 
     /**
