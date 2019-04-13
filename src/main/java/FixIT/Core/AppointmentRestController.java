@@ -88,6 +88,7 @@ public class AppointmentRestController {
      */
     @RequestMapping(method= RequestMethod.PUT, value="/updateAppointmentStatus", headers="Accept=application/json")
     @ResponseBody ResponseEntity updateAppointmentStatus(Appointment appointment) {
+        logger.info(appointment.toString());
         AppointmentManager.updateAppointmentStatus(appointment.getAppointmentID(), appointment.getAppointmentStatus());
         return new ResponseEntity(HttpStatus.OK);
     }
