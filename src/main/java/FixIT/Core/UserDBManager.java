@@ -17,12 +17,19 @@ public abstract class UserDBManager<T extends User> extends DBManager {
     }
 
     /**
+     * Used to insert a new user into the database
+     *
+     * @param user the user to insert into the database
+     */
+    protected abstract void insertUserToDB(T user);
+
+    /**
      * Used to check if a user already exists before inserting a user into the database table during registration
      *
      * @param username the username to query for
      * @return true if the username exists in the DB, false otherwise
      */
-    public boolean userExists(String username) {
+    boolean userExists(String username) {
         String sql = "SELECT COUNT(*) AS count FROM " + userTable + " WHERE username=?";
         return deserializeResultSetCol(executeQuery(sql, username), "count", int.class) == 1;
     }
@@ -52,7 +59,7 @@ public abstract class UserDBManager<T extends User> extends DBManager {
      * @param password the user's password
      * @return true if the password is valid for the given username, false otherwise
      */
-    public boolean passwordValid(String username, String password) {
+    boolean passwordValid(String username, String password) {
         String sql = "SELECT COUNT(*) AS count FROM " + userTable + " WHERE username=? AND password=?";
         return deserializeResultSetCol(executeQuery(sql, username, password), "count", int.class) == 1;
     }

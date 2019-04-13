@@ -1,5 +1,7 @@
 package FixIT.Customer;
 
+import FixIT.Core.AppointmentDBManager;
+import FixIT.Core.UserDBManager;
 import FixIT.Core.UserRestController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,20 +33,7 @@ public class CustomerRestController extends UserRestController<Customer> {
     @Override
     @RequestMapping(method= RequestMethod.POST, value="/customer/login")
     protected ResponseEntity login(HttpServletRequest request, Model model, @RequestBody Customer user) {
-        logger.info("LOGIN");
-        if (!dbManager.userExists(user.getUsername())) {
-            logger.warn("Invalid username");
-            return new ResponseEntity<>("Invalid username", HttpStatus.BAD_REQUEST);
-        }
-        else if (!dbManager.passwordValid(user.getUsername(), user.getPassword())){
-            logger.warn("Invalid password");
-            return new ResponseEntity<>("Invalid password", HttpStatus.BAD_REQUEST);
-        }
-        else {
-            logger.info("SUCCESS");
-            // TODO return cookie?
-            return new ResponseEntity(HttpStatus.OK);
-        }
+        return super.login(request, model, user);
     }
 
     /**
@@ -58,6 +47,16 @@ public class CustomerRestController extends UserRestController<Customer> {
     }
 
     /**
+     * Retrieves the DBManager of the subclass
+     *
+     * @return the DBManager in the subclass
+     */
+    @Override
+    protected CustomerDBManager getDBManager() {
+        return dbManager;
+    }
+
+    /**
      * Called when a customer attempts to sign-up with FixIT
      *
      * @param request the HttpRequest entity containing header information
@@ -68,26 +67,7 @@ public class CustomerRestController extends UserRestController<Customer> {
     @Override
     @RequestMapping(method= RequestMethod.POST, value="/customer/signup")
     protected ResponseEntity signUp(HttpServletRequest request, Model model, @RequestBody Customer user) {
-        logger.info("SignUp - Customer: " + user.toString());
-        // Check validity of sign-up form
-        if (signUpFormInvalid(user)) {
-            logger.info("Invalid signup form");
-            return new ResponseEntity<>("Invalid registration form", HttpStatus.BAD_REQUEST);
-        }
-        // Check if user already exists
-        else if (dbManager.userExists(user.getUsername())) {
-            logger.info("Username already exists");
-            model.addAttribute("errorMsg", "Username already in use");
-            return new ResponseEntity<>("Username already in use",  HttpStatus.BAD_REQUEST);
-        }
-        // Register user and return success
-        else {
-            logger.info("Success!");
-            dbManager.insertUserToDB(user.getUsername(), user.getPassword(), user.getEmail(), user.getName(),
-                    user.getAddress(), user.getAppointmentHistory(), user.getCreditCard());
-            // TODO return cookie
-            return new ResponseEntity<>(HttpStatus.OK);
-        }
+        return super.signUp(request, model, user);
     }
 
     /**
@@ -122,17 +102,14 @@ public class CustomerRestController extends UserRestController<Customer> {
     }
 
     /**
-     * Used to determine if a sign-up form is invalid
+     * Retrieves a customer's rating
      *
-     * @param user the user object passed up via the sign-up endpoint
-     * @return true if the form contains an invalid field, false otherwise
+     * @return the customer's rating
      */
-    private boolean signUpFormInvalid(Customer user) {
-        return (user.getUsername() == null || user.getUsername().equals("")) ||
-                user.getPassword() == null || user.getPassword().equals("") ||
-                user.getEmail() == null || user.getEmail().equals("") ||
-                user.getName() == null || user.getName().equals("") ||
-                user.getAddress() == null || user.getAddress().equals("") ||
-                user.getCreditCard() == null || user.getCreditCard().equals("");
+    @RequestMapping(method= RequestMethod.GET, value="/customer/rating")
+    protected static ResponseEntity getCustomerRating(HttpServletRequest request) {
+        String username = request.getHeader("username");
+        double rating = AppointmentDBManager.getCustomerRating(username);
+        return new ResponseEntity<>(rating, HttpStatus.OK);
     }
 }

@@ -32,6 +32,28 @@ public class AppointmentDBManager extends DBManager {
     }
 
     /**
+     * Finds the average rating for a customer
+     *
+     * @param username the username of the customer
+     * @return the customer's rating
+     */
+    public static double getCustomerRating(String username) {
+        String sql = "SELECT AVG(customerRating) AS avg FROM " + appointmentTable + " WHERE customerUsername=?";
+        return deserializeResultSetCol(executeQuery(sql, username), "avg", double.class);
+    }
+
+    /**
+     * Finds the average rating for a staff
+     *
+     * @param username the username of the staff
+     * @return the staff's rating
+     */
+    public static double getStaffRating(String username) {
+        String sql = "SELECT AVG(staffRating) AS avg FROM " + appointmentTable + " WHERE staffUsername=?";
+        return deserializeResultSetCol(executeQuery(sql, username), "avg", double.class);
+    }
+
+    /**
      * Used to insert an appointment into the appointment table once requested by a customer
      *
      * @param problem the problem the appointment is for
