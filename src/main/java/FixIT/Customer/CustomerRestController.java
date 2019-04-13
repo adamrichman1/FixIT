@@ -112,6 +112,16 @@ public class CustomerRestController extends UserRestController<Customer> {
     }
 
     /**
+     * Called when a user (customer or staff) attempts to login to FixIT
+     *
+     * @return the login template to the user
+     */
+    @RequestMapping(method= RequestMethod.GET, value="/customer/create-appointment")
+    protected static String getCreateAppointmentTemplate() {
+        return "create-appointment";
+    }
+
+    /**
      * Used to determine if a sign-up form is invalid
      *
      * @param user the user object passed up via the sign-up endpoint

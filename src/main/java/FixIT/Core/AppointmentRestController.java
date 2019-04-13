@@ -3,6 +3,7 @@ package FixIT.Core;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,11 +22,14 @@ public class AppointmentRestController {
      * @return a ResponseEntity to the user containing the result of the request in the body
      */
     @RequestMapping(method= RequestMethod.POST, value="/createAppointment", headers="Accept=application/json")
-    @ResponseBody String createAppointment(HttpServletRequest request, Appointment appointment) {
-        appointment.setCustomerUsername(request.getHeader("username"));
-        appointment.setStaffUsername(AppointmentManager.findStaffMember());
-        AppointmentManager.createAppointment(appointment);
-        return "appointment-summary";
+    @ResponseBody String createAppointment(HttpServletRequest request, Appointment appointment, Model model) {
+        if (AppointmentManager.isStaffMemberAvailable()) {
+            appointment.setCustomerUsername(request.getHeader("username"));
+            appointment.setStaffUsername(AppointmentManager.findStaffMember());
+            model.addAttribute("appointment", AppointmentManager.createAppointment(appointment));
+            return "appointment-summary";
+        }
+        return "appointment-error";
     }
 
     /**
@@ -61,23 +65,8 @@ public class AppointmentRestController {
      */
     @RequestMapping(method= RequestMethod.POST, value="/updateWorklog", headers="Accept=application/json")
     @ResponseBody ResponseEntity updateAppointmentWorklog(HttpServletRequest request, Appointment appointment) {
-        String username = request.getHeader("username");
-        // TODO update appointment worklog
-        return null;
-    }
-
-    /**
-     * Used to update the appointment time when requested by FixIT customers
-     *
-     * @param request the HttpRequest entity containing header information and the username of the requesting user
-     * @param appointment the appointment object containing an updated appointment time
-     * @return a ResponseEntity to the user containing confirmation of the time update
-     */
-    @RequestMapping(method= RequestMethod.POST, value="/updateAppointmentTime", headers="Accept=application/json")
-    @ResponseBody ResponseEntity updateAppointmentTime(HttpServletRequest request, Appointment appointment) {
-        String username = request.getHeader("username");
-        // TODO update appointment time
-        return null;
+        AppointmentManager.updateWorklog(appointment.getAppointmentID(), appointment.getWorkLog());
+        return new ResponseEntity(HttpStatus.OK);
     }
 
     /**
@@ -89,8 +78,7 @@ public class AppointmentRestController {
      */
     @RequestMapping(method= RequestMethod.POST, value="/updateAppointmentStatus", headers="Accept=application/json")
     @ResponseBody ResponseEntity updateAppointmentStatus(HttpServletRequest request, Appointment appointment) {
-        String username = request.getHeader("username");
-        // TODO update appointment status
-        return null;
+        AppointmentManager.updateAppointmentStatus(appointment.getAppointmentID(), appointment.getAppointmentStatus());
+        return new ResponseEntity(HttpStatus.OK);
     }
 }

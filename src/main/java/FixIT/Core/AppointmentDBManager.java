@@ -7,6 +7,7 @@ import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -43,13 +44,14 @@ public class AppointmentDBManager extends DBManager {
      * @param staffRating the staff member's rating for the appointment
      * @param appointmentCost the cost of the appointment
      */
-    void insertAppointmentToDB(String problem, String customerUsername, String staffUsername,
+    Appointment insertAppointmentToDB(String problem, String customerUsername, String staffUsername,
                                long appointmentTime, List<String> worklog, int appointmentStatus,
                                int customerRating, int staffRating, BigDecimal appointmentCost) {
         String sql = "INSERT INTO " + appointmentTable + " (problem, customerUsername, staffUsername, " +
                 "appointmentTime, worklog, appointmentStatus, customerRating, staffRating, appointmentCost) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        executeUpdate(sql, problem, customerUsername, staffUsername, appointmentTime, worklog, appointmentStatus, customerRating, staffRating, appointmentCost);
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING *";
+        return populateAppointment(executeUpdate(sql, problem, customerUsername, staffUsername, appointmentTime, worklog, appointmentStatus,
+                customerRating, staffRating, appointmentCost));
     }
 
     /**
@@ -127,9 +129,20 @@ public class AppointmentDBManager extends DBManager {
      * @param appointmentID the id of the appointment to update
      * @param appointmentStatus the new status of the appointment
      */
-    public void updateAppointmentStatus(long appointmentID, int appointmentStatus) {
+    void updateAppointmentStatus(long appointmentID, int appointmentStatus) {
         String sql = "UPDATE " + appointmentTable + " SET appointmentStatus=? WHERE appointmentID=?";
         executeUpdate(sql, appointmentStatus, appointmentID);
+    }
+
+    /**
+     * Used to adjust the status of an appointment (0=not-started, 1=in-progress, 2=completed)
+     *
+     * @param appointmentID the id of the appointment to update
+     * @param worklog the updated worklog for the appointment
+     */
+    void updateAppointmentWorklog(long appointmentID, List<String> worklog) {
+        String sql = "UPDATE " + appointmentTable + " SET worklog=? WHERE appointmentID=?";
+        executeUpdate(sql, Arrays.toString(worklog.toArray()), appointmentID);
     }
 
     /**
