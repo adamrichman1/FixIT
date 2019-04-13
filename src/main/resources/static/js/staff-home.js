@@ -12,30 +12,35 @@ function initialize(){
 
     //poll the model for any new rooms that may have been created
     function pollAppointments() {
-       /* var xmlHttp = new XMLHttpRequest();
+        var xmlHttp = new XMLHttpRequest();
         xmlHttp.onreadystatechange = function() {
             if (xmlHttp.readyState == 4 && xmlHttp.status == 200){
                 var rawJson = JSON.parse(xmlHttp.responseText);
                 updateChatRoomList(rawJson, pollAppointments);
             }
         };
-        xmlHttp.open("GET", '/staff/getAppointments/', true);
-        xmlHttp.send(null);*/
-        var testData = {"subject":"PC","address": "A street","appointmentTime": 1000,"notes":"FixComputer","date":"4/28/19","ID":1,"name":"John"};
-        updateChatRoomList(testData, pollAppointments);
+        xmlHttp.open("GET", '/staff/getAppointmentHistory', true);
+        xmlHttp.send(null);
+        //var testData = {"subject":"PC","address": "A street","appointmentTime": 1000,"notes":"FixComputer","date":"4/28/19","ID":1,"name":"John"};
+        console.log(rawJson);
+        updateAppointmentList(rawJson, pollAppointments);
     }
 
 
     //update the DOM to show the updated list of appointments
-    function updateChatRoomList(rawJson, callback){
+    function updateAppointmentList(rawJson, callback){
+
+        //TODO if there is an appointment
         if (true){
-            //TODO add proper logic to iterate through appointments
+
 
             var staffAppHead = document.getElementById('staffAppHead');
             staffAppHead.textContent = 'Currently Scheduled Appointments:';
 
             var staffAppList = document.getElementById('staffAppList');
             staffAppList.innerHTML = '';
+
+            // TODO how to iterate through list
             for(var i = 0; i < 1; i++){
                 var appInd = document.createElement('li');
                 var appTime = document.createElement('h4');
@@ -79,7 +84,7 @@ function initialize(){
     //function to cancel an appointment
     function cancelAppointment(eve){
         var appointmentID = eve.srcElement.id;
-        /* var xmlHttp = new XMLHttpRequest();
+        var xmlHttp = new XMLHttpRequest();
         xmlHttp.onreadystatechange = function() {
             if (xmlHttp.readyState == 4 && xmlHttp.status == 200){
                 var rawJson = JSON.parse(xmlHttp.responseText);
@@ -87,6 +92,6 @@ function initialize(){
             }
         };
         xmlHttp.open("POST", '/staff/cancelAppointment/'+appointmentID, true);
-        xmlHttp.send(null);*/
+        xmlHttp.send(null);
     }
 
