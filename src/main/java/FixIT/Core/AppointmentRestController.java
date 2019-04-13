@@ -81,4 +81,30 @@ public class AppointmentRestController {
         AppointmentManager.updateAppointmentStatus(appointment.getAppointmentID(), appointment.getAppointmentStatus());
         return new ResponseEntity(HttpStatus.OK);
     }
+
+    /**
+     * Used by FixIT staff members to update the customer's rating for the appointment
+     *
+     * @param request the HttpRequest entity containing header information and the username of the requesting user
+     * @param appointment the appointment object containing an updated appointment status
+     * @return a ResponseEntity to the user containing confirmation of status update
+     */
+    @RequestMapping(method= RequestMethod.POST, value="/updateCustomerRating", headers="Accept=application/json")
+    @ResponseBody ResponseEntity updateCustomerRating(HttpServletRequest request, Appointment appointment) {
+        AppointmentManager.addCustomerRating(appointment.getAppointmentID(), appointment.getCustomerRating());
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+    /**
+     * Used by FixIT staff members to update the staff member's rating for the appointment
+     *
+     * @param request the HttpRequest entity containing header information and the username of the requesting user
+     * @param appointment the appointment object containing an updated appointment status
+     * @return a ResponseEntity to the user containing confirmation of status update
+     */
+    @RequestMapping(method= RequestMethod.POST, value="/updateStaffRating", headers="Accept=application/json")
+    @ResponseBody ResponseEntity updateStaffRating(HttpServletRequest request, Appointment appointment) {
+        AppointmentManager.addStaffRating(appointment.getAppointmentID(), appointment.getStaffRating());
+        return new ResponseEntity(HttpStatus.OK);
+    }
 }
