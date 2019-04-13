@@ -3,6 +3,7 @@ window.addEventListener("load",initialize,true);
 
 function initialize(){
 
+
     //initial call to poll staff appointments
     pollAppointments();
 
@@ -20,7 +21,7 @@ function initialize(){
         };
         xmlHttp.open("GET", '/staff/getAppointments/', true);
         xmlHttp.send(null);*/
-        var testData = {"appointmentTime": 1000,"notes":"FixComputer","date":"4/28/19","ID":1,"name":"John"};
+        var testData = {"subject":"PC","address": "A street","appointmentTime": 1000,"notes":"FixComputer","date":"4/28/19","ID":1,"name":"John"};
         updateChatRoomList(testData, pollAppointments);
     }
 
@@ -29,15 +30,17 @@ function initialize(){
     function updateChatRoomList(rawJson, callback){
         if (true){
 
-            var staffAppHead = document.getElementById('staffAppHead');
-            staffAppHead.textContent = 'Currently Scheduled Appointments:';
+            var custAppHead = document.getElementById('custAppHead');
+            custAppList.textContent = 'Currently Scheduled Appointments:';
 
-            var staffAppList = document.getElementById('staffAppList');
+            var staffAppList = document.getElementById('custAppList');
             staffAppList.innerHTML = '';
             for(var i = 0; i < 1; i++){
                 var appInd = document.createElement('li');
                 var appTime = document.createElement('h4');
                 var appDate = document.createElement('h4');
+                var appAddress = document.createElement('h4');
+                var appSubject = document.createElement('h4');
                 var appName = document.createElement('h4');
                 var appNotesHead = document.createElement('h4');
                 var appNotes = document.createElement('p');
@@ -46,24 +49,27 @@ function initialize(){
                 appDel.addEventListener('click', cancelAppointment,false);
                 appTime.textContent = "Appointment Time: "+ rawJson.appointmentTime;
                 appDate.textContent = "Appointment Date: "+rawJson.date;
+                appAddress.textContent = "Appointment Address: "+rawJson.address;
+                appSubject.textContent = "Appointment Subject: "+rawJson.subject;
                 appName.textContent = "Customer Name: "+rawJson.name;
                 appNotesHead.textContent = "Appointment Notes:";
                 appNotes.textContent = rawJson.notes;
                 appDel.textContent = "Cancel Appointment";
 
                 staffAppList.appendChild(appInd);
-                appInd.appendChild(appTime);
                 appInd.appendChild(appDate);
-                appInd.appendChild(appName);
+                appInd.appendChild(appTime);
+                appInd.appendChild(appAddress);
+                appInd.appendChild(appSubject);
                 appInd.appendChild(appNotesHead);
                 appInd.appendChild(appNotes);
                 appInd.appendChild(appDel);
-                staffAppList.appendChild(appInd);
+                custAppList.appendChild(appInd);
             }
         }
         else{
-            var staffAppHead = document.getElementById('staffAppHead');
-            staffAppHead.textContent = 'You currently have no appointments scheduled';
+            var custAppHead = document.getElementById('custAppHead');
+            custAppHead.textContent = 'You currently have no appointments scheduled';
         }
 
         setTimeout(callback, 1000);
