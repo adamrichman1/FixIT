@@ -9,7 +9,7 @@
     <meta name="author" content="">
     <link rel="icon" href="../../favicon.ico">
 
-    <title>Welcome to FixIT</title>
+    <title>Create Appointment</title>
 
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
@@ -34,9 +34,8 @@
         </div>
         <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="#">Home</a></li>
-                <li><a href="#">Request Appointment</a></li>
-                <li><a href="#">My Account</a></li>
+                <li><a href="http://localhost:8080/customer/home">Home</a></li>
+                <li class="active"><a href="http://localhost:8080/customer/createAppointment">Request Appointment</a></li>
             </ul>
         </div><!--/.nav-collapse -->
     </div>
@@ -46,65 +45,30 @@
 </br>
 </br>
 
-<main class="main_layout">
+<div class="container">
 
-    <form class="form-signin">
-        <h2 class="form-signin-heading">Create Appointment</h2>
-        </br>
+    <form>
+        <div class="form-group">
+            <h1>Create Appointment</h1>
+        </div>
 
-        <h4 class = "label-black">Date</h4>
-        <input type="date" id="inputDate" class="form-control" placeholder="Date" required autofocus>
-        </br>
+        <div class="form-group">
+            <h4>Time</h4>
+            <input type="time" id="appt-time" class="form-control" placeholder="Time" required autofocus>
+        </div>
 
-        <h4 class = "label-black">Time</h4>
-        <input type="time" id="inputTime" class="form-control" placeholder="Time" required autofocus>
-        </br>
+        <div class="form-group">
+            <h4>Problem Description</h4>
+            <textarea class="form-control" id="appt-description" rows="3" placeholder="Enter problem..."></textarea>
+        </div>
 
-        <h4 class = "label-black">Address</h4>
-        <input type="" id="inputAddress" class="form-control" placeholder="Address" required autofocus>
-        </br>
+        <div class="form-group">
+            <h4>Cost</h4>
+            <p class="small">Default: $25.00</p>
+        </div>
 
-        <h4 class = "label-black">Subject</h4>
-        <input type="" id="inputSubject" class="form-control" placeholder="Subject" required autofocus>
-        </br>
-
-        <h4 class = "label-black">Description</h4>
-        <textarea id = "inputDescription" rows="8" cols="100" placeholder="Problem Description"></textarea>
-
-        <button class="btn btn-lg btn-primary btn-block" id="customer-create-appt" type="submit">Submit Appointment</button>
+        <button class="btn btn-primary btn-block" id="create-appt-button" type="submit">Create Appointment</button>
     </form>
-
-
-
-</main>
+</div>
 </body>
 </html>
-<script>
-    button = document.getElementById('staff-signup-button');
-    button.addEventListener('click', function() {
-
-        const formData = JSON.stringify({
-            "date": document.getElementById('inputDate').value,
-            "time": document.getElementById('inputTime').value,
-            "address":  document.getElementById('inputAddress').value,
-            "subject":  document.getElementById('inputSubject').value,
-            "description":  document.getElementById('inputDescription').value,
-        });
-        console.log(formData);
-        $.ajax({
-            url: "http://localhost:8080/customer/create-appointment",
-            type: 'POST',
-            data: formData,
-            contentType: "application/json",
-            success: function() {
-                window.location.href = "/customer/home";
-            },
-            error: function(jqXHR, textStatus, errorThrown){
-                console.log(jqXHR.status);
-                console.log(textStatus);
-                console.log(errorThrown);
-                // TODO - ERROR HANDLE
-            }
-        });
-    });
-</script>

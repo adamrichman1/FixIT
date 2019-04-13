@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <link rel="icon" href="../../favicon.ico">
+
+        <!-- Bootstrap core CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+
+        <title>FixIT</title>
+
+        <!-- Custom styles for this template -->
+        <link rel="stylesheet" type="text/css" th:href="@{/css/index.css}">
+    </head>
+</head>
+<body>
+<div class="container">
+    <div id="center-box" class="main">
+        <h1>Oops!</h1>
+        <p class="lead">Sorry about that. No staff members are currently available</p>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="text-center">
+                <button type="button" class="btn btn-primary" onclick="window.location.href='http://localhost:8080/customer/createAppointment';">Go Back</button>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ" crossorigin="anonymous"></script>
+<script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+<script src="../../dist/js/bootstrap.min.js"></script>
+
+</html>

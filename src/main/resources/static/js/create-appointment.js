@@ -3,28 +3,35 @@ window.addEventListener("load",initialize,true);
 
 function initialize(){
 
-    var createApp  = document.getElementById('createAppointment');
-    createApp.addEventListener("click",createAppointment);
-
+    let button = document.getElementById('create-appt-button');
+    button.addEventListener('click', function() {
+        const formData = {
+            "appointmentTime": document.getElementById('appt-time').value,
+            "problem": document.getElementById('appt-description').value,
+            "cost": 25
+        };
+        createAppointment(formData);
+    });
 
 }
 
-//Update the token that was just placed
-function createAppointment()
-{
-
-    var time = document.getElementById('apptTime');
-    console.log(time.value);
-    var notes = document.getElementById('apptNotes');
-    console.log(notes.value);
-    var xhr = new XMLHttpRequest();
-    xhr.open("POST", '/createAppointment', true);
-    xhr.setRequestHeader('Content-Type', 'application/json');
-
-    xhr.onload = function() {
-        var result = JSON.parse(xhr.responseText);
-
-    };
-
-    xhr.send(null);
+function createAppointment(data) {
+    $.ajax({
+        url: "http://localhost:8080/createAppointment",
+        type: 'POST',
+        contentType: "application/json",
+        data: JSON.stringify(data),
+        headers: {
+            'username': localStorage.getItem("username")
+        },
+        success: function() {
+            window.location.href = "/customer/home"
+        },
+        error: function(jqXHR, textStatus, errorThrown){
+            console.log(jqXHR.status);
+            console.log(textStatus);
+            console.log(errorThrown);
+            // TODO - ERROR HANDLE
+        }
+    });
 }
