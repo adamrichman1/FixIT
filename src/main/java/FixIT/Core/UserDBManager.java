@@ -24,6 +24,13 @@ public abstract class UserDBManager<T extends User> extends DBManager {
     protected abstract void insertUserToDB(T user);
 
     /**
+     * Drops the user table
+     */
+    public void dropUserTable() {
+        dropTable(userTable);
+    }
+
+    /**
      * Used to check if a user already exists before inserting a user into the database table during registration
      *
      * @param username the username to query for

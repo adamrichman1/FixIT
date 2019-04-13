@@ -1,6 +1,8 @@
 package FixIT;
 
 import FixIT.Core.AppointmentDBManager;
+import FixIT.Customer.CustomerDBManager;
+import FixIT.Staff.StaffDBManager;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import org.slf4j.Logger;
@@ -34,11 +36,15 @@ public class Application {
 
         // Launch FixIT
         logger.info("------------ FixIT Launching ------------");
+        initializeResources();
         SpringApplication.run(Application.class, args);
         logger.info("------------ FixIT Launched Successfully ------------");
     }
 
     private static void initializeResources() {
+        AppointmentDBManager.dropAppointmentTable();
+        CustomerDBManager.getInstance().dropUserTable();
+        StaffDBManager.getInstance().dropUserTable();
         AppointmentDBManager.createAppointmentTable();
     }
 

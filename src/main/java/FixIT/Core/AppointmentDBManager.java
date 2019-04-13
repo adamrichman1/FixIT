@@ -54,6 +54,13 @@ public class AppointmentDBManager extends DBManager {
     }
 
     /**
+     * Drops the appointment table
+     */
+    public static void dropAppointmentTable() {
+        dropTable(appointmentTable);
+    }
+
+    /**
      * Used to insert an appointment into the appointment table once requested by a customer
      *
      * @param problem the problem the appointment is for

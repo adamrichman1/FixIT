@@ -30,7 +30,7 @@ public class CustomerDBManager extends UserDBManager<Customer> {
      *
      * @return the singleton instance of this class
      */
-    static CustomerDBManager getInstance() {
+    public static CustomerDBManager getInstance() {
         if (dbManager == null) {
             dbManager = new CustomerDBManager();
         }
