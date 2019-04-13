@@ -19,7 +19,7 @@ function initialize(){
                 updateChatRoomList(rawJson, pollAppointments);
             }
         };
-        xmlHttp.open("GET", '/staff/getAppointments/', true);
+        xmlHttp.open("GET", '/customer/getAppointments/', true);
         xmlHttp.send(null);*/
         var testData = {"subject":"PC","address": "A street","appointmentTime": 1000,"notes":"FixComputer","date":"4/28/19","ID":1,"name":"John"};
         updateChatRoomList(testData, pollAppointments);
@@ -85,7 +85,7 @@ function initialize(){
                 //updateChatRoomList(rawJson, pollAppointments);
             }
         };
-        xmlHttp.open("POST", '/staff/cancelAppointment/'+appointmentID, true);
+        xmlHttp.open("POST", '/customer/cancelAppointment/'+appointmentID, true);
         xmlHttp.send(null);*/
     }
 

@@ -16,6 +16,11 @@
 
     <!-- Custom styles for this template -->
     <link href="../styles/staff-home.css" rel="stylesheet">
+
+
+    // Javscript to populate appointments
+    <script type = "text/javascript" th:src="@{/js/staff-home.js}"></script>
+    <script type = "text/javascript" src="../static/js/staff-home.js"></script>
 </head>
 
 <body>
@@ -41,14 +46,17 @@
     </div>
 </nav>
 
+</br>
+</br>
+</br>
+
 <div class="container">
-    <div class="staff-home">
-        <h1>Bootstrap starter template</h1>
-        <p class="lead">
-            Use this document as a way to quickly start any new project.
-            <br> All you get is this text and a mostly barebones HTML document.
-        </p>
-        <ul id ="staffAppointmentList"></ul>
+    <div class="current-appointments">
+        <h1>Current Appointments</h1>
+        <p id="staffAppHead" class="lead"></p>
+        <ul id= "staffAppList">
+
+        </ul>
     </div>
 </div><!-- /.container -->
 </body>
