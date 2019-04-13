@@ -1,14 +1,12 @@
 package FixIT.Customer;
 
 import FixIT.Core.AppointmentDBManager;
-import FixIT.Core.UserDBManager;
 import FixIT.Core.UserRestController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -25,15 +23,13 @@ public class CustomerRestController extends UserRestController<Customer> {
     /**
      * Called when a customer attempts to login to FixIT
      *
-     * @param request the HttpRequest entity containing header information
-     * @param model the model that allows for html templates to be customized
      * @param user the login form of the customer attempting to login
      * @return a ResponseEntity to the user
      */
     @Override
     @RequestMapping(method= RequestMethod.POST, value="/customer/login")
-    protected ResponseEntity login(HttpServletRequest request, Model model, @RequestBody Customer user) {
-        return super.login(request, model, user);
+    protected ResponseEntity login(@RequestBody Customer user) {
+        return super.login(user);
     }
 
     /**
@@ -59,15 +55,13 @@ public class CustomerRestController extends UserRestController<Customer> {
     /**
      * Called when a customer attempts to sign-up with FixIT
      *
-     * @param request the HttpRequest entity containing header information
-     * @param model the model that allows for html templates to be customized
      * @param user the sign-up form of the user attempting to sign-up
      * @return a ResponseEntity to the user
      */
     @Override
     @RequestMapping(method= RequestMethod.POST, value="/customer/signup")
-    protected ResponseEntity signUp(HttpServletRequest request, Model model, @RequestBody Customer user) {
-        return super.signUp(request, model, user);
+    protected ResponseEntity signUp(@RequestBody Customer user) {
+        return super.signUp(user);
     }
 
     /**
@@ -96,7 +90,7 @@ public class CustomerRestController extends UserRestController<Customer> {
      *
      * @return the login template to the user
      */
-    @RequestMapping(method= RequestMethod.GET, value="/customer/create-appointment")
+    @RequestMapping(method= RequestMethod.GET, value="/customer/createAppointment")
     protected static String getCreateAppointmentTemplate() {
         return "create-appointment";
     }

@@ -1,13 +1,9 @@
 package FixIT.Core;
 
-import FixIT.Customer.Customer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * This class contains methods that are shared between StaffRestController and CustomerRestController. It also contains
@@ -22,12 +18,10 @@ public abstract class UserRestController<T extends User> {
     /**
      * Requires subclasses of this class to implement a login endpoint
      *
-     * @param request the HttpRequest entity containing header information
-     * @param model the model that allows for html templates to be customized
      * @param user the login form of the user attempting to login
      * @return a ResponseEntity to the user
      */
-    protected ResponseEntity login(HttpServletRequest request, Model model,  T user) {
+    protected ResponseEntity login(T user) {
         if (!getDBManager().userExists(user.getUsername())) {
             logger.warn("Invalid username");
             return new ResponseEntity<>("Invalid username", HttpStatus.BAD_REQUEST);
@@ -45,12 +39,10 @@ public abstract class UserRestController<T extends User> {
     /**
      * Requires subclasses of this class to implement a sign-up endpoint
      *
-     * @param request the HttpRequest entity containing header information
-     * @param model the model that allows for html templates to be customized
      * @param user the sign-up form of the user attempting to sign-up
      * @return a ResponseEntity to the user
      */
-    protected ResponseEntity signUp(HttpServletRequest request, Model model, T user) {
+    protected ResponseEntity signUp(T user) {
         logger.info("SignUp - Customer: " + user.toString());
         // Check validity of sign-up form
         if (signUpFormInvalid(user)) {
@@ -60,7 +52,6 @@ public abstract class UserRestController<T extends User> {
         // Check if user already exists
         else if (getDBManager().userExists(user.getUsername())) {
             logger.info("Username already exists");
-            model.addAttribute("errorMsg", "Username already in use");
             return new ResponseEntity<>("Username already in use",  HttpStatus.BAD_REQUEST);
         }
         // Register user and return success

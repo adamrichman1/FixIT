@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * This class manages all appointment logic
  */
-public class AppointmentManager {
+class AppointmentManager {
 
     private static AppointmentDBManager appointmentDBManager = new AppointmentDBManager();
     private static StaffDBManager staffDBManager = StaffDBManager.getInstance();

@@ -2,12 +2,10 @@ package FixIT.Staff;
 
 import FixIT.Core.AppointmentDBManager;
 import FixIT.Core.UserRestController;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -23,26 +21,24 @@ public class StaffRestController extends UserRestController<Staff> {
     /**
      * Called when a staff member attempts to login to FixIT
      *
-     * @param request the HttpRequest entity containing header information
      * @param user the login form of the staff member attempting to login
      * @return a ResponseEntity to the user
      */
     @RequestMapping(method= RequestMethod.POST, value="/staff/login")
-    protected @ResponseBody ResponseEntity login(HttpServletRequest request, Model model, @RequestBody Staff user) {
-        return super.login(request, model, user);
+    protected @ResponseBody ResponseEntity login(@RequestBody Staff user) {
+        return super.login(user);
     }
 
     /**
      * Called when a staff member attempts to sign-up with FixIT
      *
-     * @param request the HttpRequest entity containing header information
      * @param user the sign-up form of the user attempting to sign-up
      * @return a ResponseEntity to the user
      */
     @Override
     @RequestMapping(method= RequestMethod.POST, value="/staff/signup")
-    protected @ResponseBody ResponseEntity signUp(HttpServletRequest request, Model model, @RequestBody Staff user) {
-        return super.signUp(request, model, user);
+    protected @ResponseBody ResponseEntity signUp(@RequestBody Staff user) {
+        return super.signUp(user);
     }
 
     /**
