@@ -46,7 +46,7 @@ public class AppointmentRestController {
     @RequestMapping(method= RequestMethod.GET, value="/customer/getAppointmentHistory", headers="Accept=application/json")
     @ResponseBody ResponseEntity getCustomerAppointmentHistory(HttpServletRequest request) {
         String username = request.getHeader("username");
-        logger.info("Finding appointment history for: " + username);
+        logger.info("Finding appointment history for customer: " + username);
         List<Appointment> appointments = AppointmentManager.getCustomerAppointmentHistory(username);
         logger.info("Appointment history: " + Arrays.toString(appointments.toArray()));
         return new ResponseEntity<>(appointments, HttpStatus.OK);
@@ -61,7 +61,10 @@ public class AppointmentRestController {
     @RequestMapping(method= RequestMethod.GET, value="/staff/getAppointmentHistory", headers="Accept=application/json")
     @ResponseBody ResponseEntity getStaffAppointmentHistory(HttpServletRequest request) {
         String username = request.getHeader("username");
-        return new ResponseEntity<>(AppointmentManager.getStaffAppointmentHistory(username), HttpStatus.OK);
+        logger.info("Finding appointment history for staff: " + username);
+        List<Appointment> appointments = AppointmentManager.getStaffAppointmentHistory(username);
+        logger.info("Appointment history: " + Arrays.toString(appointments.toArray()));
+        return new ResponseEntity<>(appointments, HttpStatus.OK);
     }
 
     /**
