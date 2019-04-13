@@ -45,6 +45,16 @@ public class StaffRestController extends UserRestController<Staff> {
     }
 
     /**
+     * Called when a staff member attempts to access the home
+     *
+     * @return the login template to the user
+     */
+    @RequestMapping(method= RequestMethod.GET, value="/staff/home")
+    protected static String getStaffHome() {
+        return "staff-home";
+    }
+
+    /**
      * Called when a staff member attempts to sign-up with FixIT
      *
      * @return the staff sign-up template to the user

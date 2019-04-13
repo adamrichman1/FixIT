@@ -34,12 +34,12 @@
         <input id="inputLastName" class="form-control" placeholder="Last Name" required autofocus>
         <input id="inputAddress" class="form-control" placeholder="Address" required autofocus>
         <br />
-        <button class="btn btn-lg btn-primary btn-block" id="staff-signup-button" type="button">Sign up</button>
+        <button class="btn btn-lg btn-primary btn-block" id="staffUsername-signup-button" type="button">Sign up</button>
     </form>
 </div> <!-- /container -->
 
 <div id="return-to-login" class="container">
-    <span>Already have an account? <a href="http://localhost:8080/staff/login">Return to login.</a></span>
+    <span>Already have an account? <a href="http://localhost:8080/staffUsername/login">Return to login.</a></span>
 </div>
 
 <div id="back-to-home" class="container">
@@ -50,7 +50,7 @@
 </html>
 
 <script>
-    button = document.getElementById('staff-signup-button');
+    button = document.getElementById('staffUsername-signup-button');
     button.addEventListener('click', function() {
 
         const formData = JSON.stringify({
@@ -63,12 +63,12 @@
         document.getElementById("signup-form").reset();
         console.log(formData);
         $.ajax({
-            url: "http://localhost:8080/staff/signup",
+            url: "http://localhost:8080/staffUsername/signup",
             type: 'POST',
             data: formData,
             contentType: "application/json",
             success: function() {
-                window.location.href = "/staff/home";
+                window.location.href = "/staffUsername/home";
             },
             error: function(jqXHR, textStatus, errorThrown){
                 console.log(jqXHR.status);

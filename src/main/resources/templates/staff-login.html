@@ -36,7 +36,7 @@
 </div> <!-- /container -->
 
 <div id="sign-up-link" class="container">
-    <span>New User? <a href="http://localhost:8080/staff/signup">Become a FixIT Consultant</a></span>
+    <span>New User? <a href="http://localhost:8080/staffUsername/signup">Become a FixIT Consultant</a></span>
 </div>
 
 <div id="back-to-home" class="container">
@@ -56,12 +56,12 @@
         document.getElementById("signin-form").reset();
         console.log(formData);
         $.ajax({
-            url: "http://localhost:8080/staff/login",
+            url: "http://localhost:8080/staffUsername/login",
             type: 'POST',
             data: formData,
             contentType: "application/json",
             success: function() {
-                window.location.href = "/staff/home";
+                window.location.href = "/staffUsername/home";
             },
             error: function(jqXHR, textStatus, errorThrown){
                 console.log(jqXHR.status);
