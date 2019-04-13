@@ -16,6 +16,10 @@
 
     <!-- Custom styles for this template -->
     <link rel="stylesheet" type="text/css" th:href="@{/css/home.css}">
+
+    // Javscript to populate appointments
+    <script type = "text/javascript" th:src="@{/js/customer-home.js}"></script>
+    <script type = "text/javascript" src="../static/js/customer-home.js"></script>
 </head>
 <body>
 <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -39,13 +43,17 @@
     </div>
 </nav>
 
+</br>
+</br>
+</br>
+
 <div class="container">
 
     <div class="current-appointments">
         <h1>Current Appointments</h1>
-        <p class="lead">No current appointments available.</p>
-        <ul>
-            <li></li>
+        <p id="custAppHead" class="lead"></p>
+        <ul id= "custAppList">
+
         </ul>
     </div>
 

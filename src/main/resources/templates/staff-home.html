@@ -15,6 +15,9 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
 
     <!-- Custom styles for this template -->
+  
+    // Javscript to populate appointments
+    <script type = "text/javascript" th:src="@{/js/staff-home.js}"></script>
     <link rel="stylesheet" type="text/css" th:href="@{/css/home.css}">
 </head>
 
@@ -40,13 +43,16 @@
     </div>
 </nav>
 
+</br>
+</br>
+</br>
+
 <div class="container">
     <div class="current-appointments">
-        <h1>Pending Appointments</h1>
-        <ul>
-            <li>
-                <p>Name</p>
-            </li>
+
+        <h1>Current Appointments</h1>
+        <p id="staffAppHead" class="lead"></p>
+        <ul id= "staffAppList">
         </ul>
     </div>
 </div><!-- /.container -->
