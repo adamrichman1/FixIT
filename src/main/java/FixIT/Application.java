@@ -46,6 +46,7 @@ public class Application {
         CustomerDBManager.getInstance().dropUserTable();
         StaffDBManager.getInstance().dropUserTable();
         AppointmentDBManager.createAppointmentTable();
+        CustomerDBManager.getInstance().createCustomerTable();
     }
 
     /**

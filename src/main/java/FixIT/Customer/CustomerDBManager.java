@@ -22,7 +22,6 @@ public class CustomerDBManager extends UserDBManager<Customer> {
 
     private CustomerDBManager() {
         super("customers");
-        createCustomerTable(userTable);
     }
 
     /**
@@ -62,11 +61,9 @@ public class CustomerDBManager extends UserDBManager<Customer> {
 
     /**
      * Used to create the customer table
-     *
-     * @param tableName the name of the table to create // TODO - finish this based on insert and integrate
      */
-    private void createCustomerTable(String tableName) {
-        String sql = "CREATE TABLE IF NOT EXISTS " + tableName +
+    public void createCustomerTable() {
+        String sql = "CREATE TABLE IF NOT EXISTS " + userTable +
                 " (username         TEXT        NOT NULL, " +
                 "password           TEXT        NOT NULL, " +
                 "email              TEXT        NOT NULL, " +
