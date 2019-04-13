@@ -16,14 +16,15 @@ function initialize(){
         xmlHttp.onreadystatechange = function() {
             if (xmlHttp.readyState == 4 && xmlHttp.status == 200){
                 var rawJson = JSON.parse(xmlHttp.responseText);
+                console.log(rawJson);
                 updateChatRoomList(rawJson, pollAppointments);
+            }
+            else{
+                console.log("error: "+ xmlHttp.status);
             }
         };
         xmlHttp.open("GET", '/staff/getAppointmentHistory', true);
         xmlHttp.send(null);
-        //var testData = {"subject":"PC","address": "A street","appointmentTime": 1000,"notes":"FixComputer","date":"4/28/19","ID":1,"name":"John"};
-        console.log(rawJson);
-        updateAppointmentList(rawJson, pollAppointments);
     }
 
 
