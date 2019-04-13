@@ -2,6 +2,7 @@ package FixIT.Core;
 
 import FixIT.Application;
 import FixIT.Staff.Staff;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -9,6 +10,7 @@ import java.util.ArrayList;
 /**
  * This class represents an appointment between a FixIT customer and FixIT staffUsername member
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Appointment {
     private String problem;
     private long appointmentID;
