@@ -13,35 +13,44 @@
 
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <!-- Custom styles for this template -->
     <link rel="stylesheet" type="text/css" th:href="@{/css/login.css}">
-    <script type="js" src=@{/js/appointment-summary.js}" />
+    <script type="text/javascript" th:src="@{/js/appointment-summary.js}"></script>
 </head>
 
 
 <body>
 <main class="main_layout">
-
-    <form class="form-signin">
+    <div id="summary">
         <h2 class="form-signin-heading">Appointment Summary</h2>
 
         <h3>Date:</h3>
-        <input type="date" id="inputDate" class="form-control" placeholder="Date" required autofocus>
+        <p></p>
         </br>
 
         <h3>Time:</h3>
-        <input type="time" id="inputTime" class="form-control" placeholder="Time" required autofocus>
+        <p></p>
         </br>
 
         <h3>Description:</h3>
-        <textarea rows="8" cols="100" placeholder="Problem Description"></textarea>
+        <p></p>
+    </div>
 
-        <button class="btn btn-lg btn-primary btn-block" id="staffUsername-signup-button" type="submit">Sign up</button>
-    </form>
+    <div id="rating">
+        <br />
+        <br />
 
+        <h3>Submit a rating of your FixIT Consultant!</h3>
+        <span id="1star" class="fa fa-star checked"></span>
+        <span id="2star" class="fa fa-star checked"></span>
+        <span id="3star" class="fa fa-star checked"></span>
+        <span id="4star" class="fa fa-star checked"></span>
+        <span id="5star" class="fa fa-star checked"></span>
 
-
+        <button class="btn btn-lg btn-primary btn-block" id="submit-rating-button" type="submit">Submit Rating</button>
+    </div>
 </main>
 </body>
 </html>
