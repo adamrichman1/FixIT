@@ -86,13 +86,33 @@ public class CustomerRestController extends UserRestController<Customer> {
     }
 
     /**
-     * Called when a user (customer or staff) attempts to login to FixIT
+     * Called when a user attempts to create an appointment
      *
-     * @return the login template to the user
+     * @return the create-appointment template to the user
      */
     @RequestMapping(method= RequestMethod.GET, value="/customer/createAppointment")
     protected static String getCreateAppointmentTemplate() {
         return "create-appointment";
+    }
+
+    /**
+     * Called when a user fails to create an appointment
+     *
+     * @return the appointment-error template to the user
+     */
+    @RequestMapping(method= RequestMethod.GET, value="/appointment/error")
+    protected static String getAppointmentErrorTemplate() {
+        return "appointment-error";
+    }
+
+    /**
+     * Called when a user views an appointment
+     *
+     * @return the appointment summary template to the user
+     */
+    @RequestMapping(method= RequestMethod.GET, value="/appointment/summary")
+    protected static String getAppointmentSummaryTemplate() {
+        return "appointment-summary";
     }
 
     /**

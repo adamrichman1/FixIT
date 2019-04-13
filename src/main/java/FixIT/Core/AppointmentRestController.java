@@ -5,7 +5,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -28,14 +27,14 @@ public class AppointmentRestController {
      * @return a ResponseEntity to the user containing the result of the request in the body
      */
     @RequestMapping(method= RequestMethod.POST, value="/createAppointment", headers="Accept=application/json")
-    @ResponseBody String createAppointment(HttpServletRequest request, Appointment appointment, Model model) {
+    @ResponseBody ResponseEntity createAppointment(HttpServletRequest request, Appointment appointment) {
         if (AppointmentManager.isStaffMemberAvailable()) {
             appointment.setCustomerUsername(request.getHeader("username"));
             appointment.setStaffUsername(AppointmentManager.findStaffMember());
-            model.addAttribute("appointment", AppointmentManager.createAppointment(appointment));
-            return "appointment-summary";
+            AppointmentManager.createAppointment(appointment);
+            return new ResponseEntity(HttpStatus.OK);
         }
-        return "appointment-error";
+        return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     /**
