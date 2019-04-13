@@ -1,5 +1,7 @@
 window.addEventListener("load",initialize,true);
 
+var rating = 0;
+
 function initialize(){
     document.getElementById("1star").addEventListener("click", colorRating(1));
     document.getElementById("2star").addEventListener("click", colorRating(2));
@@ -27,6 +29,7 @@ function showRating(appointmentStatus){
 function colorRating(rating){
     switch (rating){
         case 5:
+            rating = 5;
             check(document.getElementById("1star"));
             check(document.getElementById("2star"));
             check(document.getElementById("3star"));
@@ -34,6 +37,7 @@ function colorRating(rating){
             check(document.getElementById("5star"));
             break;
         case 4:
+            rating = 4;
             check(document.getElementById("1star"));
             check(document.getElementById("2star"));
             check(document.getElementById("3star"));
@@ -68,9 +72,10 @@ function colorRating(rating){
 
 function check(elem) {
     elem.removeClass("unchecked");
-    elem.addClass("checked")
+    elem.addClass("checked");
 }
 
 function uncheck(elem) {
-
+    elem.removeClass("checked");
+    elem.addClass("unchecked");
 }
