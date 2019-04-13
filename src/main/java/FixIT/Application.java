@@ -2,7 +2,6 @@ package FixIT;
 
 import FixIT.Core.AppointmentDBManager;
 import FixIT.Customer.CustomerDBManager;
-import FixIT.Staff.Staff;
 import FixIT.Staff.StaffDBManager;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;

@@ -167,12 +167,4 @@ public abstract class DBManager {
             return null;
         }
     }
-
-    /**
-     * Package-private getters for class variables - helps with testing
-     * @return class variables
-     */
-    String getDbURL(){
-        return dbURL;
-    }
 }
