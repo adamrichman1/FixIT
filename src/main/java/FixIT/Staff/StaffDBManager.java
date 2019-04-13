@@ -25,11 +25,31 @@ public class StaffDBManager extends UserDBManager<Staff> {
      *
      * @return the singleton instance of this class
      */
-    static StaffDBManager getInstance() {
+    public static StaffDBManager getInstance() {
         if (dbManager == null) {
             dbManager = new StaffDBManager();
         }
         return dbManager;
+    }
+
+    /**
+     * Checks if the staff table has staff member in it
+     *
+     * @return true if there exists a staff member in the table, false otherwise
+     */
+    public boolean staffAvailable() {
+        String sql = "SELECT COUNT(*) AS count FROM " + userTable;
+        return deserializeResultSetCol(executeQuery(sql), "count", int.class) != 0;
+    }
+
+    /**
+     * Checks if the staff table has staff member in it
+     *
+     * @return true if there exists a staff member in the table, false otherwise
+     */
+    public String findStaff() {
+        String sql = "SELECT username FROM " + userTable + " ORDER BY RANDOM() LIMIT 1";
+        return deserializeResultSetCol(executeQuery(sql), "username", String.class);
     }
 
     /**

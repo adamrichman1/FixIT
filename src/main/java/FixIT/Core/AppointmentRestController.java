@@ -1,7 +1,9 @@
 package FixIT.Core;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -12,8 +14,6 @@ import javax.servlet.http.HttpServletRequest;
 @Controller
 public class AppointmentRestController {
 
-    private AppointmentDBManager appointmentDBManager = new AppointmentDBManager();
-
     /**
      * Called when a customer tries to create an appointment
      *
@@ -22,11 +22,11 @@ public class AppointmentRestController {
      * @return a ResponseEntity to the user containing the result of the request in the body
      */
     @RequestMapping(method= RequestMethod.POST, value="/createAppointment", headers="Accept=application/json")
-    @ResponseBody ResponseEntity createAppointment(HttpServletRequest request, Appointment appointment) {
-        String username = request.getHeader("username");
-
-        // TODO create appointment
-        return null;
+    @ResponseBody String createAppointment(HttpServletRequest request, Appointment appointment) {
+        appointment.setCustomerUsername(request.getHeader("username"));
+        appointment.setStaffUsername(AppointmentManager.findStaffMember());
+        AppointmentManager.createAppointment(appointment);
+        return "appointment-summary";
     }
 
     /**
@@ -35,11 +35,23 @@ public class AppointmentRestController {
      * @param request the HttpRequest entity containing header information and the username of the requesting user
      * @return a ResponseEntity to the user containing the appointment history in the response body
      */
-    @RequestMapping(method= RequestMethod.GET, value="/getAppointmentHistory", headers="Accept=application/json")
-    @ResponseBody ResponseEntity getAppointmentHistory(HttpServletRequest request) {
+    @RequestMapping(method= RequestMethod.GET, value="/customer/getAppointmentHistory", headers="Accept=application/json")
+    @ResponseBody String getCustomerAppointmentHistory(HttpServletRequest request, Model model) {
         String username = request.getHeader("username");
-        // TODO find appointment history
-        return null;
+        model.addAttribute("appointmentHistory", AppointmentManager.getCustomerAppointmentHistory(username));
+        return "customer-appointment-history";
+    }
+
+    /**
+     * Used to retrieve a user's appointment history
+     *
+     * @param request the HttpRequest entity containing header information and the username of the requesting user
+     * @return a ResponseEntity to the user containing the appointment history in the response body
+     */
+    @RequestMapping(method= RequestMethod.GET, value="/staff/getAppointmentHistory", headers="Accept=application/json")
+    @ResponseBody ResponseEntity getStaffAppointmentHistory(HttpServletRequest request) {
+        String username = request.getHeader("username");
+        return new ResponseEntity<>(AppointmentManager.getStaffAppointmentHistory(username), HttpStatus.OK);
     }
 
     /**
@@ -83,5 +95,4 @@ public class AppointmentRestController {
         // TODO update appointment status
         return null;
     }
-
 }

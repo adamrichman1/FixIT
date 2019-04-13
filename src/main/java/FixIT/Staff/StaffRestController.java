@@ -1,5 +1,6 @@
 package FixIT.Staff;
 
+import FixIT.Core.AppointmentManager;
 import FixIT.Core.UserRestController;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -50,7 +51,9 @@ public class StaffRestController extends UserRestController<Staff> {
      * @return the login template to the user
      */
     @RequestMapping(method= RequestMethod.GET, value="/staff/home")
-    protected static String getStaffHome() {
+    protected static String getStaffHome(HttpServletRequest request, Model model) {
+        String username = request.getHeader("username");
+        model.addAttribute("appointmentHistory", AppointmentManager.getStaffAppointmentHistory(username));
         return "staff-home";
     }
 
