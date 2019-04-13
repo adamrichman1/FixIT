@@ -1,5 +1,7 @@
 package FixIT.Core;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -7,12 +9,16 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * This class manages HTTP endpoints for appointment-related functionality (e.g. createAppointment)
  */
 @Controller
 public class AppointmentRestController {
+
+    private static Logger logger = LoggerFactory.getLogger(AppointmentRestController.class);
 
     /**
      * Called when a customer tries to create an appointment
@@ -41,7 +47,10 @@ public class AppointmentRestController {
     @RequestMapping(method= RequestMethod.GET, value="/customer/getAppointmentHistory", headers="Accept=application/json")
     @ResponseBody ResponseEntity getCustomerAppointmentHistory(HttpServletRequest request) {
         String username = request.getHeader("username");
-        return new ResponseEntity<>(AppointmentManager.getCustomerAppointmentHistory(username), HttpStatus.OK);
+        logger.info("Finding appointment history for: " + username);
+        List<Appointment> appointments = AppointmentManager.getCustomerAppointmentHistory(username);
+        logger.info("Appointment history: " + Arrays.toString(appointments.toArray()));
+        return new ResponseEntity<>(appointments, HttpStatus.OK);
     }
 
     /**
