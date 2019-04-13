@@ -1,6 +1,5 @@
 package FixIT.Customer;
 
-import FixIT.Core.AppointmentManager;
 import FixIT.Core.UserRestController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -97,9 +96,8 @@ public class CustomerRestController extends UserRestController<Customer> {
      * @return the login template to the user
      */
     @RequestMapping(method= RequestMethod.GET, value="/customer/home")
-    protected static String getCustomerHome(HttpServletRequest request, Model model) {
-        String username = request.getHeader("username");
-        model.addAttribute("appointmentHistory", AppointmentManager.getStaffAppointmentHistory(username));
+    protected static String getCustomerHome() {
+        logger.info("accessed");
         return "customer-home";
     }
 

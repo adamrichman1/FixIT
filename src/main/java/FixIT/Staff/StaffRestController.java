@@ -51,9 +51,7 @@ public class StaffRestController extends UserRestController<Staff> {
      * @return the login template to the user
      */
     @RequestMapping(method= RequestMethod.GET, value="/staff/home")
-    protected static String getStaffHome(HttpServletRequest request, Model model) {
-        String username = request.getHeader("username");
-        model.addAttribute("appointmentHistory", AppointmentManager.getStaffAppointmentHistory(username));
+    protected static String getStaffHome() {
         return "staff-home";
     }
 
