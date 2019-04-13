@@ -50,6 +50,7 @@
 
     <form class="form-signin">
         <h2 class="form-signin-heading">Create Appointment</h2>
+        </br>
 
         <h4 class = "label-black">Date</h4>
         <input type="date" id="inputDate" class="form-control" placeholder="Date" required autofocus>
@@ -59,17 +60,16 @@
         <input type="time" id="inputTime" class="form-control" placeholder="Time" required autofocus>
         </br>
 
-        <h4 class = "label-black">Subject</h4>
-        <input type="" id="inputSubject" class="form-control" placeholder="Subject" required autofocus>
-        </br>
-
         <h4 class = "label-black">Address</h4>
         <input type="" id="inputAddress" class="form-control" placeholder="Address" required autofocus>
         </br>
 
+        <h4 class = "label-black">Subject</h4>
+        <input type="" id="inputSubject" class="form-control" placeholder="Subject" required autofocus>
+        </br>
 
         <h4 class = "label-black">Description</h4>
-        <textarea rows="8" cols="100" placeholder="Problem Description"></textarea>
+        <textarea id = "inputDescription" rows="8" cols="100" placeholder="Problem Description"></textarea>
 
         <button class="btn btn-lg btn-primary btn-block" id="customer-create-appt" type="submit">Submit Appointment</button>
     </form>
@@ -79,3 +79,32 @@
 </main>
 </body>
 </html>
+<script>
+    button = document.getElementById('staff-signup-button');
+    button.addEventListener('click', function() {
+
+        const formData = JSON.stringify({
+            "date": document.getElementById('inputDate').value,
+            "time": document.getElementById('inputTime').value,
+            "address":  document.getElementById('inputAddress').value,
+            "subject":  document.getElementById('inputSubject').value,
+            "description":  document.getElementById('inputDescription').value,
+        });
+        console.log(formData);
+        $.ajax({
+            url: "http://localhost:8080/customer/create-appointment",
+            type: 'POST',
+            data: formData,
+            contentType: "application/json",
+            success: function() {
+                window.location.href = "/customer/home";
+            },
+            error: function(jqXHR, textStatus, errorThrown){
+                console.log(jqXHR.status);
+                console.log(textStatus);
+                console.log(errorThrown);
+                // TODO - ERROR HANDLE
+            }
+        });
+    });
+</script>
