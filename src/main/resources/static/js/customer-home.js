@@ -20,7 +20,7 @@ function initialize(){
                 updateChatRoomList(rawJson, pollAppointments);
             }
             else{
-                console.log("Error" +xmlHttp.status );
+                console.log("Error" +xmlHttp.status);
             }
         };
         xmlHttp.open("GET", '/staff/getAppointmentHistory', true);
