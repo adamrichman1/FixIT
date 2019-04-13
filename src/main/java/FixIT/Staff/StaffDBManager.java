@@ -77,7 +77,7 @@ public class StaffDBManager extends UserDBManager<Staff> {
         String sql = "INSERT INTO " + userTable + " (username, password, email, name, address, appointmentHistory, " +
                 "rating) VALUES (?, ?, ?, ?, ?, ?, 0.0)";
         executeUpdate(sql, user.getUsername(), user.getPassword(), user.getEmail(), user.getName(), user.getAddress(),
-                Arrays.toString(user.getAppointmentHistory().toArray()), user.getRating());
+                Arrays.toString(user.getAppointmentHistory().toArray()));
     }
 
     /**
