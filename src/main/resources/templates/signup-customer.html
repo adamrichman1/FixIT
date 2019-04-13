@@ -64,7 +64,6 @@
         document.getElementById("signup-form").reset();
         console.log(formData);
         localStorage.setItem("username", formData.username);
-        console.log(localStorage.getItem("username"));
         $.ajax({
             url: "http://localhost:8080/customer/signup",
             type: 'POST',

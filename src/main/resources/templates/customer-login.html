@@ -53,16 +53,17 @@
 <script>
     button = document.getElementById('login-button');
     button.addEventListener('click', function() {
-        const formData = JSON.stringify({
+        const formData = {
             username: document.getElementById('inputUsername').value,
             password: document.getElementById('inputPassword').value
-        });
+        };
         document.getElementById("signin-form").reset();
         console.log(formData);
+        localStorage.setItem("username", formData.username);
         $.ajax({
             url: "http://localhost:8080/customer/login",
             type: 'POST',
-            data: formData,
+            data: JSON.stringify(formData),
             contentType: "application/json",
             success: function() {
                 window.location.href = "/customer/home";
