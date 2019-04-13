@@ -1,6 +1,5 @@
 package FixIT.Customer;
 
-import FixIT.Core.Appointment;
 import FixIT.Core.UserDBManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

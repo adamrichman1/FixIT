@@ -17,7 +17,7 @@ public class AppointmentDBManager extends DBManager {
     private static String appointmentTable = "appointments";
     private static Logger logger = LoggerFactory.getLogger(AppointmentDBManager.class);
 
-    private static void createAppointmentTable() {
+    public static void createAppointmentTable() {
         executeUpdate("CREATE TABLE IF NOT EXISTS " + appointmentTable +
                 " (problem              TEXT        NOT NULL," +
                 " customerUsername      TEXT        NOT NULL," +
