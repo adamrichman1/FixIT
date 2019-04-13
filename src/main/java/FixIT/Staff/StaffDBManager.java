@@ -34,6 +34,21 @@ public class StaffDBManager extends UserDBManager<Staff> {
     }
 
     /**
+     * Used to create the staff table
+     */
+    public void createStaffTable() {
+        String sql = "CREATE TABLE IF NOT EXISTS " + userTable +
+                " (username         TEXT        NOT NULL, " +
+                "password           TEXT        NOT NULL, " +
+                "email              TEXT        NOT NULL, " +
+                "name               TEXT        NOT NULL, " +
+                "address            TEXT        NOT NULL, " +
+                "appointmentHistory TEXT        NOT NULL, " +
+                "rating             DECIMAL     NOT NULL)";
+        executeUpdate(sql);
+    }
+
+    /**
      * Checks if the staff table has staff member in it
      *
      * @return true if there exists a staff member in the table, false otherwise
@@ -60,10 +75,9 @@ public class StaffDBManager extends UserDBManager<Staff> {
      */
     protected void insertUserToDB(Staff user) {
         String sql = "INSERT INTO " + userTable + " (username, password, email, name, address, appointmentHistory, " +
-                "rating, yearWorked, strengths) VALUES (?, ?, ?, ?, ?, ?, 0.0, 0.0, ?)";
+                "rating) VALUES (?, ?, ?, ?, ?, ?, 0.0)";
         executeUpdate(sql, user.getUsername(), user.getPassword(), user.getEmail(), user.getName(), user.getAddress(),
-                Arrays.toString(user.getAppointmentHistory().toArray()), user.getRating(), user.getYearsWorked(),
-                user.getStrengths());
+                Arrays.toString(user.getAppointmentHistory().toArray()), user.getRating());
     }
 
     /**
@@ -82,8 +96,6 @@ public class StaffDBManager extends UserDBManager<Staff> {
                 s.setAddress(rs.getString("address"));
                 s.setAppointmentHistory(deserializeString("appointmentHistory", ArrayList.class));
                 s.setRating(rs.getDouble("rating"));
-                s.setStrengths(deserializeString("strengths", ArrayList.class));
-                s.setYearsWorked(rs.getInt("yearsWorked"));
                 return s;
             }
         } catch (SQLException e) {
