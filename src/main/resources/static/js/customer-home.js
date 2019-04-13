@@ -24,7 +24,7 @@ function initialize(){
             }
         };
         xmlHttp.open("GET", '/staff/getAppointmentHistory', true);
-        xmlHttp.send(null);*/
+        xmlHttp.send(null);
         //var testData = {"subject":"PC","address": "A street","appointmentTime": 1000,"notes":"FixComputer","date":"4/28/19","ID":1,"name":"John"};
     }
 
