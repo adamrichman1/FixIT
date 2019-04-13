@@ -17,7 +17,7 @@
     <!-- Custom styles for this template -->
     <link rel="stylesheet" type="text/css" th:href="@{/css/home.css}">
 
-    // Javscript to populate appointments
+    <!-- Javscript to populate appointments-->
     <script type = "text/javascript" th:src="@{/js/customer-home.js}"></script>
     <script type = "text/javascript" src="../static/js/customer-home.js"></script>
 </head>
@@ -51,10 +51,8 @@
 
     <div class="current-appointments">
         <h1>Current Appointments</h1>
-        <p id="custAppHead" class="lead"></p>
-        <ul id= "custAppList">
-
-        </ul>
+        <p id="appt-head" class="lead"></p>
+        <ul id= "appt-list" class="list-group"></ul>
     </div>
 
     <div class="container"></div>
@@ -62,12 +60,12 @@
 </div><!-- /.container -->
 
 
-<!--&lt;!&ndash; Bootstrap core JavaScript-->
-<!--================================================== &ndash;&gt;-->
-<!--&lt;!&ndash; Placed at the end of the document so the pages load faster &ndash;&gt;-->
-<!--<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ" crossorigin="anonymous"></script>-->
-<!--<script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>-->
-<!--<script src="../../dist/js/bootstrap.min.js"></script>-->
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ" crossorigin="anonymous"></script>
+<script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+<script src="../../dist/js/bootstrap.min.js"></script>
 
 </body>
 </html>

@@ -53,20 +53,22 @@
 <script>
     button = document.getElementById('customer-signup-button');
     button.addEventListener('click', function() {
-        const formData = JSON.stringify({
+        const formData = {
             "username": document.getElementById('inputUsername').value,
             "password": document.getElementById('inputPassword').value,
             "email":  document.getElementById('email').value,
             "name":  document.getElementById('firstname').value + " " + document.getElementById('lastname').value,
             "address":  document.getElementById('address').value,
             "creditCard":  document.getElementById('creditcard').value
-        });
+        };
         document.getElementById("signup-form").reset();
         console.log(formData);
+        localStorage.setItem("username", formData.username);
+        console.log(localStorage.getItem("username"));
         $.ajax({
             url: "http://localhost:8080/customer/signup",
             type: 'POST',
-            data: formData,
+            data: JSON.stringify(formData),
             contentType: "application/json",
             success: function() {
                 window.location.href = "/customer/home";
