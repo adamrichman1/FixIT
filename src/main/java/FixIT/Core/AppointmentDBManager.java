@@ -91,7 +91,7 @@ public class AppointmentDBManager extends DBManager {
      */
     ArrayList<Appointment> findCustomerAppointmentHistory(String customerUsername) {
         String sql = "SELECT * FROM " + appointmentTable + " WHERE customerUsername=?";
-        return populateAppointmentHistory(executeUpdate(sql, customerUsername));
+        return populateAppointmentHistory(executeQuery(sql, customerUsername));
     }
 
     /**
@@ -102,7 +102,7 @@ public class AppointmentDBManager extends DBManager {
      */
     ArrayList<Appointment> findStaffAppointmentHistory(String staffUsername) {
         String sql = "SELECT * FROM " + appointmentTable + " WHERE staffUsername=?";
-        return populateAppointmentHistory(executeUpdate(sql, staffUsername));
+        return populateAppointmentHistory(executeQuery(sql, staffUsername));
     }
 
     /**
