@@ -64,7 +64,7 @@ public class StaffDBManager extends UserDBManager<Staff> {
      * @return true if there exists a staff member in the table, false otherwise
      */
     public String findStaff() {
-        String sql = "SELECT username FROM " + userTable + " ORDER BY RANDOM() LIMIT 1";
+        String sql = "SELECT username AS username FROM " + userTable + " ORDER BY random() LIMIT 1";
         return deserializeResultSetCol(executeQuery(sql), "username", String.class);
     }
 

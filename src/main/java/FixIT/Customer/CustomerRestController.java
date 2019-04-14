@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -115,5 +116,16 @@ public class CustomerRestController extends UserRestController<Customer> {
         String username = request.getHeader("username");
         double rating = AppointmentDBManager.getCustomerRating(username);
         return new ResponseEntity<>(rating, HttpStatus.OK);
+    }
+
+    /**
+     * Called when a staff member views an appointment
+     *
+     * @return the appointment worklog template to the staff-member
+     */
+    @RequestMapping(method= RequestMethod.GET, value="/customer/appointment/summary")
+    protected static String getWorklogTemplate(@RequestParam("appointmentID") long appointmentID, Model model) {
+        model.addAttribute("appointment", AppointmentDBManager.findAppointment(appointmentID));
+        return "appointment-summary";
     }
 }
