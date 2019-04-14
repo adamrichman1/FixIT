@@ -1,6 +1,8 @@
 package FixIT.Core;
 
 import FixIT.Staff.StaffDBManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
@@ -11,6 +13,7 @@ class AppointmentManager {
 
     private static AppointmentDBManager appointmentDBManager = new AppointmentDBManager();
     private static StaffDBManager staffDBManager = StaffDBManager.getInstance();
+    private static Logger logger = LoggerFactory.getLogger(AppointmentManager.class);
 
     /**
      * Creates a new appointment
@@ -18,6 +21,7 @@ class AppointmentManager {
      * @param appointment the appointment to create
      */
     static void createAppointment(Appointment appointment) {
+        logger.info(appointment.toString());
         appointmentDBManager.insertAppointmentToDB(
                 appointment.getProblem(),
                 appointment.getCustomerUsername(),

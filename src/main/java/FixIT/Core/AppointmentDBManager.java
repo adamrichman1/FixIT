@@ -22,7 +22,7 @@ public class AppointmentDBManager extends DBManager {
                 " (problem              TEXT        NOT NULL," +
                 " customerUsername      TEXT        NOT NULL," +
                 " staffUsername         TEXT        NOT NULL," +
-                " appointmentTime       BIGINT      NOT NULL," +
+                " appointmentTime       TEXT        NOT NULL," +
                 " worklog               TEXT        NOT NULL," +
                 " appointmentStatus     INT         NOT NULL," +
                 " customerRating        INT         NOT NULL," +
@@ -85,7 +85,7 @@ public class AppointmentDBManager extends DBManager {
      * @param appointmentCost the cost of the appointment
      */
     void insertAppointmentToDB(String problem, String customerUsername, String staffUsername,
-                               long appointmentTime, List<String> worklog, int appointmentStatus,
+                               String appointmentTime, List<String> worklog, int appointmentStatus,
                                int customerRating, int staffRating, BigDecimal appointmentCost) {
         String sql = "INSERT INTO " + appointmentTable + " (problem, customerUsername, staffUsername, " +
                 "appointmentTime, worklog, appointmentStatus, customerRating, staffRating, appointmentCost) " +
@@ -146,7 +146,7 @@ public class AppointmentDBManager extends DBManager {
                 a.setProblem(rs.getString("problem"));
                 a.setCustomerUsername(rs.getString("customerUsername"));
                 a.setStaffUsername(rs.getString("staffUsername"));
-                a.setAppointmentTime(rs.getLong("appointmentTime"));
+                a.setAppointmentTime(rs.getString("appointmentTime"));
                 a.setWorkLog(deserializeString(rs.getString("worklog"), ArrayList.class));
                 a.setAppointmentStatus(rs.getInt("appointmentStatus"));
                 a.setCustomerRating(rs.getInt("customerRating"));

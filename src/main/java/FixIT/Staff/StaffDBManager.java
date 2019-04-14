@@ -65,7 +65,7 @@ public class StaffDBManager extends UserDBManager<Staff> {
      */
     public String findStaff() {
         String sql = "SELECT username AS username FROM " + userTable + " ORDER BY random() LIMIT 1";
-        return deserializeResultSetCol(executeQuery(sql), "username", String.class);
+        return getString(executeQuery(sql), "username");
     }
 
     /**

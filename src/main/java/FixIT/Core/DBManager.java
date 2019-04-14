@@ -56,7 +56,7 @@ public abstract class DBManager {
      *
      * @param table the table to drop
      */
-    protected static void dropTable(String table){
+    static void dropTable(String table){
         String sql = "DROP TABLE IF EXISTS " + table;
         executeUpdate(sql);
     }
@@ -90,7 +90,7 @@ public abstract class DBManager {
      * @param rs the ResultSet object containing match data from the query
      * @param id the id of the column to extract from the ResultSet
      * @param c the Class to convert the ResultSet column to
-     * @return an array of Team objects containing team data from the query
+     * @return the deserialized value
      */
     protected static <S> S deserializeResultSetCol(ResultSet rs, String id, Class<S> c) {
         try {
@@ -105,12 +105,31 @@ public abstract class DBManager {
     }
 
     /**
+     * Used to convert a ResultSet object into a String
+     *
+     * @param rs the ResultSet object containing match data from the query
+     * @param id the id of the column to extract from the ResultSet
+     * @return the deserialized value
+     */
+    protected static String getString(ResultSet rs, String id) {
+        try {
+            if (rs.next()) {
+                return rs.getString(id);
+            }
+        } catch (SQLException e) {
+            logger.error(">>> ERROR: Couldn't extract ResultSet column " + id, e);
+            System.exit(1);
+        }
+        return null;
+    }
+
+    /**
      * Used to deserialize an object
      *
      * @param data the data to deserialize
      * @param c the class of generic type S that the data will be deserialized into
      * @param <S> the generic type that the data will be deserialized into
-     * @return the deserialized form of the data provided
+     * @return the deserialized value
      */
     protected static <S> S deserializeString(String data, Class<S> c) {
         ObjectMapper mapper = new ObjectMapper();

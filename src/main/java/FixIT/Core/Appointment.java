@@ -15,7 +15,7 @@ public class Appointment {
     private long appointmentID;
     private String customerUsername;
     private String staffUsername;
-    private long appointmentTime;
+    private String appointmentTime;
     private ArrayList<String> workLog;
     private int appointmentStatus;
     private int staffRating;
@@ -54,11 +54,11 @@ public class Appointment {
         this.staffUsername = staffUsername;
     }
 
-    public long getAppointmentTime() {
+    public String getAppointmentTime() {
         return appointmentTime;
     }
 
-    public void setAppointmentTime(long appointmentTime) {
+    public void setAppointmentTime(String appointmentTime) {
         this.appointmentTime = appointmentTime;
     }
 

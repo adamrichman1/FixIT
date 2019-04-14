@@ -81,8 +81,10 @@
         const formData = {
             "appointmentTime": document.getElementById('appt-time').value,
             "problem": document.getElementById('appt-description').value,
-            "cost": 25
+            "appointmentCost": 25
         };
+        console.log(formData.problem);
+        console.log(formData);
         createAppointment(formData);
     });
 
