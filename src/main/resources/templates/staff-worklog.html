@@ -42,21 +42,80 @@
 
 <div class="container">
     <div class="current-appointments">
-        <h1 th:text="'Appointment #' + ${appointmentID}"></h1>
-        <p class="lead" th:text="'Customer: ' + ${customerUsername}"></p>
-        <p class="lead" th:text="'Time: ' + ${appointmentTime}"></p>
-        <p class="lead">Description</p>
-        <p class="lead" th:text="${problem}"></p>
+        <h1 th:text="'Appointment #' + ${appointment.appointmentID}"></h1>
+        <p class="lead" th:text="'Customer: ' + ${appointment.customerUsername}"></p>
+        <p class="lead" th:text="'Time: ' + ${appointment.appointmentTime}"></p>
+        <div>
+            <p class="lead">Description</p>
+            <p class="small" th:text="${appointment.problem}"></p>
+        </div>
         <p class="lead">Worklog</p>
-        <ol>
+        <ol class="list-group" id="worklog">
             <li>
-                <p class="entry" th:each="entry : ${worklog}" th:text="${entry}"></p>
+                <p class="small" th:each="entry : ${appointment.workLog}" th:text="${entry}"></p>
             </li>
         </ol>
-        <textarea rows="8" cols="100" placeholder="Add Entry"></textarea>
+        <textarea id="new-entry" rows="8" cols="100" placeholder="Add Entry"></textarea>
 
-        <button class="btn btn-lg btn-primary btn-block" id="add-entry-button" type="submit">Add Entry</button>
+        <button class="btn btn-lg btn-primary btn-block" id="add-entry-button" type="button">Add Entry</button>
     </div>
 </div><!-- /.container -->
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ" crossorigin="anonymous"></script>
+<script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+<script src="../../dist/js/bootstrap.min.js"></script>
 </body>
+<script th:inline="javascript">
+    let button = document.getElementById('add-entry-button');
+    let workLog = [[${appointment.workLog}]];
+    button.addEventListener('click', function() {
+        workLog.push(document.getElementById('new-entry').value);
+        const formData = {
+            "workLog": workLog,
+        };
+        updateWorkLog(formData);
+    });
+
+    function updateWorkLog(data) {
+        console.log(data);
+        $.ajax({
+            url: "http://localhost:8080/updateWorklog",
+            type: 'PUT',
+            contentType: "application/json",
+            data: JSON.stringify(data),
+            headers: {
+                'username': localStorage.getItem("username")
+            },
+            success: function() {
+                refreshWorkLog();
+            },
+            error: function(jqXHR, statusCode, errorThrown){
+                console.log(jqXHR.status);
+                console.log(statusCode);
+                console.log(errorThrown);
+                if (jqXHR.status === 500) {
+                    window.location.href = "/appointment/error";
+                }
+            }
+        });
+    }
+
+    function refreshWorkLog() {
+        console.log(document.getElementById('new-entry').value);
+        let worklog = document.getElementById('worklog');
+        let listItem = document.createElement('li');
+        let newEntry = document.createElement('p');
+        newEntry.className = 'small';
+
+        newEntry.innerText = document.getElementById('new-entry').value;
+        document.getElementById('new-entry').innerText = '';
+
+        listItem.appendChild(newEntry);
+        worklog.appendChild(listItem);
+    }
+</script>
 </html>
+

@@ -68,6 +68,7 @@ function populateAppointments(appointments) {
                     "appointmentStatus": 1
                 };
                 updateAppointmentStatus(formData);
+                window.location.href = "/staff/appointment/worklog?appointmentID=" + appointmentID;
             });
 
             if (appointments[i].appointmentStatus === PENDING) {
