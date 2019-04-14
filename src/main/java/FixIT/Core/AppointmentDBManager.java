@@ -1,5 +1,6 @@
 package FixIT.Core;
 
+import org.json.JSONArray;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -7,7 +8,6 @@ import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -179,7 +179,7 @@ public class AppointmentDBManager extends DBManager {
      */
     void updateAppointmentWorklog(long appointmentID, List<String> worklog) {
         String sql = "UPDATE " + appointmentTable + " SET worklog=? WHERE appointmentID=?";
-        executeUpdate(sql, Arrays.toString(worklog.toArray()), appointmentID);
+        executeUpdate(sql, new JSONArray(worklog).toString(), appointmentID);
     }
 
     /**
@@ -188,7 +188,7 @@ public class AppointmentDBManager extends DBManager {
      * @param appointmentID the id of the appointment to update
      * @param staffRating the rating for the staff member
      */
-    public void addStaffRatingToDB(long appointmentID, int staffRating) {
+    void addStaffRatingToDB(long appointmentID, int staffRating) {
         String sql = "UPDATE " + appointmentTable + " SET staffRating=? WHERE appointmentID=?";
         executeUpdate(sql, staffRating, appointmentID);
     }
@@ -199,7 +199,7 @@ public class AppointmentDBManager extends DBManager {
      * @param appointmentID the id of the appointment to update
      * @param customerRating the rating for the customer
      * */
-    public void addCustomerRatingToDB(long appointmentID, int customerRating) {
+    void addCustomerRatingToDB(long appointmentID, int customerRating) {
         String sql = "UPDATE " + appointmentTable + " SET customerRating=? WHERE appointmentID=?";
         executeUpdate(sql, customerRating, appointmentID);
     }
