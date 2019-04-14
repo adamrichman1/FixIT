@@ -61,6 +61,17 @@ public class AppointmentDBManager extends DBManager {
     }
 
     /**
+     * Finds an appointment in the database
+     *
+     * @param appointmentID the ID of the appointment to locate
+     * @return an Appointment object
+     */
+    public static Appointment findAppointment(long appointmentID) {
+        String sql = "SELECT * FROM " + appointmentTable + " WHERE appointmentID=?";
+        return populateAppointment(executeQuery(sql, appointmentID));
+    }
+
+    /**
      * Used to insert an appointment into the appointment table once requested by a customer
      *
      * @param problem the problem the appointment is for
@@ -73,14 +84,14 @@ public class AppointmentDBManager extends DBManager {
      * @param staffRating the staff member's rating for the appointment
      * @param appointmentCost the cost of the appointment
      */
-    Appointment insertAppointmentToDB(String problem, String customerUsername, String staffUsername,
+    void insertAppointmentToDB(String problem, String customerUsername, String staffUsername,
                                long appointmentTime, List<String> worklog, int appointmentStatus,
                                int customerRating, int staffRating, BigDecimal appointmentCost) {
         String sql = "INSERT INTO " + appointmentTable + " (problem, customerUsername, staffUsername, " +
                 "appointmentTime, worklog, appointmentStatus, customerRating, staffRating, appointmentCost) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING *";
-        return populateAppointment(executeUpdate(sql, problem, customerUsername, staffUsername, appointmentTime, worklog, appointmentStatus,
-                customerRating, staffRating, appointmentCost));
+        executeUpdate(sql, problem, customerUsername, staffUsername, appointmentTime, worklog, appointmentStatus,
+                customerRating, staffRating, appointmentCost);
     }
 
     /**
@@ -111,40 +122,37 @@ public class AppointmentDBManager extends DBManager {
      * @param rs the ResultSet object containing data from the DB
      * @return a List of Appointment objects
      */
-    private ArrayList<Appointment> populateAppointmentHistory(ResultSet rs) {
-        try {
-            ArrayList<Appointment> list = new ArrayList<>();
-            while (rs.next()) {
-                list.add(populateAppointment(rs));
-            }
-            return list;
-        } catch (SQLException e) {
-            logger.error(">>> ERROR: Couldn't populate appointment list", e);
-            System.exit(1);
+    private static ArrayList<Appointment> populateAppointmentHistory(ResultSet rs) {
+        ArrayList<Appointment> list = new ArrayList<>();
+        Appointment a;
+        while ((a = populateAppointment(rs)) != null) {
+            list.add(a);
         }
-        return null;
+        return list;
     }
 
     /**
      * Populates an appointment following a DB query
      *
      * @param rs the ResultSet object containing data from the DB
-     * @return an Appointment object
+     * @return an Appointment object, or null if there is not an appointment object present
      */
-    private Appointment populateAppointment(ResultSet rs) {
+    private static Appointment populateAppointment(ResultSet rs) {
         try {
-            Appointment a = new Appointment();
-            a.setProblem(rs.getString("problem"));
-            a.setCustomerUsername(rs.getString("customerUsername"));
-            a.setStaffUsername(rs.getString("staffUsername"));
-            a.setAppointmentTime(rs.getLong("appointmentTime"));
-            a.setWorkLog(deserializeString(rs.getString("worklog"), ArrayList.class));
-            a.setAppointmentStatus(rs.getInt("appointmentStatus"));
-            a.setCustomerRating(rs.getInt("customerRating"));
-            a.setStaffRating(rs.getInt("staffRating"));
-            a.setAppointmentCost(rs.getBigDecimal("appointmentCost"));
-            a.setAppointmentID(rs.getLong("appointmentID"));
-            return a;
+            if (rs.next()) {
+                Appointment a = new Appointment();
+                a.setProblem(rs.getString("problem"));
+                a.setCustomerUsername(rs.getString("customerUsername"));
+                a.setStaffUsername(rs.getString("staffUsername"));
+                a.setAppointmentTime(rs.getLong("appointmentTime"));
+                a.setWorkLog(deserializeString(rs.getString("worklog"), ArrayList.class));
+                a.setAppointmentStatus(rs.getInt("appointmentStatus"));
+                a.setCustomerRating(rs.getInt("customerRating"));
+                a.setStaffRating(rs.getInt("staffRating"));
+                a.setAppointmentCost(rs.getBigDecimal("appointmentCost"));
+                a.setAppointmentID(rs.getLong("appointmentID"));
+                return a;
+            }
         } catch (SQLException e) {
             logger.error(">>> ERROR: Couldn't populate appointment object", e);
             System.exit(1);

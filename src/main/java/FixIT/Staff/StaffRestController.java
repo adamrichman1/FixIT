@@ -6,6 +6,7 @@ import FixIT.Core.UserRestController;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -99,7 +100,8 @@ public class StaffRestController extends UserRestController<Staff> {
      * @return the appointment worklog template to the staff-member
      */
     @RequestMapping(method= RequestMethod.GET, value="/staff/appointment/worklog")
-    protected static String getWorklogTemple() {
+    protected static String getWorklogTemplate(@RequestParam("appointmentID") long appointmentID, Model model) {
+        model.addAttribute("appointment", AppointmentDBManager.findAppointment(appointmentID));
         return "staff-worklog";
     }
 }

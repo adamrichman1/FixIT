@@ -17,8 +17,8 @@ class AppointmentManager {
      *
      * @param appointment the appointment to create
      */
-    static Appointment createAppointment(Appointment appointment) {
-        return appointmentDBManager.insertAppointmentToDB(
+    static void createAppointment(Appointment appointment) {
+        appointmentDBManager.insertAppointmentToDB(
                 appointment.getProblem(),
                 appointment.getCustomerUsername(),
                 appointment.getStaffUsername(),
