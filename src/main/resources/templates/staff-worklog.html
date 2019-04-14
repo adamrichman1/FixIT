@@ -29,12 +29,11 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">FixIT</a>
+            <a class="navbar-brand" href="#">FixIT Staff</a>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
                 <li class="active"><a href="#">Appointment Requests</a></li>
-                <li><a href="#">Account</a></li>
             </ul>
         </div><!--/.nav-collapse -->
     </div>
@@ -50,14 +49,25 @@
             <p class="small" th:text="${appointment.problem}"></p>
         </div>
         <p class="lead">Worklog</p>
-        <ol class="list-group" id="worklog">
-            <li>
-                <p class="small" th:each="entry : ${appointment.workLog}" th:text="${entry}"></p>
+        <ul id="worklog" class="list-group">
+            <li class="list-group-item" th:each="entry : ${appointment.workLog}">
+                <p class="small" th:text="${entry}"></p>
             </li>
-        </ol>
+        </ul>
         <textarea id="new-entry" rows="8" cols="100" placeholder="Add Entry"></textarea>
 
-        <button class="btn btn-lg btn-primary btn-block" id="add-entry-button" type="button">Add Entry</button>
+
+
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="text-center">
+                    <button class="btn btn-primary" id="add-entry-button" type="button">Add Entry</button>
+                    <button class="btn btn-danger" id="close-appointment-button" type="button">Close Appointment</button>
+                </div>
+            </div>
+        </div>
+
+
     </div>
 </div><!-- /.container -->
 
@@ -69,12 +79,16 @@
 <script src="../../dist/js/bootstrap.min.js"></script>
 </body>
 <script th:inline="javascript">
+    const CLOSED = 2;
+
     let button = document.getElementById('add-entry-button');
     let workLog = [[${appointment.workLog}]];
+    let appointmentID = [[${appointment.appointmentID}]];
     button.addEventListener('click', function() {
         workLog.push(document.getElementById('new-entry').value);
         const formData = {
-            "workLog": workLog,
+            "appointmentID": appointmentID,
+            "workLog": workLog
         };
         updateWorkLog(formData);
     });
@@ -107,14 +121,45 @@
         console.log(document.getElementById('new-entry').value);
         let worklog = document.getElementById('worklog');
         let listItem = document.createElement('li');
+        listItem.className='list-group-item';
         let newEntry = document.createElement('p');
         newEntry.className = 'small';
 
         newEntry.innerText = document.getElementById('new-entry').value;
-        document.getElementById('new-entry').innerText = '';
+        document.getElementById('new-entry').value = '';
 
-        listItem.appendChild(newEntry);
+        listItem.append(newEntry);
         worklog.appendChild(listItem);
+    }
+
+    let closeAppointmentButton = document.getElementById('close-appointment-button');
+    closeAppointmentButton.addEventListener('click', function() {
+        const formData = {
+            "appointmentID": appointmentID,
+            "appointmentStatus": CLOSED
+        };
+        updateAppointmentStatus(formData);
+    });
+
+    function updateAppointmentStatus(formData) {
+        $.ajax({
+            url: "http://localhost:8080/updateAppointmentStatus",
+            type: 'PUT',
+            contentType: "application/json",
+            headers: {
+                'username': localStorage.getItem("username")
+            },
+            data: JSON.stringify(formData),
+            success: function() {
+                window.location.href = "/staff/home";
+            },
+            error: function(jqXHR, textStatus, errorThrown){
+                console.log(jqXHR.status);
+                console.log(textStatus);
+                console.log(errorThrown);
+                // TODO - ERROR HANDLE
+            }
+        });
     }
 </script>
 </html>

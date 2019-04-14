@@ -1,6 +1,8 @@
 window.addEventListener("load",initialize,true);
 
 const PENDING = 0;
+const ACTIVE = 1;
+const CLOSED = 2;
 
 function initialize(){
     //initial call to poll staff appointments
@@ -72,7 +74,6 @@ function populateAppointments(appointments) {
             });
 
             if (appointments[i].appointmentStatus === PENDING) {
-                console.log("pending appointments");
                 acceptButton.style.visibility = '';
             }
 
@@ -80,6 +81,20 @@ function populateAppointments(appointments) {
             apptData.append(problem);
             apptData.append(apptTime);
             apptData.append(acceptButton);
+
+            if (appointments[i].appointmentStatus === CLOSED) {
+                let closedItem = document.createElement('p');
+                closedItem.className='text-danger';
+                closedItem.innerText="CLOSED";
+                apptData.append(closedItem);
+                idLink.href="http://localhost:8080/staff/appointment/worklog?appointmentID=" + appointmentID;
+            } else if (appointments[i].appointmentStatus === ACTIVE) {
+                let activeItem = document.createElement('p');
+                activeItem.className='text-success';
+                activeItem.innerText="ACTIVE";
+                apptData.append(activeItem);
+                idLink.href="http://localhost:8080/staff/appointment/worklog?appointmentID=" + appointmentID;
+            }
 
             listItem.appendChild(apptData);
 
