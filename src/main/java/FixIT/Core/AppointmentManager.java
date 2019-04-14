@@ -4,6 +4,7 @@ import FixIT.Staff.StaffDBManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -27,10 +28,10 @@ class AppointmentManager {
                 appointment.getCustomerUsername(),
                 appointment.getStaffUsername(),
                 appointment.getAppointmentTime(),
-                appointment.getWorkLog(),
-                appointment.getAppointmentStatus(),
-                appointment.getCustomerRating(),
-                appointment.getStaffRating(),
+                new ArrayList<>(),
+                0,
+                0,
+                0,
                 appointment.getAppointmentCost()
         );
     }

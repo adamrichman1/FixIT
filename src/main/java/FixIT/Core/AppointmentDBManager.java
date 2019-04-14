@@ -90,8 +90,8 @@ public class AppointmentDBManager extends DBManager {
         String sql = "INSERT INTO " + appointmentTable + " (problem, customerUsername, staffUsername, " +
                 "appointmentTime, worklog, appointmentStatus, customerRating, staffRating, appointmentCost) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING *";
-        executeUpdate(sql, problem, customerUsername, staffUsername, appointmentTime, worklog, appointmentStatus,
-                customerRating, staffRating, appointmentCost);
+        executeUpdate(sql, problem, customerUsername, staffUsername, appointmentTime, new JSONArray(worklog).toString(),
+                appointmentStatus, customerRating, staffRating, appointmentCost);
     }
 
     /**
