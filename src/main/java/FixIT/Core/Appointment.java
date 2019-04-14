@@ -1,7 +1,6 @@
 package FixIT.Core;
 
 import FixIT.Application;
-import FixIT.Staff.Staff;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.math.BigDecimal;
@@ -22,12 +21,6 @@ public class Appointment {
     private int staffRating;
     private int customerRating;
     private BigDecimal appointmentCost;
-
-    // Appointment status values
-    private static final int REQUESTED = 0;
-    private static final int ACCEPTED = 1;
-    private static final int COMPLETED = 2;
-    private static final int CANCELLED = 3;
 
     public String getProblem() {
         return problem;

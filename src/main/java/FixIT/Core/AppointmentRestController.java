@@ -70,12 +70,12 @@ public class AppointmentRestController {
     /**
      * Used when a FixIT staff member updates the work-log for an appointment
      *
-     * @param request the HttpRequest entity containing header information and the username of the requesting user
      * @param appointment the appointment object containing an updated appointment work-log
      * @return a ResponseEntity to the user containing confirmation of the work-log update
      */
     @RequestMapping(method= RequestMethod.PUT, value="/updateWorklog", headers="Accept=application/json")
-    @ResponseBody ResponseEntity updateAppointmentWorklog(HttpServletRequest request, @RequestBody Appointment appointment) {
+    @ResponseBody ResponseEntity updateAppointmentWorklog(@RequestBody Appointment appointment) {
+        logger.info(appointment.toString());
         AppointmentManager.updateWorklog(appointment.getAppointmentID(), appointment.getWorkLog());
         return new ResponseEntity(HttpStatus.OK);
     }
