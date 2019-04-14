@@ -60,6 +60,7 @@ function populateAppointments(appointments) {
 
             acceptButton.className = ' btn btn-primary';
             acceptButton.innerText = "Accept Appointment";
+            acceptButton.style.visibility = 'hidden';
 
             acceptButton.addEventListener('click', function() {
                 const formData = {
@@ -70,7 +71,8 @@ function populateAppointments(appointments) {
             });
 
             if (appointments[i].appointmentStatus === PENDING) {
-                acceptButton.type = hidden;
+                console.log("pending appointments");
+                acceptButton.style.visibility = '';
             }
 
             apptData.append(idLink);
