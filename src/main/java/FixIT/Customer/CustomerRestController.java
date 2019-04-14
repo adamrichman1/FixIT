@@ -106,16 +106,6 @@ public class CustomerRestController extends UserRestController<Customer> {
     }
 
     /**
-     * Called when a user views an appointment
-     *
-     * @return the appointment summary template to the user
-     */
-    @RequestMapping(method= RequestMethod.GET, value="/appointment/summary")
-    protected static String getAppointmentSummaryTemplate() {
-        return "appointment-summary";
-    }
-
-    /**
      * Retrieves a customer's rating
      *
      * @return the customer's rating

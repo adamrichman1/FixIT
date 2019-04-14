@@ -92,4 +92,14 @@ public class StaffRestController extends UserRestController<Staff> {
     protected static String getLoginTemplate() {
         return "staff-login";
     }
+
+    /**
+     * Called when a staff member views an appointment
+     *
+     * @return the appointment worklog template to the staff-member
+     */
+    @RequestMapping(method= RequestMethod.GET, value="/staff/appointment/worklog")
+    protected static String getWorklogTemple() {
+        return "staff-worklog";
+    }
 }
