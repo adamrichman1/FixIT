@@ -26,6 +26,12 @@ cd FixIT
 java -jar target/FixIT-1.0.jar
 ```
 
+#### Build & Run
+```
+cd FixIT
+bash run.sh
+```
+
 #### Access
 ```
 http://localhost:8080/
