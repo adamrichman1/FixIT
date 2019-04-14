@@ -56,8 +56,6 @@
         </ul>
         <textarea id="new-entry" rows="8" cols="100" placeholder="Add Entry"></textarea>
 
-
-
         <div class="row">
             <div class="col-xs-12">
                 <div class="text-center">
@@ -80,6 +78,13 @@
 </body>
 <script th:inline="javascript">
     const CLOSED = 2;
+    let appointmentStatus = [[${appointment.appointmentStatus}]];
+
+    if(appointmentStatus === CLOSED) {
+        document.getElementById('add-entry-button').style.visibility='hidden';
+        document.getElementById('close-appointment-button').style.visibility='hidden';
+        document.getElementById('new-entry').style.visibility='hidden';
+    }
 
     let button = document.getElementById('add-entry-button');
     let workLog = [[${appointment.workLog}]];

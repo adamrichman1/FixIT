@@ -37,6 +37,7 @@ function populateAppointments(appointments) {
         let apptList = document.getElementById('appt-list');
 
         for (var i = 0; i < appointments.length; i++) {
+            let appointmentID = appointments[i].appointmentID;
             let listItem = document.createElement('li');
             listItem.className = "list-group-item";
 
@@ -44,6 +45,7 @@ function populateAppointments(appointments) {
 
             let idLink = document.createElement('a');
             idLink.innerText = "ID: " + appointments[i].appointmentID;
+            idLink.href = "http://localhost:8080/customer/appointment/summary?appointmentID=" + appointmentID;
 
             let problem = document.createElement('p');
             problem.className = 'small';
