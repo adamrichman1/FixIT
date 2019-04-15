@@ -45,6 +45,7 @@ function colorRating(rating){
             uncheck(document.getElementById("5star"));
             break;
         case 3:
+            rating = 3;
             check(document.getElementById("1star"));
             check(document.getElementById("2star"));
             check(document.getElementById("3star"));
@@ -52,6 +53,7 @@ function colorRating(rating){
             uncheck(document.getElementById("5star"));
             break;
         case 2:
+            rating = 2;
             check(document.getElementById("1star"));
             check(document.getElementById("2star"));
             uncheck(document.getElementById("3star"));
@@ -59,6 +61,7 @@ function colorRating(rating){
             uncheck(document.getElementById("5star"));
             break;
         case 1:
+            rating = 1;
             check(document.getElementById("1star"));
             uncheck(document.getElementById("2star"));
             uncheck(document.getElementById("3star"));
