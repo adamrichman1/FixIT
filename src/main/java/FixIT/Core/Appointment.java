@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 
 /**
- * This class represents an appointment between a FixIT customer and FixIT staffUsername member
+ * This class represents an appointment between a FixIT customer and FixIT staff member
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Appointment {

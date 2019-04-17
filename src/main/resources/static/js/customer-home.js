@@ -1,5 +1,8 @@
 window.addEventListener("load",initialize,true);
 
+const PENDING = 0;
+const ACCEPTED = 1;
+const CLOSED = 2;
 
 function initialize(){
     //initial call to poll staff appointments
@@ -58,6 +61,24 @@ function populateAppointments(appointments) {
             apptData.append(idLink);
             apptData.append(problem);
             apptData.append(apptTime);
+
+            if (appointments[i].appointmentStatus === CLOSED) {
+                let closedItem = document.createElement('p');
+                closedItem.className='text-danger';
+                closedItem.innerText="CLOSED";
+                apptData.append(closedItem);
+            } else if (appointments[i].appointmentStatus === ACCEPTED) {
+                let activeItem = document.createElement('p');
+                activeItem.className='text-success';
+                activeItem.innerText="ACCEPTED";
+                apptData.append(activeItem);
+            }
+            else {
+                let activeItem = document.createElement('p');
+                activeItem.className='text-danger';
+                activeItem.innerText="PENDING";
+                apptData.append(activeItem);
+            }
 
             listItem.appendChild(apptData);
 
