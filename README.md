@@ -13,6 +13,11 @@
 * [Maven 3.3.9+](https://maven.apache.org/install.html)
 * [PostgreSQL 10.6+](https://www.postgresql.org/download/)
 
+#### Setup PostgreSQL
+* [Install Postgres App](https://postgresapp.com)
+* Open GUI
+* Click Initialize
+* Alternatively, setup local database instance with the following credentials: (port=5432, dbName=postgres)
 
 #### Build
 ```
