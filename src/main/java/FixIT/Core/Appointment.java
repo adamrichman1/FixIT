@@ -18,8 +18,6 @@ public class Appointment {
     private String appointmentTime;
     private ArrayList<String> workLog;
     private int appointmentStatus;
-    private int staffRating;
-    private int customerRating;
     private BigDecimal appointmentCost;
 
     public String getProblem() {
@@ -76,22 +74,6 @@ public class Appointment {
 
     public void setAppointmentStatus(int appointmentStatus) {
         this.appointmentStatus = appointmentStatus;
-    }
-
-    public int getStaffRating() {
-        return staffRating;
-    }
-
-    public void setStaffRating(int staffRating) {
-        this.staffRating = staffRating;
-    }
-
-    public int getCustomerRating() {
-        return customerRating;
-    }
-
-    public void setCustomerRating(int customerRating) {
-        this.customerRating = customerRating;
     }
 
     public BigDecimal getAppointmentCost() {

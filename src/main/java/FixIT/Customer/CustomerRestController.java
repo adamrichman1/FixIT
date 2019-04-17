@@ -4,13 +4,10 @@ import FixIT.Core.AppointmentDBManager;
 import FixIT.Core.UserRestController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * This class manages HTTP endpoints for FixIT customers
@@ -104,18 +101,6 @@ public class CustomerRestController extends UserRestController<Customer> {
     @RequestMapping(method= RequestMethod.GET, value="/appointment/error")
     protected static String getAppointmentErrorTemplate() {
         return "appointment-error";
-    }
-
-    /**
-     * Retrieves a customer's rating
-     *
-     * @return the customer's rating
-     */
-    @RequestMapping(method= RequestMethod.GET, value="/customer/rating")
-    protected static ResponseEntity getCustomerRating(HttpServletRequest request) {
-        String username = request.getHeader("username");
-        double rating = AppointmentDBManager.getCustomerRating(username);
-        return new ResponseEntity<>(rating, HttpStatus.OK);
     }
 
     /**

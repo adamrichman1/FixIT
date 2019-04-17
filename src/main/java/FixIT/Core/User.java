@@ -15,7 +15,6 @@ public abstract class User {
     private String name;
     private String address;
     private ArrayList<Appointment> appointmentHistory = new ArrayList<>();
-    private double rating;
 
     public User() {}
 
@@ -69,13 +68,5 @@ public abstract class User {
 
     public void setAppointmentHistory(ArrayList<Appointment> appointmentHistory) {
         this.appointmentHistory = appointmentHistory;
-    }
-
-    public double getRating() {
-        return rating;
-    }
-
-    public void setRating(double rating) {
-        this.rating = rating;
     }
 }

@@ -54,7 +54,7 @@ public class CustomerDBManager extends UserDBManager<Customer> {
      */
     protected void insertUserToDB(Customer user) {
         String sql = "INSERT INTO " + userTable + " (username, password, email, name, address, appointmentHistory, " +
-                "rating, creditCard, balance) VALUES (?, ?, ?, ?, ?, ?, 5.0, ?, 0.0)";
+                "creditCard, balance) VALUES (?, ?, ?, ?, ?, ?, ?, 0.0)";
         executeUpdate(sql, user.getUsername(), user.getPassword(), user.getEmail(), user.getName(), user.getAddress(),
                 Arrays.toString(user.getAppointmentHistory().toArray()), user.getCreditCard());
     }
@@ -70,7 +70,6 @@ public class CustomerDBManager extends UserDBManager<Customer> {
                 "name               TEXT        NOT NULL, " +
                 "address            TEXT        NOT NULL, " +
                 "appointmentHistory TEXT        NOT NULL, " +
-                "rating             DECIMAL     NOT NULL, " +
                 "creditCard         TEXT        NOT NULL, " +
                 "balance            DECIMAL     NOT NULL)";
         executeUpdate(sql);
@@ -90,7 +89,6 @@ public class CustomerDBManager extends UserDBManager<Customer> {
                 c.setName(rs.getString("name"));
                 c.setAddress(rs.getString("address"));
                 c.setAppointmentHistory(deserializeString("appointmentHistory", ArrayList.class));
-                c.setRating(rs.getDouble("rating"));
                 c.setCreditCard(rs.getString("creditCard"));
                 c.setBalance(rs.getBigDecimal("balance"));
                 return c;

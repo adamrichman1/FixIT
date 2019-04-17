@@ -63,18 +63,6 @@ public class StaffRestController extends UserRestController<Staff> {
     }
 
     /**
-     * Retrieves a staff's rating
-     *
-     * @return the staff's rating
-     */
-    @RequestMapping(method= RequestMethod.GET, value="/staff/rating")
-    protected static ResponseEntity getStaffRating(HttpServletRequest request) {
-        String username = request.getHeader("username");
-        double rating = AppointmentDBManager.getStaffRating(username);
-        return new ResponseEntity<>(rating, HttpStatus.OK);
-    }
-
-    /**
      * Called when a staff member attempts to sign-up with FixIT
      *
      * @return the staff sign-up template to the user

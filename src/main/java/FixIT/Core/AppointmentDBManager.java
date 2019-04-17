@@ -25,32 +25,8 @@ public class AppointmentDBManager extends DBManager {
                 " appointmentTime       TEXT        NOT NULL," +
                 " worklog               TEXT        NOT NULL," +
                 " appointmentStatus     INT         NOT NULL," +
-                " customerRating        INT         NOT NULL," +
-                " staffRating           INT         NOT NULL," +
                 " appointmentCost       REAL        NOT NULL," +
                 " appointmentID SERIAL PRIMARY KEY  NOT NULL)");
-    }
-
-    /**
-     * Finds the average rating for a customer
-     *
-     * @param username the username of the customer
-     * @return the customer's rating
-     */
-    public static double getCustomerRating(String username) {
-        String sql = "SELECT AVG(customerRating) AS avg FROM " + appointmentTable + " WHERE customerUsername=?";
-        return deserializeResultSetCol(executeQuery(sql, username), "avg", double.class);
-    }
-
-    /**
-     * Finds the average rating for a staff
-     *
-     * @param username the username of the staff
-     * @return the staff's rating
-     */
-    public static double getStaffRating(String username) {
-        String sql = "SELECT AVG(staffRating) AS avg FROM " + appointmentTable + " WHERE staffUsername=?";
-        return deserializeResultSetCol(executeQuery(sql, username), "avg", double.class);
     }
 
     /**
@@ -80,18 +56,16 @@ public class AppointmentDBManager extends DBManager {
      * @param appointmentTime the appointmentTime of the appointment
      * @param worklog the appointment's worklog
      * @param appointmentStatus the status of the appointment
-     * @param customerRating the customer's rating for the appointment
-     * @param staffRating the staff member's rating for the appointment
      * @param appointmentCost the cost of the appointment
      */
     void insertAppointmentToDB(String problem, String customerUsername, String staffUsername,
                                String appointmentTime, List<String> worklog, int appointmentStatus,
-                               int customerRating, int staffRating, BigDecimal appointmentCost) {
+                               BigDecimal appointmentCost) {
         String sql = "INSERT INTO " + appointmentTable + " (problem, customerUsername, staffUsername, " +
-                "appointmentTime, worklog, appointmentStatus, customerRating, staffRating, appointmentCost) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING *";
+                "appointmentTime, worklog, appointmentStatus, appointmentCost) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?) RETURNING *";
         executeUpdate(sql, problem, customerUsername, staffUsername, appointmentTime, new JSONArray(worklog).toString(),
-                appointmentStatus, customerRating, staffRating, appointmentCost);
+                appointmentStatus, appointmentCost);
     }
 
     /**
@@ -149,8 +123,6 @@ public class AppointmentDBManager extends DBManager {
                 a.setAppointmentTime(rs.getString("appointmentTime"));
                 a.setWorkLog(deserializeString(rs.getString("worklog"), ArrayList.class));
                 a.setAppointmentStatus(rs.getInt("appointmentStatus"));
-                a.setCustomerRating(rs.getInt("customerRating"));
-                a.setStaffRating(rs.getInt("staffRating"));
                 a.setAppointmentCost(rs.getBigDecimal("appointmentCost"));
                 a.setAppointmentID(rs.getLong("appointmentID"));
                 return a;
@@ -182,27 +154,5 @@ public class AppointmentDBManager extends DBManager {
     void updateAppointmentWorklog(long appointmentID, List<String> worklog) {
         String sql = "UPDATE " + appointmentTable + " SET worklog=? WHERE appointmentID=?";
         executeUpdate(sql, new JSONArray(worklog).toString(), appointmentID);
-    }
-
-    /**
-     * Used to adjust the staff rating column once a customer rates the staff member following an appointment
-     *
-     * @param appointmentID the id of the appointment to update
-     * @param staffRating the rating for the staff member
-     */
-    void addStaffRatingToDB(long appointmentID, int staffRating) {
-        String sql = "UPDATE " + appointmentTable + " SET staffRating=? WHERE appointmentID=?";
-        executeUpdate(sql, staffRating, appointmentID);
-    }
-
-    /**
-     * Used to adjust the customer rating column once a staff member rates the customer following an appointment
-     *
-     * @param appointmentID the id of the appointment to update
-     * @param customerRating the rating for the customer
-     * */
-    void addCustomerRatingToDB(long appointmentID, int customerRating) {
-        String sql = "UPDATE " + appointmentTable + " SET customerRating=? WHERE appointmentID=?";
-        executeUpdate(sql, customerRating, appointmentID);
     }
 }

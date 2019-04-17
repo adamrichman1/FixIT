@@ -28,13 +28,13 @@ public class AppointmentRestController {
      */
     @RequestMapping(method= RequestMethod.POST, value="/createAppointment", headers="Accept=application/json")
     @ResponseBody ResponseEntity createAppointment(HttpServletRequest request, @RequestBody Appointment appointment) {
-        if (AppointmentManager.isStaffMemberAvailable()) {
-            appointment.setCustomerUsername(request.getHeader("username"));
-            appointment.setStaffUsername(AppointmentManager.findStaffMember());
-            AppointmentManager.createAppointment(appointment);
-            return new ResponseEntity(HttpStatus.OK);
+        if (!AppointmentManager.isStaffMemberAvailable()) {
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        appointment.setCustomerUsername(request.getHeader("username"));
+        appointment.setStaffUsername(AppointmentManager.findStaffMember());
+        AppointmentManager.createAppointment(appointment);
+        return new ResponseEntity(HttpStatus.OK);
     }
 
     /**
@@ -90,30 +90,6 @@ public class AppointmentRestController {
     @ResponseBody ResponseEntity updateAppointmentStatus(@RequestBody Appointment appointment) {
         logger.info(appointment.toString());
         AppointmentManager.updateAppointmentStatus(appointment.getAppointmentID(), appointment.getAppointmentStatus());
-        return new ResponseEntity(HttpStatus.OK);
-    }
-
-    /**
-     * Used by FixIT staff members to update the customer's rating for the appointment
-     *
-     * @param appointment the appointment object containing an updated appointment status
-     * @return a ResponseEntity to the user containing confirmation of status update
-     */
-    @RequestMapping(method= RequestMethod.PUT, value="/updateCustomerRating", headers="Accept=application/json")
-    @ResponseBody ResponseEntity updateCustomerRating(@RequestBody Appointment appointment) {
-        AppointmentManager.addCustomerRating(appointment.getAppointmentID(), appointment.getCustomerRating());
-        return new ResponseEntity(HttpStatus.OK);
-    }
-
-    /**
-     * Used by FixIT staff members to update the staff member's rating for the appointment
-     *
-     * @param appointment the appointment object containing an updated appointment status
-     * @return a ResponseEntity to the user containing confirmation of status update
-     */
-    @RequestMapping(method= RequestMethod.PUT, value="/updateStaffRating", headers="Accept=application/json")
-    @ResponseBody ResponseEntity updateStaffRating(@RequestBody Appointment appointment) {
-        AppointmentManager.addStaffRating(appointment.getAppointmentID(), appointment.getStaffRating());
         return new ResponseEntity(HttpStatus.OK);
     }
 }

@@ -43,8 +43,7 @@ public class StaffDBManager extends UserDBManager<Staff> {
                 "email              TEXT        NOT NULL, " +
                 "name               TEXT        NOT NULL, " +
                 "address            TEXT        NOT NULL, " +
-                "appointmentHistory TEXT        NOT NULL, " +
-                "rating             DECIMAL     NOT NULL)";
+                "appointmentHistory TEXT        NOT NULL)";
         executeUpdate(sql);
     }
 
@@ -74,8 +73,8 @@ public class StaffDBManager extends UserDBManager<Staff> {
      * @param user the staff member to insert into the database
      */
     protected void insertUserToDB(Staff user) {
-        String sql = "INSERT INTO " + userTable + " (username, password, email, name, address, appointmentHistory, " +
-                "rating) VALUES (?, ?, ?, ?, ?, ?, 0.0)";
+        String sql = "INSERT INTO " + userTable + " (username, password, email, name, address, appointmentHistory)" +
+                " VALUES (?, ?, ?, ?, ?, ?)";
         executeUpdate(sql, user.getUsername(), user.getPassword(), user.getEmail(), user.getName(), user.getAddress(),
                 Arrays.toString(user.getAppointmentHistory().toArray()));
     }
@@ -95,7 +94,6 @@ public class StaffDBManager extends UserDBManager<Staff> {
                 s.setName(rs.getString("name"));
                 s.setAddress(rs.getString("address"));
                 s.setAppointmentHistory(deserializeString("appointmentHistory", ArrayList.class));
-                s.setRating(rs.getDouble("rating"));
                 return s;
             }
         } catch (SQLException e) {

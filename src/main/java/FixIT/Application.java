@@ -55,7 +55,7 @@ public class Application {
      */
     @PreDestroy
     public static void tearDown() {
-        // TODO
+        logger.info("------------ FixIT Shutdown Successfully ------------");
     }
 
     /**
