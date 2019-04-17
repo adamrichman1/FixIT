@@ -36,7 +36,7 @@ public class CustomerRestController extends UserRestController<Customer> {
      * @return the customer sign-up template to the user
      */
     @RequestMapping(method= RequestMethod.GET, value="/customer/signup")
-    protected String getSignupTemplate() {
+    public String getSignupTemplate() {
         return "signup-customer";
     }
 

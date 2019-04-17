@@ -79,7 +79,7 @@ public abstract class UserRestController<T extends User> {
      *
      * @return the signup template to the user
      */
-    protected abstract String getSignupTemplate();
+    public abstract String getSignupTemplate();
 
     /**
      * Retrieves the DBManager of the subclass

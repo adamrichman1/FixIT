@@ -3,13 +3,10 @@ package FixIT.Staff;
 import FixIT.Core.AppointmentDBManager;
 import FixIT.Core.UserRestController;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * This class manages HTTP endpoints for FixIT staff members
@@ -68,7 +65,7 @@ public class StaffRestController extends UserRestController<Staff> {
      * @return the staff sign-up template to the user
      */
     @RequestMapping(method= RequestMethod.GET, value="/staff/signup")
-    protected String getSignupTemplate() {
+    public String getSignupTemplate() {
         return "signup-staff";
     }
 

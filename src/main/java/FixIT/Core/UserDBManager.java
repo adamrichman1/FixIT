@@ -1,7 +1,5 @@
 package FixIT.Core;
 
-import java.sql.ResultSet;
-
 /**
  * This class contains query functionality that is general to users and is shared by subclasses CustomerDBManager and
  * StaffDBManager
@@ -20,8 +18,9 @@ public abstract class UserDBManager<T extends User> extends DBManager {
      * Used to insert a new user into the database
      *
      * @param user the user to insert into the database
+     * @return the user object inserted
      */
-    protected abstract void insertUserToDB(T user);
+    protected abstract T insertUserToDB(T user);
 
     /**
      * Drops the user table
@@ -40,24 +39,6 @@ public abstract class UserDBManager<T extends User> extends DBManager {
         String sql = "SELECT COUNT(*) AS count FROM " + userTable + " WHERE username=?";
         return deserializeResultSetCol(executeQuery(sql, username), "count", int.class) == 1;
     }
-
-    /**
-     * Used to get information about the user for the user's profile page
-     *
-     * @param username the username of the user whose profile should be queried for
-     * @return a User object containing the user's profile
-     */
-    protected T getUserProfile(String username) {
-        return populateUser(executeQuery("SELECT * FROM " + userTable + " WHERE username=?"));
-    }
-
-    /**
-     * Used to populate a user object
-     *
-     * @param rs the ResultSet containing customer data
-     * @return a populated user object
-     */
-    protected abstract T populateUser(ResultSet rs);
 
     /**
      * Used to determine if a user's username and password are valid upon sign-up
