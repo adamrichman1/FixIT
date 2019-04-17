@@ -12,7 +12,7 @@ import java.util.List;
  */
 class AppointmentManager {
 
-    private static AppointmentDBManager appointmentDBManager = new AppointmentDBManager();
+    private static AppointmentDBManager appointmentDBManager = AppointmentDBManager.getInstance();
     private static StaffDBManager staffDBManager = StaffDBManager.getInstance();
     private static Logger logger = LoggerFactory.getLogger(AppointmentManager.class);
 

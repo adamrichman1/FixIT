@@ -110,7 +110,7 @@ public class CustomerRestController extends UserRestController<Customer> {
      */
     @RequestMapping(method= RequestMethod.GET, value="/customer/appointment/summary")
     protected static String getWorklogTemplate(@RequestParam("appointmentID") long appointmentID, Model model) {
-        model.addAttribute("appointment", AppointmentDBManager.findAppointment(appointmentID));
+        model.addAttribute("appointment", AppointmentDBManager.getInstance().findAppointment(appointmentID));
         return "appointment-summary";
     }
 }

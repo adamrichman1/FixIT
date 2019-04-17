@@ -89,7 +89,7 @@ public class StaffRestController extends UserRestController<Staff> {
      */
     @RequestMapping(method= RequestMethod.GET, value="/staff/appointment/worklog")
     protected static String getWorklogTemplate(@RequestParam("appointmentID") long appointmentID, Model model) {
-        model.addAttribute("appointment", AppointmentDBManager.findAppointment(appointmentID));
+        model.addAttribute("appointment", AppointmentDBManager.getInstance().findAppointment(appointmentID));
         return "staff-worklog";
     }
 }

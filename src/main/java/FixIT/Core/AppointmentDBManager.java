@@ -14,8 +14,23 @@ import java.util.List;
  * This class contains query functionality specific to Appointments
  */
 public class AppointmentDBManager extends DBManager {
+    private static AppointmentDBManager appointmentDBManager;
     private static String appointmentTable = "appointments";
     private static Logger logger = LoggerFactory.getLogger(AppointmentDBManager.class);
+
+    private AppointmentDBManager() {}
+
+    /**
+     * Singleton design pattern
+     *
+     * @return the sole instance of AppointmentDBManager
+     */
+    public static AppointmentDBManager getInstance() {
+        if (appointmentDBManager == null) {
+            appointmentDBManager = new AppointmentDBManager();
+        }
+        return appointmentDBManager;
+    }
 
     public static void createAppointmentTable() {
         executeUpdate("CREATE TABLE IF NOT EXISTS " + appointmentTable +
@@ -42,7 +57,7 @@ public class AppointmentDBManager extends DBManager {
      * @param appointmentID the ID of the appointment to locate
      * @return an Appointment object
      */
-    public static Appointment findAppointment(long appointmentID) {
+    public Appointment findAppointment(long appointmentID) {
         String sql = "SELECT * FROM " + appointmentTable + " WHERE appointmentID=?";
         return populateAppointment(executeQuery(sql, appointmentID));
     }
@@ -58,14 +73,14 @@ public class AppointmentDBManager extends DBManager {
      * @param appointmentStatus the status of the appointment
      * @param appointmentCost the cost of the appointment
      */
-    void insertAppointmentToDB(String problem, String customerUsername, String staffUsername,
+    Appointment insertAppointmentToDB(String problem, String customerUsername, String staffUsername,
                                String appointmentTime, List<String> worklog, int appointmentStatus,
                                BigDecimal appointmentCost) {
         String sql = "INSERT INTO " + appointmentTable + " (problem, customerUsername, staffUsername, " +
                 "appointmentTime, worklog, appointmentStatus, appointmentCost) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?) RETURNING *";
-        executeUpdate(sql, problem, customerUsername, staffUsername, appointmentTime, new JSONArray(worklog).toString(),
-                appointmentStatus, appointmentCost);
+        return populateAppointment(executeUpdate(sql, problem, customerUsername, staffUsername, appointmentTime, new JSONArray(worklog).toString(),
+                appointmentStatus, appointmentCost));
     }
 
     /**
