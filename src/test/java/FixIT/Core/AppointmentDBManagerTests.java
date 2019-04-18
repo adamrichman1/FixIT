@@ -1,5 +1,6 @@
 package FixIT.Core;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -18,6 +19,14 @@ public class AppointmentDBManagerTests {
     public void setup() {
         AppointmentDBManager.dropAppointmentTable();
         AppointmentDBManager.createAppointmentTable();
+    }
+
+    /**
+     * Shutdown operations
+     */
+    @After
+    public void teardown() {
+        AppointmentDBManager.dropAppointmentTable();
     }
 
     /**

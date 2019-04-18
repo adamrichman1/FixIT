@@ -1,5 +1,6 @@
 package FixIT.Staff;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -16,6 +17,14 @@ public class StaffDBManagerTests {
     public void setup() {
         StaffDBManager.getInstance().dropUserTable();
         StaffDBManager.getInstance().createStaffTable();
+    }
+
+    /**
+     * Shutdown operations
+     */
+    @After
+    public void teardown() {
+        StaffDBManager.getInstance().dropUserTable();
     }
 
     /**

@@ -1,5 +1,6 @@
 package FixIT.Customer;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -16,6 +17,14 @@ public class CustomerDBManagerTests {
     public void setup() {
         CustomerDBManager.getInstance().dropUserTable();
         CustomerDBManager.getInstance().createCustomerTable();
+    }
+
+    /**
+     * Shutdown operations
+     */
+    @After
+    public void teardown() {
+        CustomerDBManager.getInstance().dropUserTable();
     }
 
     /**
