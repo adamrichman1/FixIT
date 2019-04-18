@@ -59,14 +59,13 @@ public abstract class UserRestController<T extends User> {
 
     }
 
-
     /**
      * Used to determine if a sign-up form is invalid
      *
      * @param user the user object passed up via the sign-up endpoint
      * @return true if the form contains an invalid field, false otherwise
      */
-    private boolean signUpFormInvalid(T user) {
+    private static boolean signUpFormInvalid(User user) {
         return (user.getUsername() == null || user.getUsername().equals("")) ||
                 user.getPassword() == null || user.getPassword().equals("") ||
                 user.getEmail() == null || user.getEmail().equals("") ||

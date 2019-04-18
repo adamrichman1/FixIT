@@ -11,6 +11,9 @@ import static org.junit.Assert.assertEquals;
 
 public class AppointmentDBManagerTests {
 
+    /**
+     * Setup operations
+     */
     @Before
     public void setup() {
         AppointmentDBManager.dropAppointmentTable();

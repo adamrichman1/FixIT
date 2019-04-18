@@ -6,7 +6,6 @@ import org.slf4j.LoggerFactory;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
@@ -48,6 +47,18 @@ public class StaffDBManager extends UserDBManager<Staff> {
     }
 
     /**
+     * Used to insert a new staff member into the database
+     *
+     * @param user the staff member to insert into the database
+     */
+    protected Staff insertUserToDB(Staff user) {
+        String sql = "INSERT INTO " + userTable + " (username, password, email, name, address, appointmentHistory)" +
+                " VALUES (?, ?, ?, ?, ?, ?) RETURNING *";
+        return populateUser(executeUpdate(sql, user.getUsername(), user.getPassword(), user.getEmail(), user.getName(), user.getAddress(),
+                Arrays.toString(user.getAppointmentHistory().toArray())));
+    }
+
+    /**
      * Checks if the staff table has staff member in it
      *
      * @return true if there exists a staff member in the table, false otherwise
@@ -65,18 +76,6 @@ public class StaffDBManager extends UserDBManager<Staff> {
     public String findStaff() {
         String sql = "SELECT username AS username FROM " + userTable + " ORDER BY random() LIMIT 1";
         return getString(executeQuery(sql), "username");
-    }
-
-    /**
-     * Used to insert a new staff member into the database
-     *
-     * @param user the staff member to insert into the database
-     */
-    protected Staff insertUserToDB(Staff user) {
-        String sql = "INSERT INTO " + userTable + " (username, password, email, name, address, appointmentHistory)" +
-                " VALUES (?, ?, ?, ?, ?, ?)";
-        return populateUser(executeUpdate(sql, user.getUsername(), user.getPassword(), user.getEmail(), user.getName(), user.getAddress(),
-                Arrays.toString(user.getAppointmentHistory().toArray())));
     }
 
     /**

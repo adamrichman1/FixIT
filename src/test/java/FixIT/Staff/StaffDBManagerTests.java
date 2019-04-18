@@ -3,52 +3,89 @@ package FixIT.Staff;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
+import java.util.ArrayList;
+
+import static org.junit.Assert.*;
 
 public class StaffDBManagerTests {
 
+    /**
+     * Setup operations
+     */
     @Before
     public void setup() {
         StaffDBManager.getInstance().dropUserTable();
         StaffDBManager.getInstance().createStaffTable();
     }
 
+    /**
+     * Tests insertUserToDB()
+     */
     @Test
-    public void testInsertUserToDB() {
-        String username = "sohelsarwar";
-        Staff user = new Staff(username);
+    public void testInsertCustomerToDB() {
+        Staff s = new Staff();
+        s.setUsername("adam");
+        s.setPassword("pass");
+        s.setEmail("email");
+        s.setName("adam");
+        s.setAddress("address");
+        s.setAppointmentHistory(new ArrayList<>());
 
-        //Test
-        Staff s = StaffDBManager.getInstance().insertUserToDB(user);
+        // Test
+        Staff inserted = StaffDBManager.getInstance().insertUserToDB(s);
 
-        //Asserts
-        assertEquals(s.getUsername(), username);
+        // Asserts
+        assertEquals(s.getUsername(), inserted.getUsername());
+        assertEquals(s.getEmail(), inserted.getEmail());
+        assertEquals(s.getAddress(), s.getAddress());
+        assertEquals(s.getAppointmentHistory().size(), inserted.getAppointmentHistory().size());
     }
 
+    /**
+     * Tests staffAvailable() when a staff-member is available
+     */
     @Test
-    public void testStaffAvailable() {
-        String username = "sohelsarwar";
-        Staff user = new Staff(username);
+    public void testStaffAvailableTrue() {
+        // Insert mock staff member to DB
+        Staff s = new Staff();
+        s.setUsername("adam");
+        s.setPassword("pass");
+        s.setEmail("email");
+        s.setName("adam");
+        s.setAddress("address");
+        s.setAppointmentHistory(new ArrayList<>());
+        StaffDBManager.getInstance().insertUserToDB(s);
 
-        //Test
-        Staff s = StaffDBManager.getInstance().insertUserToDB(user);
-        boolean result = StaffDBManager.getInstance().staffAvailable();
+        // Assert
+        assertTrue(StaffDBManager.getInstance().staffAvailable());
+    }
 
-        //Asserts
-        assertEquals(StaffDBManager.getInstance().staffAvailable(), result);
+    /**
+     * Tests staffAvailable() when a staff-member is NOT available
+     */
+    @Test
+    public void testStaffAvailableFalse() {
+        // Assert
+        assertFalse(StaffDBManager.getInstance().staffAvailable());
     }
 
     @Test
     public void testFindStaff() {
-        String username = "sohelsarwar";
-        Staff user = new Staff(username);
+        // Insert mock staff member to DB
+        Staff s = new Staff();
+        s.setUsername("adam");
+        s.setPassword("pass");
+        s.setEmail("email");
+        s.setName("adam");
+        s.setAddress("address");
+        s.setAppointmentHistory(new ArrayList<>());
+        StaffDBManager.getInstance().insertUserToDB(s);
 
-        //Test
-        Staff s = StaffDBManager.getInstance().insertUserToDB(user);
-        String staffMember = StaffDBManager.getInstance().findStaff();
+        // Find a random staff member
+        String staffUsername = StaffDBManager.getInstance().findStaff();
 
-        //Asserts
-        assertEquals(StaffDBManager.getInstance().findStaff(), staffMember);
+        // Asserts
+        assertEquals(s.getUsername(), staffUsername);
     }
 }
 

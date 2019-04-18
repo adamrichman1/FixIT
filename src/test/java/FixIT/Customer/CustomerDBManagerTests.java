@@ -9,6 +9,9 @@ import static org.junit.Assert.assertEquals;
 
 public class CustomerDBManagerTests {
 
+    /**
+     * Setup operations
+     */
     @Before
     public void setup() {
         CustomerDBManager.getInstance().dropUserTable();

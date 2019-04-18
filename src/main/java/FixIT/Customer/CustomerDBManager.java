@@ -6,7 +6,6 @@ import org.slf4j.LoggerFactory;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
@@ -34,19 +33,6 @@ public class CustomerDBManager extends UserDBManager<Customer> {
     }
 
     /**
-     * Used to insert a new user into the database
-     *
-     * @param user the user to insert into the database
-     * @return the Customer object inserted
-     */
-    protected Customer insertUserToDB(Customer user) {
-        String sql = "INSERT INTO " + userTable + " (username, password, email, name, address, appointmentHistory, " +
-                "creditCard) VALUES (?, ?, ?, ?, ?, ?, ?)";
-        return populateUser(executeUpdate(sql, user.getUsername(), user.getPassword(), user.getEmail(), user.getName(), user.getAddress(),
-                Arrays.toString(user.getAppointmentHistory().toArray()), user.getCreditCard()));
-    }
-
-    /**
      * Used to create the customer table
      */
     public void createCustomerTable() {
@@ -59,6 +45,19 @@ public class CustomerDBManager extends UserDBManager<Customer> {
                 "appointmentHistory TEXT        NOT NULL, " +
                 "creditCard         TEXT        NOT NULL)";
         executeUpdate(sql);
+    }
+
+    /**
+     * Used to insert a new user into the database
+     *
+     * @param user the user to insert into the database
+     * @return the Customer object inserted
+     */
+    protected Customer insertUserToDB(Customer user) {
+        String sql = "INSERT INTO " + userTable + " (username, password, email, name, address, appointmentHistory, " +
+                "creditCard) VALUES (?, ?, ?, ?, ?, ?, ?) RETURNING *";
+        return populateUser(executeUpdate(sql, user.getUsername(), user.getPassword(), user.getEmail(), user.getName(), user.getAddress(),
+                Arrays.toString(user.getAppointmentHistory().toArray()), user.getCreditCard()));
     }
 
     /**
